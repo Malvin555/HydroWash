@@ -22,7 +22,8 @@ return new class extends Migration
             $table->enum('retrieval_method', ['take_away', 'delivery'])->default('take_away'); // Fixed default value
             $table->enum('status_transaction', ['uncompleted', 'completed'])->default('uncompleted');
             $table->enum('status_report', ['normal', 'deleted'])->default('normal');
-            $table->text('address'); // Changed from var to text
+            $table->text('address_taking'); // Changed from var to 
+            $table->text('address_delivery'); // Changed from var to 
             $table->enum('status', ['pending', 'process', 'completed'])->default('pending');
             $table->text('notes_ironing')->nullable(); // Changed to text and made nullable
             $table->timestamps(); // Adds created_at & updated_at
