@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('canceled', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key for users
-            $table->foreignId('laundry_id')->constrained('laundry')->onDelete('cascade'); // Foreign key for users
-            $table->foreignId('ironing_id')->constrained('ironing')->onDelete('cascade'); // Foreign key for users
+            $table->foreignId('laundry_id')->nullable()->constrained('laundry')->onDelete('cascade'); // Foreign key for users
+            $table->foreignId('ironing_id')->nullable()->constrained('ironing')->onDelete('cascade'); // Foreign key for users
             $table->text('issues'); // Changed to text and fixed typo
             $table->timestamps(); // Adds created_at & updated_at
         });
