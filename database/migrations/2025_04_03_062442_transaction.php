@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id(); 
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key for users
-            $table->foreignId('laundry_id')->nullable()->constrained('laundry')->onDelete('cascade'); // Foreign key for laundry, nullable
-            $table->foreignId('ironing_id')->nullable()->constrained('ironing')->onDelete('cascade'); // Foreign key for ironing, nullable
-            $table->decimal('price_transaction', 10, 2); // Decimal for price
-            $table->enum('method', ['cash', 'debit'])->default('cash'); // Fixed default value
-            $table->string('user_transaction')->nullable(); // Changed to string (varchar) and made nullable
-            $table->timestamps(); // Adds created_at & updated_at
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('laundry_id')->nullable()->constrained('laundry')->onDelete('cascade'); 
+            $table->foreignId('ironing_id')->nullable()->constrained('ironing')->onDelete('cascade');
+            $table->decimal('price_transaction', 10, 2); 
+            $table->enum('method', ['cash', 'debit'])->default('cash'); 
+            $table->string('user_transaction')->nullable(); 
+            $table->string('card_number')->nullable();
+            $table->string('postal_code')->nullable(); 
+            $table->string('bank_name')->nullable();
+            $table->timestamps();
         });
     }
 
