@@ -2,8 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Canceled;
+use App\Models\Feedback;
+use App\Models\Ironing;
+use App\Models\ItemType;
+use App\Models\Laundry;
+use App\Models\Transaction;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +18,47 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // 1. For Admin
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'role' => 'admin',
+            'telp' => '081234567890',
+            'address' => 'Jl. Admin No. 1',
+            'desc' => 'Admin utama',
+            'password' => bcrypt('pass123'),
         ]);
+
+        // 2. Users
+        $users = User::factory(10)->create();
+
+        // 3. Item Types
+        $itemIroning = ItemType::factory(5)->create(['role' => 'ironing']);
+        $itemLaundry = ItemType::factory(5)->create(['role' => 'laundry']);
+
+        // 4. Ironings
+        $ironings = Ironing::factory(10)
+            ->recycle([$users, $itemIroning])
+            ->create();
+
+        // 5. Laundries
+        $laundries = Laundry::factory(10)
+            ->recycle([$users, $itemLaundry])
+            ->create();
+
+        // 6. Feedbacks 
+        Feedback::factory(10)
+            ->recycle([$users])
+            ->create();
+
+        // 7. Transactions
+        Transaction::factory(10)
+            ->recycle([$users, $laundries, $ironings])
+            ->create();
+
+        // 8. Canceled 
+        Canceled::factory(10)
+            ->recycle([$users, $laundries, $ironings])
+            ->create();
     }
 }
