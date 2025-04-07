@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['user', 'admin'])->default('user');
-            $table->string('telp'); // Changed to string for phone numbers
-            $table->text('address'); // Changed from var to text
+            $table->string('telp')->nullable(); // Changed to string for phone numbers
+            $table->text('address')->nullable(); // Changed from var to text
             $table->text('desc')->nullable(); // Nullable to avoid issues
             $table->string('password');
             $table->rememberToken();
