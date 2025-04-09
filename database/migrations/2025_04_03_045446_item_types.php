@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('price_item', 10, 2); // Decimal for price
             $table->string('image_item')->nullable(); // String for image path, nullable
             $table->enum('role', ['laundry', 'ironing'])->default('laundry');
+            $table->string('created_who');
             $table->timestamps(); // Adds created_at & updated_at
             
         });
