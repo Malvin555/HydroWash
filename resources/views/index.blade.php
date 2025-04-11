@@ -255,7 +255,7 @@
                     </p>
                 </div>
 
-                <div class="text-white mx-auto max-w-3xl px-4 z-20">
+                {{-- <div class="text-white mx-auto max-w-3xl px-4 z-20">
                     <div class="flex items-center gap-2 mb-4">
                         <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-10 h-10 md:w-15 md:h-15">
                         <div>
@@ -268,7 +268,7 @@
                         My clothes come back looking perfect every time, and the pickup and delivery are
                         incredibly convenient. I can't imagine going back to doing my own laundry!
                     </p>
-                </div>
+                </div> --}}
             
                 <div class="absolute right-[-3rem] top-1/2  z-10">
                     <svg xmlns="http://www.w3.org/2000/svg"
