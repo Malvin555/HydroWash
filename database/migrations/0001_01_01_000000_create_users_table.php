@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('address')->nullable(); // Changed from var to text
             $table->text('desc')->nullable(); // Nullable to avoid issues
             $table->string('password');
+            $table->string('created_who');
             $table->rememberToken();
             $table->timestamps();
         });
