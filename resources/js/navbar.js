@@ -14,3 +14,19 @@ document.addEventListener('click', (e) => {
     menu.classList.add('-translate-x-full');
   }
 });
+
+// For Blur Effect Navbar:) - Not Active
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('navbar');
+  const navmenu = document.getElementById('menu');
+
+  window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+          nav.classList.add('bg-primary/35', 'backdrop-blur-2xl');
+          navmenu.classList.add('backdrop-blur-2xl');
+      } else {
+          nav.classList.remove('bg-primary/35', 'backdrop-blur-2xl');
+          navmenu.classList.remove('backdrop-blur-2xl');
+      }
+  });
+});
