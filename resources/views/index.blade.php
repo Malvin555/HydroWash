@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body data-page="landing">
@@ -86,7 +86,7 @@
                 </p>
             </div>
 
-            <div class="flex flex-wrap mb-25 lg:mb-35 ">
+            <div class="flex flex-wrap mb-25 lg:mb-35 md:justify-center">
                 <div class="w-full px-4 lg:w-1/2 xl:w-1/3 ">
                     <div class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
                         <div class="bg-btn w-12 h-12 rounded-sm">
@@ -228,60 +228,68 @@
                     <h1 class="text-center text-primary text-sm md:text-2xl">What our clients say</h1>
                 </div>
             </div>
-    
-            <div class="w-full relative flex items-center justify-between">
-                <div class="absolute left-[-3rem] top-1/2  z-10">
+
+            <div class="w-full relative">
+                <!-- Left Arrow -->
+                <div class="absolute left-[-3rem] top-1/2 z-10">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 text-white cursor-pointer"
-                        viewBox="0 0 320 512"
-                        onclick="prevReview()">
+                        viewBox="0 0 320 512" onclick="prevReview()">
                         <path fill="currentColor"
-                            d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+                            d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
                     </svg>
                 </div>
-            
-                <div class="text-white mx-auto max-w-3xl px-4 z-20">
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-10 h-10 md:w-15 md:h-15">
-                        <div>
-                            <h1 class="text-lg md:text-xl">MARIA</h1>
-                            <p class="text-[.7rem] md:text-sm">07/08/2025</p>
+
+                <div class="overflow-hidden w-full">
+                    <div id="reviewWrapper" class="flex mx-5 transition-transform duration-500 ease-in-out w-full">
+                        <!-- Review 1 -->
+                        <div class="w-full flex-shrink-0 text-white px-4">
+                            <div class="flex items-center gap-2 mb-4">
+                                <img src="{{ asset('img/profile-img.png') }}" alt="profile"
+                                    class="w-10 h-10 md:w-15 md:h-15">
+                                <div>
+                                    <h1 class="text-lg md:text-xl">MARIA</h1>
+                                    <p class="text-[.7rem] md:text-sm">07/08/2025</p>
+                                </div>
+                            </div>
+                            <p class="text-[.9rem] md:text-lg lg:text-2xl">
+                                Bubble Laundry is a lifesaver! Their Wash & Fold service is top-notch. My clothes come
+                                back
+                                looking perfect every time, and the pickup and delivery are incredibly convenient.
+                            </p>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="w-full flex-shrink-0 text-white px-4">
+                            <div class="flex items-center gap-2 mb-4">
+                                <img src="{{ asset('img/profile-img.png') }}" alt="profile"
+                                    class="w-10 h-10 md:w-15 md:h-15">
+                                <div>
+                                    <h1 class="text-lg md:text-xl">JAMES</h1>
+                                    <p class="text-[.7rem] md:text-sm">10/08/2025</p>
+                                </div>
+                            </div>
+                            <p class="text-[.9rem] md:text-lg lg:text-2xl">
+                                Super easy process and great customer service. Bubble Laundry made my busy week a lot
+                                easier!
+                            </p>
                         </div>
                     </div>
-                    <p class="text-[.9rem] md:text-lg lg:text-2xl">
-                        Bubble Laundry is a lifesaver! Their Wash & Fold service is top-notch.
-                        My clothes come back looking perfect every time, and the pickup and delivery are
-                        incredibly convenient. I can't imagine going back to doing my own laundry!
-                    </p>
                 </div>
 
-                {{-- <div class="text-white mx-auto max-w-3xl px-4 z-20">
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-10 h-10 md:w-15 md:h-15">
-                        <div>
-                            <h1 class="text-lg md:text-xl">MARIA</h1>
-                            <p class="text-[.7rem] md:text-sm">07/08/2025</p>
-                        </div>
-                    </div>
-                    <p class="text-[.9rem] md:text-lg lg:text-2xl">
-                        Bubble Laundry is a lifesaver! Their Wash & Fold service is top-notch.
-                        My clothes come back looking perfect every time, and the pickup and delivery are
-                        incredibly convenient. I can't imagine going back to doing my own laundry!
-                    </p>
-                </div> --}}
-            
-                <div class="absolute right-[-3rem] top-1/2  z-10">
+                <!-- Right Arrow -->
+                <div class="absolute right-[-3rem] top-1/2 z-10">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 text-white cursor-pointer"
-                        viewBox="0 0 320 512"
-                        onclick="nextReview()">
+                        viewBox="0 0 320 512" onclick="nextReview()">
                         <path fill="currentColor"
-                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
                     </svg>
                 </div>
             </div>
         </div>
     </section>
+
 
 
 
@@ -292,7 +300,7 @@
         <!-- Gradient atas -->
         <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary to-transparent z-0"></div>
 
-        
+
         <div class="relative z-10 max-w-3xl space-y-6">
             <h1 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 Ready to Experience <br class="hidden sm:block" /> the Fresh & Clean Difference?
@@ -326,7 +334,12 @@
 
 
 
-    @vite('resources/js/app.js')
 </body>
+
+<script>
+    
+</script>
+
+
 
 </html>
