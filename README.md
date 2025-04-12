@@ -1,66 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+---
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+```markdown
+# 💧 HydroWash - Laundry Web 🧺
 
-## About Laravel
+HydroWash is a powerful, modern, and user-friendly web application built with Laravel, designed to streamline and digitize laundry services. Whether you're managing a small laundry shop or a large operation, HydroWash helps you keep everything organized — from orders to deliveries.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- ✅ User Registration & Login (with role-based access)
+- 📋 Order Management (Create, View, Update, Track Orders)
+- 🧑‍💼 Admin Panel for Managing Services, Users, and Orders
+- 🧾 Dynamic Pricing Based on Laundry Type & Weight
+- 📦 Pickup & Delivery Tracking System
+- 📊 Dashboard with Real-time Statistics
+- 📧 Email Notifications (optional setup)
+- 🔐 Secure Authentication using Laravel’s built-in Auth
+- 🎨 Clean and Responsive UI
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📸 Preview
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+> Coming soon...
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## ⚙️ Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Backend:** Laravel 12
+- **Frontend:** Blade + Bootstrap/Tailwind CSS
+- **Database:** MySQL
+- **Authentication:** Laravel Auth
+- **Email:** Laravel Mail (optional)
+- **Deployment Ready:** Yes ✅
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 📁 Installation
 
-## Contributing
+Clone the project:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+git clone https://github.com/yourusername/hydrowash.git
+cd hydrowash
+```
 
-## Code of Conduct
+Install dependencies:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+composer install
+npm install && npm run dev
+```
 
-## Security Vulnerabilities
+Copy and set up `.env` file:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+Configure your database in `.env`, then run migrations:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate --seed
+```
+
+Start the development server:
+
+```bash
+php artisan serve
+```
+
+---
+
+## 🔐 Default Login Credentials
+
+| Role  | Email             | Password |
+|-------|------------------|----------|
+| Admin | admin@hydro.com  | password |
+| Staff | staff@hydro.com  | password |
+| User  | user@hydro.com   | password |
+
+> ⚠️ Please change the passwords after your first login for security.
+
+---
+
+## 📌 Folder Structure Highlights
+
+- `app/Http/Controllers/` - All main controllers
+- `resources/views/` - Blade view templates
+- `routes/web.php` - Route definitions
+- `database/seeders/` - Seeders for roles & sample users
+
+---
+
+## 🙌 Contributing
+
+Want to contribute? Awesome! Fork the repo, make your changes, and submit a pull request. Make sure your code follows Laravel best practices.
+
+---
+
+## 🧼 About HydroWash
+
+HydroWash was created to help local laundries go digital — improving customer experience, increasing efficiency, and offering transparency. Designed with simplicity and scalability in mind.
+
+---
+
+## 📃 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+## 👨‍💻 Developer
+
+**HydroWash Team**
+
+> Follow us on GitHub to stay updated with new features and improvements!
+
+```
+
+---
+
+Let me know if you'd like to customize it further — like adding badges, screenshots, or linking it with a live demo.
