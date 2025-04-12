@@ -14,7 +14,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
+<body data-page="landing">
 
     {{-- navbar --}}
     <nav class="bg-primary fixed top-0 left-0 right-0 z-[100]">
