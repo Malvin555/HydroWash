@@ -25,6 +25,7 @@ class ItemTypeFactory extends Factory
                 $this->faker->randomFloat(2, 3000, 10000),
             'image_item' => $this->faker->optional()->imageUrl(640, 480, 'clothes', true, 'Laundry'),
             'role' => $role,
+            'created_who' => 'admin'
         ];
     }
 }

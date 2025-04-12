@@ -33,9 +33,11 @@ class TransactionFactory extends Factory
 
         // Get user from laundry.user_id or ironing.user_id
         $userId = $laundry?->user_id ?? $ironing?->user_id;
+        $userName = 'user';
         if (!$userId) {
             $user = User::factory()->create(['role' => 'user']);
             $userId = $user->id;
+            $userName = $user->name;
         }
 
         // Prices are taken from one (if any)
@@ -60,6 +62,7 @@ class TransactionFactory extends Factory
             'card_number' => $method === "debit" ? $this->faker->creditCardNumber() : null,
             'postal_code' => $method === "debit" ? $this->faker->postcode() : null ,
             'bank_name' => $method === "debit" ?  $this->faker->randomElement(['BCA', 'BNI', 'BRI', 'Mandiri']) : null,
+            'created_who' => $userName,
         ];
     }
 }
