@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key for users
             $table->tinyInteger('star_rating'); // Changed to tinyInteger for rating (1-5 stars)
             $table->text('comment'); // Changed to text and fixed typo
-            $table->string('created_who');
+            $table->string('created_who')->nullable();
             $table->timestamps(); // Adds created_at & updated_at
         });
     }

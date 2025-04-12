@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('address_delivery')->nullable(); // Changed from var to 
             $table->enum('status', ['pending', 'process', 'completed'])->default('pending');
             $table->text('notes_laundry')->nullable(); // Changed to text and made nullable
-            $table->string('created_who');
+            $table->string('created_who')->nullable();
             $table->timestamps(); // Adds created_at & updated_at
         });
     }
