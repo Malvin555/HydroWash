@@ -1,11 +1,8 @@
----
 
-```markdown
 # 💧 HydroWash - Laundry Web 🧺
 
 HydroWash is a powerful, modern, and user-friendly web application built with Laravel, designed to streamline and digitize laundry services. Whether you're managing a small laundry shop or a large operation, HydroWash helps you keep everything organized — from orders to deliveries.
 
----
 
 ## 🚀 Features
 
