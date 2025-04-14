@@ -24,21 +24,35 @@
                 <p class="text-sm md:text-base lg:text-xl text-center">Hi there, Let's set up your new account</p>
             </div>
 
-            <form action="" method="">
-                <input type="text" name="username" id="username" placeholder="Username"
-                    class="w-full py-2 pl-4 mb-4 bg-input rounded-xl outline-0">
+            <form action="{{ route('register.store') }}" method="post">
+                @csrf
+
+                <input type="text" name="name" id="name" placeholder="username"
+                    class="w-full py-2 pl-4 mt-4 bg-input rounded-xl outline-0" value="{{ old('name') }}">
+                @error('name')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
                 <input type="email" name="email" id="email" placeholder="Email"
-                    class="w-full py-2 pl-4 mb-4 bg-input rounded-xl outline-0">
+                    class="w-full py-2 pl-4 mt-4 bg-input rounded-xl outline-0" value="{{ old('email') }}">
+                @error('email')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
                 <input type="password" name="password" id="password" placeholder="Password"
-                    class="w-full py-2 pl-4 mb-4 bg-input rounded-xl outline-0">
+                    class="w-full py-2 pl-4 mt-4 bg-input rounded-xl outline-0" value="{{ old('password') }}">
+                @error('password')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
-                <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
-                    class="w-full py-2 pl-4 mb-8 bg-input rounded-xl outline-0">
+                <input type="password" name="password_confirmation" id="confirm-password" placeholder="Confirm Password"
+                    class="w-full py-2 pl-4 mt-4 mb-8 bg-input rounded-xl outline-0" value="{{ old('password_confirmation') }}">
+                @error('password_confirmation')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
                 <button type="submit"
-                    class="font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5">Register</button>
+                    class="font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5 cursor-pointer">Register</button>
             </form>
 
             <p class="text-[#848484] text-center text-[.8rem] md:text-base mb-7 lg:mb-11">Already have an account? <a

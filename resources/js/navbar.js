@@ -18,8 +18,6 @@ if (currentPage === 'landing') {
   });
 }
 
-<<<<<<< HEAD
-=======
 document.addEventListener('click', (e) => {
   const isClickInsideMenu = menu.contains(e.target);
   const isClickOnToggle = toggle.contains(e.target);
@@ -44,4 +42,3 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 });
->>>>>>> 88d7a3d11c93eb1f9a78470d108d1361ad2749d1
