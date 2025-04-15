@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>HydroWash</title>
 
     <link rel="icon" type="images/png" href="{{ asset('img/favicon.png') }}">
 
@@ -13,70 +13,72 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100 ">
+<body class="bg-gray-100" data-page="admin">
     <div class="min-h-screen flex flex-col md:flex-row">
 
         <div id="sidebar"
-            class="min-h-screen bg-white text-primary w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20">
+            class="min-h-screen flex flex-col justify-between bg-white text-primary w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20">
 
-            <div class="flex items-center justify-between px-4">
-                <div class="flex items-center space-x-2">
-                    <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-10 h-10">
-                    <span class="text-xl font-bold sidebar-text">HydroWash</span>
+            <div>
+                <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center space-x-2">
+                        <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-10 h-10">
+                        <span class="text-xl font-bold sidebar-text">HydroWash</span>
+                    </div>
+    
                 </div>
-
+    
+                <nav class="mt-10">
+                    <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 text-primary">
+                        <i class="fas fa-home mr-2"></i>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                    <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                        <i class="fas fa-users mr-2"></i>
+                        <span class="sidebar-text">Users</span>
+                    </a>
+    
+    
+                    <div class="sidebar-dropdown">
+                        <button id="toggleDropdownBtn"
+                            class="w-full flex items-center justify-between py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 focus:outline-none">
+                            <div>
+                                <i class="fas fa-chart-bar mr-2"></i>
+                                <span class="sidebar-text">Analytics</span>
+                            </div>
+                            <i class="fas fa-chevron-down transition-transform duration-200" id="analyticsArrow"></i>
+                        </button>
+                        <div id="analyticsDropdown" class="pl-4 mt-1 hidden">
+                            <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                <span class="sidebar-text">Performance</span>
+                            </a>
+                            <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                <i class="fas fa-chart-pie mr-2"></i>
+                                <span class="sidebar-text">Reports</span>
+                            </a>
+                            <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                <i class="fas fa-chart-area mr-2"></i>
+                                <span class="sidebar-text">Statistics</span>
+                            </a>
+                        </div>
+                    </div>
+    
+    
+                    <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                        <i class="fas fa-box mr-2"></i>
+                        <span class="sidebar-text">Products</span>
+                    </a>
+                    <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                        <i class="fas fa-cog mr-2"></i>
+                        <span class="sidebar-text">Settings</span>
+                    </a>
+                </nav>
             </div>
 
-            <nav class="mt-10">
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 text-primary">
-                    <i class="fas fa-home mr-2"></i>
-                    <span class="sidebar-text">Dashboard</span>
-                </a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
-                    <i class="fas fa-users mr-2"></i>
-                    <span class="sidebar-text">Users</span>
-                </a>
 
-
-                <div class="sidebar-dropdown">
-                    <button id="toggleDropdownBtn"
-                        class="w-full flex items-center justify-between py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 focus:outline-none">
-                        <div>
-                            <i class="fas fa-chart-bar mr-2"></i>
-                            <span class="sidebar-text">Analytics</span>
-                        </div>
-                        <i class="fas fa-chevron-down transition-transform duration-200" id="analyticsArrow"></i>
-                    </button>
-                    <div id="analyticsDropdown" class="pl-4 mt-1 hidden">
-                        <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
-                            <i class="fas fa-chart-line mr-2"></i>
-                            <span class="sidebar-text">Performance</span>
-                        </a>
-                        <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
-                            <i class="fas fa-chart-pie mr-2"></i>
-                            <span class="sidebar-text">Reports</span>
-                        </a>
-                        <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
-                            <i class="fas fa-chart-area mr-2"></i>
-                            <span class="sidebar-text">Statistics</span>
-                        </a>
-                    </div>
-                </div>
-
-
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
-                    <i class="fas fa-box mr-2"></i>
-                    <span class="sidebar-text">Products</span>
-                </a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
-                    <i class="fas fa-cog mr-2"></i>
-                    <span class="sidebar-text">Settings</span>
-                </a>
-            </nav>
-
-
-            <div class="border-gray-700 pt-4 mt-auto px-4 absolute bottom-5">
-                <button class="w-full bg-primary">
+            <div class="w-full border-gray-700 flex justify-center">
+                <button class="w-full rounded-sm bg-primary py-2 text-center text-white">
                     Input Offline
                 </button>
             </div>

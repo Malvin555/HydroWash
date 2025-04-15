@@ -19,3 +19,9 @@ Route::get('/register', function () {
 Route::get('/admin', function () {
     return view('admin/index');
 })->name('admin');
+
+
+
+Route::get('/user', function () {
+    return view('user/index');
+})->name('admin');
