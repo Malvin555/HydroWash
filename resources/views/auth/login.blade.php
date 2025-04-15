@@ -25,14 +25,19 @@
                     account</p>
             </div>
 
-            <form action="" method="">
-                <input type="text" name="username" id="username" placeholder="Username"
-                    class="w-full py-2 pl-4 mb-4 bg-input rounded-xl outline-0">
+            <form action="{{ route('login.store') }}" method="post">
+                @csrf
 
+                <input type="text" name="name" id="name" placeholder="username"
+                    class="w-full py-2 pl-4 bg-input rounded-xl outline-0" value="{{ old('name') }}">
+                @error('name')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+                
                 <input type="password" name="password" id="password" placeholder="Password"
-                    class="w-full py-2 pl-4 mb-8 bg-input rounded-xl outline-0">
+                    class="w-full py-2 pl-4 mt-4 bg-input rounded-xl outline-0">
 
-                <button type="submit" class="font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5">Log
+                <button type="submit" class="mt-8 font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5">Log
                     in</button>
             </form>
 

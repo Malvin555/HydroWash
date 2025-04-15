@@ -17,9 +17,8 @@ return new class extends Migration
             $table->foreignId('laundry_id')->nullable()->constrained('laundry')->onDelete('cascade'); // Foreign key for users
             $table->foreignId('ironing_id')->nullable()->constrained('ironing')->onDelete('cascade'); // Foreign key for users
             $table->text('issues'); // Changed to text and fixed typo
-            $table->string('created_who');
+            $table->string('created_who')->nullable();
             $table->timestamps(); // Adds created_at & updated_at
-            
         });
     }
 

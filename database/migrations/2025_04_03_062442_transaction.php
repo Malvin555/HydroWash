@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('card_number')->nullable();
             $table->string('postal_code')->nullable(); 
             $table->string('bank_name')->nullable();
-            $table->string('created_who');
+            $table->string('created_who')->nullable();
             $table->timestamps();
         });
     }

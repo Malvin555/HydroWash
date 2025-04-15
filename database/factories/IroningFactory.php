@@ -44,6 +44,7 @@ class IroningFactory extends Factory
             'address_delivery' => $this->faker->address(),
             'status' => $this->faker->randomElement(['pending', 'process', 'completed']),
             'notes_ironing' => $this->faker->optional()->sentence(),
+            'created_who' => $user->name,
         ];
     }
 }

@@ -24,6 +24,7 @@ class FeedbackFactory extends Factory
             'user_id' => $user->id,
             'star_rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->sentence(10),
+            'created_who' => $user->name,
         ];
     }
 }

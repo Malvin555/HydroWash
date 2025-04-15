@@ -38,6 +38,7 @@ class CanceledFactory extends Factory
             'laundry_id' => $laundryId,
             'ironing_id' => $ironingId,
             'issues' => $this->faker->sentence(),
+            'created_who' => 'user',
         ];
     }
 }
