@@ -33,7 +33,9 @@
 
 
             <div class="flex items-center text-white gap-1">
-                <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-6 h-6 md:w-8 md:h-8">
+                <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                    {{ Str::substr(Auth::user()->name, 0, 2) }}
+                </div>
                 <h1 class="text-sm md:text-base">{{ Auth::user()->name ?? 'user' }}</h1>
             </div>
         </div>
@@ -46,6 +48,8 @@
 
     <x-landing-footer></x-landing-footer>
 
+
+    @include('pages.alert')
 
     @vite('resources/js/app.js')
 </body>
