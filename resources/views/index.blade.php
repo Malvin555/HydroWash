@@ -242,37 +242,24 @@
 
                 <div class="overflow-hidden w-full">
                     <div id="reviewWrapper" class="flex mx-5 transition-transform duration-500 ease-in-out w-full">
-                        <div class="w-full flex-shrink-0 text-white px-4">
-                            <div class="flex items-center gap-2 mb-4">
-                                <img src="{{ asset('img/profile-img.png') }}" alt="profile"
-                                    class="w-10 h-10 md:w-15 md:h-15">
-                                <div>
-                                    <h1 class="text-lg md:text-xl">MARIA</h1>
-                                    <p class="text-[.7rem] md:text-sm">07/08/2025</p>
+                        @if ($feedbacks)
+                            @foreach ($feedbacks as $feedback)
+                                <div class="w-full flex-shrink-0 text-white px-4">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <img src="{{ asset('img/profile-img.png') }}" alt="profile"
+                                            class="w-10 h-10 md:w-15 md:h-15">
+                                        <div>
+                                            <h1 class="text-lg md:text-xl">{{ $feedback->user->name }}</h1>
+                                            <p class="text-[.7rem] md:text-sm">
+                                                {{ \Carbon\Carbon::parse($feedback->created_at)->format('d/m/Y') }}</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-[.9rem] md:text-lg lg:text-2xl">
+                                        {{ $feedback->comment }}
+                                    </p>
                                 </div>
-                            </div>
-                            <p class="text-[.9rem] md:text-lg lg:text-2xl">
-                                Bubble Laundry is a lifesaver! Their Wash & Fold service is top-notch. My clothes come
-                                back
-                                looking perfect every time, and the pickup and delivery are incredibly convenient.
-                            </p>
-                        </div>
-
-
-                        <div class="w-full flex-shrink-0 text-white px-4">
-                            <div class="flex items-center gap-2 mb-4">
-                                <img src="{{ asset('img/profile-img.png') }}" alt="profile"
-                                    class="w-10 h-10 md:w-15 md:h-15">
-                                <div>
-                                    <h1 class="text-lg md:text-xl">JAMES</h1>
-                                    <p class="text-[.7rem] md:text-sm">10/08/2025</p>
-                                </div>
-                            </div>
-                            <p class="text-[.9rem] md:text-lg lg:text-2xl">
-                                Super easy process and great customer service. Bubble Laundry made my busy week a lot
-                                easier!
-                            </p>
-                        </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
@@ -324,9 +311,7 @@
 
 </body>
 
-<script>
-
-</script>
+<script></script>
 
 
 
