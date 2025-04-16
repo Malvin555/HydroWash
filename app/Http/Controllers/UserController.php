@@ -10,13 +10,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $feedbacks = Feedback::all();
+        $feedbacks = Feedback::with('user')->get();
         return view('index', compact('feedbacks'));
     }
 
     public function getFeedbacks()
     {
-        $feedbacks = Feedback::orderBy('created_at', 'desc')->get();
+        $feedbacks = Feedback::with('user')->orderBy('created_at', 'desc')->get();
         return view('pages.feedback-user', compact('feedbacks'));
     }
 
