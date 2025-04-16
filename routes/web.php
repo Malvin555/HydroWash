@@ -21,5 +21,37 @@ Route::get('/admin', function () {
 
 
 Route::get('/user', function () {
-    return view('user/index');
-})->name('admin');
+    return view('pages.home-user');
+})->name('home');
+
+Route::get('/user/iron', function () {
+    return view('pages.ironing-user');
+})->name('ironing');
+
+Route::get('/user/laundry', function () {
+    return view('pages.laundry-user');
+})->name('laundry');
+
+Route::get('/user/feedback', function () {
+    return view('pages.feedback-user');
+})->name('feedback');
+
+Route::get('/user/transaction', function () {
+    return view('pages.transaction-user');
+})->name('transaction');
+
+Route::get('/user/profile', function () {
+    return view('pages.profile-user');
+})->name('profile');
+
+Route::get('/user/history', function () {
+    return view('pages.history-user');
+})->name('history');
+
+Route::get('/user/complete-added', function () {
+    return view('pages.complete-added-user');
+})->name('complete-added');
+
+Route::get('/user/complete-transaction', function () {
+    return view('pages.complete-transaction-user');
+})->name('complete-transaction');

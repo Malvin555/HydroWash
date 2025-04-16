@@ -78,7 +78,7 @@
 
 
             <div class="w-full border-gray-700 flex justify-center">
-                <button class="w-full rounded-sm bg-primary py-2 text-center text-white">
+                <button class="w-full rounded-sm bg-primary py-2 text-center text-white cursor-pointer">
                     Input Offline
                 </button>
             </div>
@@ -90,7 +90,7 @@
             <header class="bg-primary shadow-md py-4 px-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <button id="sidebarToggle" class="text-white focus:outline-none md:hidden">
+                        <button id="sidebarToggle" class="text-white focus:outline-none cursor-pointer">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
                     </div>
