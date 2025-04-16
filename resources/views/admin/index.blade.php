@@ -33,33 +33,32 @@
                         <i class="fas fa-home mr-2"></i>
                         <span class="sidebar-text">Dashboard</span>
                     </a>
-                    <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
-                        <i class="fas fa-users mr-2"></i>
-                        <span class="sidebar-text">Users</span>
-                    </a>
-    
     
                     <div class="sidebar-dropdown">
                         <button id="toggleDropdownBtn"
                             class="w-full flex items-center justify-between py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 focus:outline-none">
                             <div>
                                 <i class="fas fa-chart-bar mr-2"></i>
-                                <span class="sidebar-text">Analytics</span>
+                                <span class="sidebar-text">Management</span>
                             </div>
                             <i class="fas fa-chevron-down transition-transform duration-200" id="analyticsArrow"></i>
                         </button>
                         <div id="analyticsDropdown" class="pl-4 mt-1 hidden">
                             <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
                                 <i class="fas fa-chart-line mr-2"></i>
-                                <span class="sidebar-text">Performance</span>
+                                <span class="sidebar-text">Item Types</span>
                             </a>
                             <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
                                 <i class="fas fa-chart-pie mr-2"></i>
-                                <span class="sidebar-text">Reports</span>
+                                <span class="sidebar-text">Laundry</span>
                             </a>
                             <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
                                 <i class="fas fa-chart-area mr-2"></i>
-                                <span class="sidebar-text">Statistics</span>
+                                <span class="sidebar-text">Ironing</span>
+                            </a>
+                            <a href="#" class="block py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                <i class="fas fa-chart-area mr-2"></i>
+                                <span class="sidebar-text">Canceled</span>
                             </a>
                         </div>
                     </div>
@@ -67,11 +66,15 @@
     
                     <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
                         <i class="fas fa-box mr-2"></i>
-                        <span class="sidebar-text">Products</span>
+                        <span class="sidebar-text">Transactions</span>
                     </a>
                     <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
-                        <i class="fas fa-cog mr-2"></i>
-                        <span class="sidebar-text">Settings</span>
+                        <i class="fas fa-box mr-2"></i>
+                        <span class="sidebar-text">Feedbacks</span>
+                    </a>
+                    <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                        <i class="fas fa-users mr-2"></i>
+                        <span class="sidebar-text">Users</span>
                     </a>
                 </nav>
             </div>
