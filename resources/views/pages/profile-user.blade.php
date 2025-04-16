@@ -14,21 +14,43 @@
                 <p class="font-light text-[.8rem] md:text-sm lg:text-base">Update your personal detail.</p>
               </div>
   
-              <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-6 h-6 md:w-8 md:h-8">
+              <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                {{ Str::substr(Auth::user()->name, 0, 2) }}
+            </div>
             </div>
   
-            <form action="" method="" class="px-3">
+            <form action="{{ route('profile') }}" method="post" class="px-3">
+              @csrf
+              @method('PUT')
+              
               <div class="w-full mb-5">
-                <input type="email" id="email" name="email" value="Maria@gmail.com" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                <input type="email" id="email" name="email" value="{{ Auth::user()->email ?? old('email') }}" placeholder="Enter your email" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                @error('email')
+                  <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
               </div>
   
               <div class="w-full mb-5">
-                <input type="text" id="username" name="username" value="MARIA" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                <input type="text" id="username" name="name" value="{{ Auth::user()->name ?? old('name') }}" placeholder="Enter your name" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                @error('name')
+                  <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
               </div>
   
               <div class="w-full flex gap-4 mb-5">
-                <input type="text" class="w-full bg-secondary rounded-sm py-1 px-2 text-primary outline-0" value="Jln Raya Kelod Kangin">
-                <input type="text" class="w-full bg-secondary rounded-sm py-1 px-2 text-primary outline-0" value="081234567891">
+                <div class="w-full">
+                  <input type="text" name="address" class="w-full bg-secondary rounded-sm py-1 px-2 text-primary outline-0" value="{{ Auth::user()->address ?? old('address') }}" placeholder="Enter your addrees">
+                  @error('address')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                  @enderror
+                </div>
+
+                <div class="w-full">
+                  <input type="text" name="telp" class="w-full bg-secondary rounded-sm py-1 px-2 text-primary outline-0" value="{{ Auth::user()->telp ?? old('telp') }}" placeholder="Enter you phone number">
+                  @error('telp')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                  @enderror
+                </div>
               </div>
               
               <div class="w-full flex justify-end">
@@ -45,24 +67,35 @@
                 <p class="font-light text-[.8rem] md:text-sm lg:text-base">Update your password.</p>
               </div>
   
-              <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-6 h-6 md:w-8 md:h-8">
+              <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                {{ Str::substr(Auth::user()->name, 0, 2) }}
+            </div>
             </div>
   
-            <form action="" method="" class="px-3">
+            <form action="{{ route('profile.password.update') }}" method="post" class="px-3">
+              @csrf
+              @method('PUT')
+
               <div class="w-full mb-5">
-                <input type="password" id="password" name="password" placeholder="Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                <input type="password" id="password" name="password" placeholder="Enter your password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                @error('password')
+                  <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
               </div>
   
               <div class="w-full mb-5">
-                <input type="password" id="new-password" name="new-password" placeholder="New Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                <input type="password" id="new-password" name="new_password" placeholder="Enter your new password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                @error('new_password')
+                  <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
               </div>
           
               <div class="w-full mb-5">
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
+                <input type="password" id="confirm-password" name="new_password_confirmation" placeholder="Confirm your password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
               </div>
               
               <div class="w-full flex justify-end">
-                <button type="submit" class="bg-primary text-white py-1 px-4 rounded-sm">Submit</button>
+                <button type="submit" class="bg-primary text-white py-1 px-4 rounded-sm cursor-pointer">Submit</button>
               </div>
             </form>
           </div>

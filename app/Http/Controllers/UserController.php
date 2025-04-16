@@ -2,40 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Feedback;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $feedbacks = Feedback::with('user')->get();
-        return view('index', compact('feedbacks'));
+        return view('pages.profile-user');
     }
 
-    public function getFeedbacks()
+    public function update(Request $request)
     {
-        $feedbacks = Feedback::with('user')->orderBy('created_at', 'desc')->get();
-        return view('pages.feedback-user', compact('feedbacks'));
-    }
+        $user = Auth::user();
+        $inputs = $request->all();
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'rating' => 'required|min:1|max:5',
-            'comment' => 'required',
+        foreach ($inputs as $key => $input) {
+            if (empty($inputs[$key])) {
+                $inputs[$key] = $user?->$key;
+            }
+        }
+
+        $validator = Validator::make($inputs, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'address' => 'nullable|string',
+            'telp' => ['nullable', 'regex:/^(\+62|62|08)[0-9]{9,13}$/'],
         ]);
 
+        if ($validator->fails()) {
+            return back()->withErrors($validator->errors())->withInput();
+        }
+
+        $user->update($inputs);
+
+        return back()->with('success', 'Profile successfully updated');
+    }
+
+    public function passwordUpdate(Request $request)
+    {
         $user = Auth::user();
 
-        Feedback::create([
-            'user_id' => $user->id,
-            'star_rating' => $request->rating,
-            'comment' => $request->comment,
-            'created_who' => $user->name,
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Your password is incorrect']);
+        }
+
+        $request->validate([
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+        
+        $user->update([
+            'password' => Hash::make($request->new_password),
         ]);
 
-        return redirect()->back()->with('success', 'Feedback successfully added.');
+        return back()->with('success', 'Password successfully updated');
     }
 }
