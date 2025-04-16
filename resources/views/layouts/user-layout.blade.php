@@ -30,7 +30,7 @@
 
             <div class="flex items-center text-white gap-1">
                 <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-6 h-6 md:w-8 md:h-8">
-                <h1 class="text-sm md:text-base">MARIA</h1>
+                <h1 class="text-sm md:text-base">{{ Auth::user()->name ?? 'user' }}</h1>
             </div>
         </div>
     </nav>

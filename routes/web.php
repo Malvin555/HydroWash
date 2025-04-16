@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('index');
-})->name('landing');
+Route::get('/', [UserController::class, 'index'])->name('landing');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
@@ -32,9 +31,8 @@ Route::get('/user/laundry', function () {
     return view('pages.laundry-user');
 })->name('laundry');
 
-Route::get('/user/feedback', function () {
-    return view('pages.feedback-user');
-})->name('feedback');
+Route::get('/user/feedback', [UserController::class, 'getFeedbacks'])->name('feedback');
+Route::post('/user/feedback', [UserController::class, 'store'])->name('feedback');
 
 Route::get('/user/transaction', function () {
     return view('pages.transaction-user');
