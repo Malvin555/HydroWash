@@ -31,9 +31,8 @@ Route::get('/user/laundry', function () {
     return view('pages.laundry-user');
 })->name('laundry');
 
-Route::get('/user/feedback', function () {
-    return view('pages.feedback-user');
-})->name('feedback');
+Route::get('/user/feedback', [UserController::class, 'getFeedbacks'])->name('feedback');
+Route::post('/user/feedback', [UserController::class, 'store'])->name('feedback');
 
 Route::get('/user/transaction', function () {
     return view('pages.transaction-user');
