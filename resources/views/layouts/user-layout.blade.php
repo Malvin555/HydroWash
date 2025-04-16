@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/app.css')
 </head>
 
 <body data-page="user">
@@ -37,10 +37,13 @@
 
     {{ $slot }}
 
+    {{-- modal information --}}
+    {{-- @include('pages.modal-information-user') --}}
+
     <x-landing-footer></x-landing-footer>
 
 
     @vite('resources/js/app.js')
 </body>
-
 </html>
+

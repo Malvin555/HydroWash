@@ -17,7 +17,6 @@
 <body data-page="landing">
 
     {{-- navbar --}}
-
     <nav class="bg-primary fixed top-0 left-0 right-0 z-[100]">
         <div class="max-w-screen-xl mx-auto px-[10%] lg:px-[5%] flex justify-between items-center py-3">
             <div class="flex items-center gap-2">
@@ -216,7 +215,7 @@
         </div>
 
 
-        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10 pointer-events-none"></div>
     </section>
 
 

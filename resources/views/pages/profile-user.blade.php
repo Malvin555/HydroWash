@@ -1,6 +1,6 @@
 <x-user-layout>
-     {{-- profile  --}}
-     <section class="h-full relative py-24">
+    {{-- profile  --}}
+    <section class="h-full relative py-24">
         <div class="px-[5%]">
           <div class="mb-5">
             <h1 class="text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)]">Your Profile</h1>
@@ -19,16 +19,16 @@
   
             <form action="" method="" class="px-3">
               <div class="w-full mb-5">
-                <input type="email" id="email" name="email" value="Maria@gmail.com" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-white">
+                <input type="email" id="email" name="email" value="Maria@gmail.com" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
               </div>
   
               <div class="w-full mb-5">
-                <input type="text" id="username" name="username" value="MARIA" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-white">
+                <input type="text" id="username" name="username" value="MARIA" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
               </div>
   
               <div class="w-full flex gap-4 mb-5">
-                <input type="text" class="w-full bg-secondary rounded-sm py-1 px-2 text-white outline-0" value="Jln Raya Kelod Kangin">
-                <input type="text" class="w-full bg-secondary rounded-sm py-1 px-2 text-white outline-0" value="081234567891">
+                <input type="text" class="w-full bg-secondary rounded-sm py-1 px-2 text-primary outline-0" value="Jln Raya Kelod Kangin">
+                <input type="text" class="w-full bg-secondary rounded-sm py-1 px-2 text-primary outline-0" value="081234567891">
               </div>
               
               <div class="w-full flex justify-end">
@@ -50,15 +50,15 @@
   
             <form action="" method="" class="px-3">
               <div class="w-full mb-5">
-                <input type="password" id="password" name="password" placeholder="Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-white">
+                <input type="password" id="password" name="password" placeholder="Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
               </div>
   
               <div class="w-full mb-5">
-                <input type="password" id="new-password" name="new-password" placeholder="New Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-white">
+                <input type="password" id="new-password" name="new-password" placeholder="New Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
               </div>
           
               <div class="w-full mb-5">
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-white">
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" class="w-full bg-secondary rounded-sm py-1 px-2 outline-0 text-primary">
               </div>
               
               <div class="w-full flex justify-end">

@@ -29,7 +29,7 @@
 
         <div class="grid grid-cols-2 gap-3 mb-5">
           <label class="cursor-pointer">
-            <div class="bg-secondary text-white p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition">
+            <div class="bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition">
               <h1 class="md:text-lg lg:text-xl">Debit</h1>
               <div class="flex flex-col items-center p-2">
                 <img src="{{ asset('img/debit.svg') }}" alt="debit" class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40"/>
@@ -39,7 +39,7 @@
           </label>
 
           <label class="cursor-pointer">
-            <div class="bg-secondary text-white p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition">
+            <div class="bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition">
               <h1 class="md:text-lg lg:text-xl">Cash</h1>
               <div class="flex flex-col items-center p-2">
                 <img src="{{ asset('img/cash.svg') }}" alt="debit" class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40"/>
