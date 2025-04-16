@@ -1,37 +1,45 @@
+<p align="center">
+  <img src="public/img/logo.png" alt="HydroWash Logo" width="200"/>
+</p>
 
-# 💧 HydroWash - Laundry Web 🧺
+# 💧 HydroWash - Laundry Web App 🧺
 
-HydroWash is a powerful, modern, and user-friendly web application built with Laravel, designed to streamline and digitize laundry services. Whether you're managing a small laundry shop or a large operation, HydroWash helps you keep everything organized — from orders to deliveries.
+
+**HydroWash** is a modern, user-friendly web application built with Laravel, designed to digitize and streamline laundry service operations. Whether you're running a small neighborhood laundry or a large-scale business, HydroWash helps you stay organized — from managing orders to tracking deliveries.
 
 
 ## 🚀 Features
 
-- ✅ User Registration & Login (with role-based access)
-- 📋 Order Management (Create, View, Update, Track Orders)
-- 🧑‍💼 Admin Panel for Managing Services, Users, and Orders
-- 🧾 Dynamic Pricing Based on Laundry Type & Weight
-- 📦 Pickup & Delivery Tracking System
-- 🎨 VERY COOL UI
+- 🔐 **User Authentication & Role-Based Access**
+- 📦 **Order Management** – Create, view, update, and track orders in real-time
+- 🧑‍💼 **Admin Dashboard** – Manage services, users, orders, and pricing
+- 💸 **Dynamic Pricing** – Pricing based on laundry type and weight
+- 🚚 **Pickup & Delivery Tracking**
+- 🎨 **Modern, Clean UI** – Built with responsiveness and UX in mind
 
 ---
-
 ## 📸 Preview
 
-> Coming soon...
+<p align="center">
+  <img src="public/img/preview.png" alt="HydroWash Preview" width="600" height="auto"/>
+</p>
+
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Backend:** Laravel 12
-- **Frontend:** Blade + Bootstrap/Tailwind CSS
+- **Backend:** Laravel 12  
+- **Frontend:** Blade, Bootstrap / Tailwind CSS  
 - **Database:** MariaDB
 
 ---
 
-## 📁 Installation
+## 📁 Getting Started
 
-Clone the project:
+### 🔧 Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/Malvin555/hydrowash.git
@@ -45,20 +53,20 @@ composer install
 npm install && npm run dev
 ```
 
-Copy and set up `.env` file:
+Set up environment variables:
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-Configure your database in `.env`, then run migrations:
+Configure your database in `.env`, then run:
 
 ```bash
 php artisan migrate --seed
 ```
 
-Start the development server:
+Start the local development server:
 
 ```bash
 php artisan serve
@@ -68,51 +76,49 @@ php artisan serve
 
 ## 🔐 Default Login Credentials
 
-| Role  | Email             | Password |
+| Role  | Email             | Password  |
 |-------|-------------------|-----------|
 | Admin | admin@hydro.com   | admin123  |
 | Staff | staff@hydro.com   | staff123  |
 | User  | user@hydro.com    | user123   |
 
-> ⚠️ Please change the passwords after your first login for security.
+> ⚠️ **Important:** Please update the default credentials after your first login for security.
 
 ---
 
-## 📌 Folder Structure Highlights
+## 📂 Key Folder Structure
 
-- `app/Http/Controllers/` - All main controllers
-- `resources/views/` - Blade view templates
-- `routes/web.php` - Route definitions
-- `database/seeders/` - Seeders for roles & sample users
+- `app/Http/Controllers/` – Core application logic  
+- `resources/views/` – Blade templates  
+- `routes/web.php` – Web routes  
+- `database/seeders/` – Role/user seeders  
 
 ---
 
 ## 🙌 Contributing
 
-Want to contribute? Awesome! Fork the repo, make your changes, and submit a pull request. Make sure your code follows Laravel best practices.
+Want to improve HydroWash? You're welcome!  
+Fork the repo, create a branch, make your changes, and open a pull request. Please follow Laravel's coding standards and best practices.
 
 ---
 
-## 🧼 About HydroWash
+## 🧼 Why HydroWash?
 
-HydroWash was created to help local laundries go digital — improving customer experience, increasing efficiency, and offering transparency. Designed with simplicity and scalability in mind.
+HydroWash was created to help local laundries embrace digital transformation.  
+It boosts efficiency, enhances the customer experience, and enables seamless tracking — all in one place.
 
 ---
 
 ## 📃 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 👨‍💻 Developer
+## 👨‍💻 Built by
 
-**HydroWash Team**
+**The HydroWash Team**
 
-> Follow us on GitHub to stay updated with new features and improvements!
-
-```
+> ⭐ Star the repo to stay up-to-date with new features!
 
 ---
-
-Let me know if you'd like to customize it further — like adding badges, screenshots, or linking it with a live demo.
