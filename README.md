@@ -11,10 +11,7 @@ HydroWash is a powerful, modern, and user-friendly web application built with La
 - 🧑‍💼 Admin Panel for Managing Services, Users, and Orders
 - 🧾 Dynamic Pricing Based on Laundry Type & Weight
 - 📦 Pickup & Delivery Tracking System
-- 📊 Dashboard with Real-time Statistics
-- 📧 Email Notifications (optional setup)
-- 🔐 Secure Authentication using Laravel’s built-in Auth
-- 🎨 Clean and Responsive UI
+- 🎨 VERY COOL UI
 
 ---
 
@@ -28,10 +25,7 @@ HydroWash is a powerful, modern, and user-friendly web application built with La
 
 - **Backend:** Laravel 12
 - **Frontend:** Blade + Bootstrap/Tailwind CSS
-- **Database:** MySQL
-- **Authentication:** Laravel Auth
-- **Email:** Laravel Mail (optional)
-- **Deployment Ready:** Yes ✅
+- **Database:** MariaDB
 
 ---
 
@@ -40,7 +34,7 @@ HydroWash is a powerful, modern, and user-friendly web application built with La
 Clone the project:
 
 ```bash
-git clone https://github.com/yourusername/hydrowash.git
+git clone https://github.com/Malvin555/hydrowash.git
 cd hydrowash
 ```
 
@@ -75,10 +69,10 @@ php artisan serve
 ## 🔐 Default Login Credentials
 
 | Role  | Email             | Password |
-|-------|------------------|----------|
-| Admin | admin@hydro.com  | password |
-| Staff | staff@hydro.com  | password |
-| User  | user@hydro.com   | password |
+|-------|-------------------|-----------|
+| Admin | admin@hydro.com   | admin123  |
+| Staff | staff@hydro.com   | staff123  |
+| User  | user@hydro.com    | user123   |
 
 > ⚠️ Please change the passwords after your first login for security.
 
