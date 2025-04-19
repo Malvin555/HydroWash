@@ -22,4 +22,10 @@ class Feedback extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function getFeedbacksWithUser($view)
+    {
+        $feedbacks = self::with('user')->orderBy('created_at', 'desc')->get();
+        return view($view, compact('feedbacks'));
+    }
 }

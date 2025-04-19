@@ -17,6 +17,6 @@
     setTimeout(() => {
         alertBox.classList.remove('opacity-100', 'top-20');
         alertBox.classList.add('opacity-0', 'top-0');
-    }, 5000);
+    }, 3500);
 </script>
 @endif
