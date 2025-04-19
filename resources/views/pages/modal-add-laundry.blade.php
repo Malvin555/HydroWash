@@ -4,15 +4,15 @@
     
     <div class="bg-white rounded-md w-full max-w-md mx-4 shadow-xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col overflow-hidden">
         
-        <div class="bg-secondary p-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-primary">Laundry #22872</h1>
+        <div class="bg-primary text-white p-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold ">Add Laundry</h1>
             <button id="closeModal" class="w-8 h-8 flex items-center justify-center cursor-pointer">
-                <img src="{{ asset('img/close.svg') }}" alt="close">
+                <img src="{{ asset('img/close2.svg') }}" alt="close">
             </button>
         </div>
 
         <div class="overflow-y-auto p-6 space-y-4 flex-1">
-            <h2 class="text-xl font-medium text-center text-primary tracking-wide">Laundry Information</h2>
+            <h2 class="text-xl font-medium text-center text-primary tracking-wide">Laundry Service Form</h2>
 
             <div>
                 <label class="text-sm font-semibold text-primary">Amount Item:</label>
