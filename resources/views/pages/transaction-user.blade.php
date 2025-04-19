@@ -28,26 +28,33 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3 mb-5">
-          <label class="cursor-pointer">
-            <div class="bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition">
-              <h1 class="md:text-lg lg:text-xl">Debit</h1>
+          <div>
+            <input type="radio" name="payment_method" value="debit" id="debit" class="peer hidden" />
+            <label for="debit"
+              class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+              <h1 class="md:text-lg lg:text-xl text-center">Debit</h1>
               <div class="flex flex-col items-center p-2">
-                <img src="{{ asset('img/debit.svg') }}" alt="debit" class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40"/>
-                <input type="checkbox" hidden name="debit" value="debit" class="" />
+                <img src="{{ asset('img/debit.svg') }}" alt="debit"
+                  class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40" />
               </div>
-            </div>
-          </label>
-
-          <label class="cursor-pointer">
-            <div class="bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition">
-              <h1 class="md:text-lg lg:text-xl">Cash</h1>
+            </label>
+          </div>
+        
+          <div>
+            <input type="radio" name="payment_method" value="cash" id="cash" class="peer hidden" />
+            <label for="cash"
+              class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+              <h1 class="md:text-lg lg:text-xl text-center">Cash</h1>
               <div class="flex flex-col items-center p-2">
-                <img src="{{ asset('img/cash.svg') }}" alt="debit" class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40"/>
-                <input type="checkbox" hidden name="debit" value="debit" class=""/>
+                <img src="{{ asset('img/cash.svg') }}" alt="cash"
+                  class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40" />
               </div>
-            </div>
-          </label>
+            </label>
+          </div>
         </div>
+        
+        
+        
 
         <div class="grid grid-cols-10 gap-3 items-center mb-5">
           <div class="col-span-1 h-14">

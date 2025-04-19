@@ -10,14 +10,12 @@ class FeedbackController extends Controller
 {
     public function index()
     {
-        $feedbacks = Feedback::with('user')->get();
-        return view('index', compact('feedbacks'));
+        return Feedback::getFeedbacksWithUser(view: 'index');
     }
 
     public function getFeedbacks()
     {
-        $feedbacks = Feedback::with('user')->orderBy('created_at', 'desc')->get();
-        return view('pages.feedback-user', compact('feedbacks'));
+        return Feedback::getFeedbacksWithUser(view: 'pages.feedback-user');
     }
 
     public function store(Request $request)

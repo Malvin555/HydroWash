@@ -3,7 +3,7 @@
   <section class="h-full relative bg-cover py-24" style="background-image: url('{{ asset('img/bg-user.png') }}')">
     <div class="px-[5%]">
       <div class="text-white mb-10 md:max-w-[65%] lg:max-w-[50%]">
-        <h1 class="text-2xl md:text-4xl lg:text-6xl font-bold leading-tight">HELLO, MARIA!</h1>
+        <h1 class="text-2xl md:text-4xl lg:text-6xl font-bold leading-tight">HELLO, {{ Auth::user()->name ?? 'User' }}!</h1>
         <p class="md:text-lg lg:text-xl">Welcome to Hydrowash, Customer Comfort is Our Priority Enjoy Your Best Service Here</p>
       </div>
   

@@ -15,7 +15,7 @@
               </div>
   
               <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
-                {{ Str::substr(Auth::user()->name, 0, 2) }}
+                {{ Str::substr(Auth::user()->name ?? 'User', 0, 2) }}
             </div>
             </div>
   
@@ -68,7 +68,7 @@
               </div>
   
               <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
-                {{ Str::substr(Auth::user()->name, 0, 2) }}
+                {{ Str::substr(Auth::user()->name ?? 'User', 0, 2) }}
             </div>
             </div>
   
