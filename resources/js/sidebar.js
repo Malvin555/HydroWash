@@ -1,5 +1,6 @@
 const sidebar = document.getElementById('sidebar');
 const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarClose = document.getElementById('sidebarClose')
 const toggleDropdownBtn = document.getElementById('toggleDropdownBtn');
 const analyticsDropdown = document.getElementById('analyticsDropdown');
 const analyticsArrow = document.getElementById('analyticsArrow');
@@ -15,6 +16,19 @@ if (currentPage === 'admin') {
     sidebar.classList.toggle('-translate-x-full');
   });
   
+
+  sidebarClose.addEventListener('click', function () {
+    sidebar.classList.toggle('md:-translate-x-full');
+    // sidebar.classList.toggle('md:hidden')
+  
+    if (sidebar.classList.contains('md:-translate-x-full')) {
+      sidebar.classList.remove('md:translate-x-0');
+    } else {
+      sidebar.classList.add('md:translate-x-0');
+    }
+  });
+  
+  
   
   window.addEventListener('click', function (e) {
     if (!sidebar.classList.contains('-translate-x-full') && 
@@ -25,13 +39,25 @@ if (currentPage === 'admin') {
   });
   
   
+  document.addEventListener('DOMContentLoaded', function () {
+    const isDropdownOpen = localStorage.getItem('analyticsDropdownOpen') === 'true';
+
+    if (isDropdownOpen) {
+      analyticsDropdown.classList.remove('hidden');
+      analyticsArrow.classList.add('rotate-180');
+    }
+  });
+
   toggleDropdownBtn.addEventListener('click', function (e) {
     e.stopPropagation();
+    const isHidden = analyticsDropdown.classList.contains('hidden');
+
     analyticsDropdown.classList.toggle('hidden');
     analyticsArrow.classList.toggle('rotate-180');
+
+    localStorage.setItem('analyticsDropdownOpen', isHidden ? 'true' : 'false');
   });
-  
-  
+
   window.addEventListener('click', function (e) {
     if (
       !analyticsDropdown.classList.contains('hidden') &&
@@ -40,19 +66,22 @@ if (currentPage === 'admin') {
     ) {
       analyticsDropdown.classList.add('hidden');
       analyticsArrow.classList.remove('rotate-180');
+
+      localStorage.setItem('analyticsDropdownOpen', 'false');
     }
   });
+
   
   
-  profileBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    profileMenu.classList.toggle('hidden');
-  });
-  
-  
-  window.addEventListener('click', function (e) {
-    if (!profileMenu.contains(e.target) && !profileBtn.contains(e.target)) {
-      profileMenu.classList.add('hidden');
-    }
-  });
 }
+profileBtn.addEventListener('click', function (e) {
+  e.stopPropagation();
+  profileMenu.classList.toggle('hidden');
+});
+
+
+window.addEventListener('click', function (e) {
+  if (!profileMenu.contains(e.target) && !profileBtn.contains(e.target)) {
+    profileMenu.classList.add('hidden');
+  }
+});

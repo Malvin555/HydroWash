@@ -32,12 +32,7 @@
             </div>
 
 
-            <div class="flex items-center text-white gap-1">
-                <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
-                    {{ Str::substr(Auth::user()->name, 0, 2) }}
-                </div>
-                <h1 class="text-sm md:text-base">{{ Auth::user()->name ?? 'user' }}</h1>
-            </div>
+            <x-profile></x-profile>
         </div>
     </nav>
 
