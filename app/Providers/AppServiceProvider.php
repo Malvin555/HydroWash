@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
          * 
          * @return float The converted float value.
          */
-        Str::macro('rupiahToFloat', function (string $value) {
+        Str::macro('rupiahToFloat', function (string $value): float {
             // Remove the 'Rp' prefix and any spaces or dots following it.
             $cleanedValue = preg_replace('/^Rp[\s\.]?/', '', $value);
 
@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
          */
         Str::macro('generateRandomString', function (): string {
             $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            $randomLength = rand(5, 6);
+            $randomLength = rand(6, 8);
 
             $randomPart = collect(range(1, $randomLength))
                     ->map(fn () => $characters[rand(0, strlen($characters) - 1)])
@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
             
             $uniquePart = substr(uniqid(), -5);
             $combined = str_shuffle($randomPart . $uniquePart);
-            return '#' . strtoupper(substr($combined, 0, $randomLength));
+            return strtoupper(substr($combined, 0, $randomLength));
         });
     }
 }

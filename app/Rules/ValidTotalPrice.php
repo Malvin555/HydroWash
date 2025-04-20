@@ -38,7 +38,5 @@ class ValidTotalPrice implements ValidationRule
         if (number_format($valueInput, 2, '.', '') !== number_format($expectedPriceTotal, 2, '.', '')) {
             $fail('The :attribute must be equal to the total price of ' . $this->itemName . ' for ' . $this->itemAmount . ' items.');
         }
-
-        return;
     }
 }

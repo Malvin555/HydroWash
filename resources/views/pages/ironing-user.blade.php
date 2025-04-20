@@ -44,9 +44,11 @@
                 <div class="w-full mt-5 flex flex-row gap-2 mb-5">
                     <div class="w-full sm:w-1/2">
                         <label for="amount" class="block mb-1 text-primary font-semibold">Amount:</label>
-                        <input type="number" id="amount" name="amount" disabled
+                        <input type="number" id="amount" name="amount"
                             class="w-full bg-secondary text-primary rounded-sm py-2 px-3 placeholder:text-primary outline-none focus:ring-2 focus:ring-white"
-                            placeholder="Amount item" value="{{ old('amount') }}" />
+                            placeholder="Amount item" 
+                            value="{{ old('amount') }}"
+                            @disabled(!$errors->any()) />
                         @error('amount')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -54,7 +56,7 @@
 
                     <div class="w-full sm:w-1/2">
                         <label class="block mb-1 text-primary font-semibold">Total:</label>
-                        <input type="text" name="price-total" value="{{ old('price-total') ?? 'Rp 0.00' }}"
+                        <input type="text" name="price-total" readonly value="{{ old('price-total') ?? 'Rp 0.00' }}"
                             class="w-full bg-secondary text-primary rounded-sm py-2 px-3 outline-none" />
                         @error('price-total')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -65,12 +67,12 @@
                 <div class="w-full mb-5">
                     <div class="relative inline-block w-full">
                         <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full"
-                            name="retrival-method">
-                            <option value="" disabled selected>Retrival Method</option>
-                            <option value="delivery" @selected(old('retrival-method') === 'delivery')>Delivery</option>
-                            <option value="take_away" @selected(old('retrival-method') === 'take_away')>Take Away</option>
+                            name="retrieval-method">
+                            <option value="" disabled selected>Retrieval Method</option>
+                            <option value="delivery" @selected(old('retrieval-method') === 'delivery')>Delivery</option>
+                            <option value="take_away" @selected(old('retrieval-method') === 'take_away')>Take Away</option>
                         </select>
-                        @error('retrival-method')
+                        @error('retrieval-method')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
 
@@ -97,10 +99,10 @@
                         <div class="grid grid-cols-2 items-center gap-2">
 
                             <div class="block w-full">
-                                <input type="text" name="from-address" placeholder="Address"
+                                <input type="text" name="address" placeholder="Address"
                                     class="bg-secondary text-primary placeholder-primary rounded-sm px-3 py-2 w-full outline-none"
-                                    value="{{ old('from-address') }}" />
-                                @error('from-address')
+                                    value="{{ old('address') }}" />
+                                @error('address')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -108,11 +110,11 @@
                             <div class="block w-full">
                                 <div class="flex items-center gap-3">
                                     <span class="text-[#194655] font-bold">to:</span>
-                                    <input type="text" name="to-address" placeholder="Destination"
+                                    <input type="text" name="destination" placeholder="Destination"
                                         class="bg-secondary text-primary placeholder-primary rounded-sm px-3 py-2 w-full outline-none"
-                                        value="{{ old('to-address') }}" />
+                                        value="{{ old('destination') }}" />
                                 </div>
-                                @error('to-address')
+                                @error('destination')
                                     <p class="mt-1 ml-8 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>

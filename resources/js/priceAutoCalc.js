@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const amountInput = document.querySelector('input[name="amount"]');
     const priceTotalInput = document.querySelector('input[name="price-total"]');
     const retrivalMethodInput = document.querySelector(
-        'select[name="retrival-method"]'
+        'select[name="retrieval-method"]'
     );
     const deliveryAddressBox = document.querySelector(".delivery-address-box");
 

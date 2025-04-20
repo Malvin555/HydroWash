@@ -82,7 +82,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route($this->adminLoginCheck($request) ? 'admin' : 'home');
+            return redirect()->route($this->isAdminAuthenticated($request) ? 'admin' : 'home');
         }
 
         return back()->withErrors([
@@ -92,15 +92,16 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        $isAdmin = $this->isAdminAuthenticated(Auth::user());
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login');
+        return redirect()->route($isAdmin ? 'login' : 'landing');
     }
 
-    public function adminLoginCheck($request)
+    public function isAdminAuthenticated($request)
     {
-        if ($request?->name === 'Admin' && $request?->password === 'pass123') {
+        if ($request?->name === 'Admin' && ($request?->password === 'pass123' || Hash::check('pass123', $request?->password))) {
             // session(['logged_as_admin' => true]);
             return true;
         }

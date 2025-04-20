@@ -65,7 +65,7 @@
 
         <!-- Fixed Footer -->
         <div class="p-4 space-y-2 bg-white">
-            <a href="{{ route('transaction') }}"
+            <a href="{{ route('landing') }}"
                 class="block w-full text-center px-4 py-2 rounded-md bg-primary text-white font-medium">
                 Transaction
             </a>

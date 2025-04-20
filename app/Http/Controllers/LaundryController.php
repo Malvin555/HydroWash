@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ServiceRequest;
-use App\Models\Ironing;
+use App\Models\Laundry;
 use App\Models\ItemType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Rules\ValidTotalPrice;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ServiceRequest;
 use Illuminate\Support\Facades\Auth;
 
-class IroningController extends Controller
+class LaundryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,11 +36,11 @@ class IroningController extends Controller
     {
         $data = $request->validated();
 
-        $ironing = Ironing::create([
+        $laundry = Laundry::create([
             'user_id' => Auth::id(),
-            'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'ironing')->first()?->id,
-            'name_ironing' => Str::generateRandomString(),
-            'price_ironing' => Str::rupiahToFloat($data['price-total']),
+            'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'laundry')->first()?->id,
+            'name_laundry' => Str::generateRandomString(),
+            'price_laundry' => Str::rupiahToFloat($data['price-total']),
             'amount_item' => $data['amount'],
             'estimation' => null,
             'retrieval_method' => $data['retrieval-method'],
@@ -48,13 +49,13 @@ class IroningController extends Controller
             'address_taking' => $data['address'],
             'address_delivery' => $data['destination'],
             'status' => 'pending',
-            'notes_ironing' => $data['note'],
+            'notes_laundry' => $data['note'],
             'created_who' => Auth::user()?->name,
         ]);
 
         return redirect()->route('complete-added')
-                ->with('ironing', $ironing)
-                ->with('success', 'Ironing order successfully created.');
+                ->with('laundry', $laundry)
+                ->with('success', 'Laundry order successfully created.');
     }
 
     /**
@@ -91,8 +92,8 @@ class IroningController extends Controller
 
     public function showCreateFormWithItemTypes()
     {
-        $itemTypes = ItemType::where('role', 'ironing')->get();
+        $itemTypes = ItemType::where('role', 'laundry')->get();
 
-        return view('pages.ironing-user', compact('itemTypes'));
+        return view('pages.laundry-user', compact('itemTypes'));
     }
 }
