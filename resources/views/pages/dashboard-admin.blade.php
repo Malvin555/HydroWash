@@ -1,5 +1,4 @@
 <x-admin-layout>
-    <main class="p-6">
         <div class="mb-6">
             <h1 class="text-2xl font-semibold text-gray-800">Dashboard</h1>
         </div>
@@ -172,5 +171,4 @@
                 </div>
             </div>
         </div>
-    </main>
 </x-admin-layout>

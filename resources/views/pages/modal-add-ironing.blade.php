@@ -1,15 +1,15 @@
 <!-- Modal -->
-<div id="modalAddLaundry"
+<div id="modalAddIroning"
     class="modal fixed inset-0 hidden flex items-center justify-center z-50 transition-opacity duration-300 opacity-0">
 
     <div
         class="modal-content bg-white rounded-md w-full max-w-md mx-4 shadow-xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col overflow-hidden">
 
-        <x-modal-header title="Add Laundry"></x-modal-header>
+        <x-modal-header title="Add Ironing"></x-modal-header>
 
 
         <div class="overflow-y-auto p-6 flex-1">
-            <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Laundry Service Form</h2>
+            <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Ironing Service Form</h2>
 
             <form action="" method="" class="space-y-4">
                 <div>

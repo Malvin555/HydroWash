@@ -1,15 +1,10 @@
 <!-- Modal -->
-<div id="modal"
-    class="fixed inset-0 hidden flex items-center justify-center z-50 transition-opacity duration-300 opacity-0">
+<div id="modalInformationUser"
+    class="modal fixed inset-0 hidden flex items-center justify-center z-50 transition-opacity duration-300 opacity-0">
     
-    <div class="bg-white rounded-md w-full max-w-md mx-4 shadow-xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col overflow-hidden">
+    <div class="modal-content bg-white rounded-md w-full max-w-md mx-4 shadow-xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col overflow-hidden">
         
-        <div class="bg-secondary p-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-primary">Laundry #22872</h1>
-            <button id="closeModal" class="w-8 h-8 flex items-center justify-center cursor-pointer">
-                <img src="{{ asset('img/close.svg') }}" alt="close">
-            </button>
-        </div>
+        <x-modal-header title="Laundry #22872"></x-modal-header>
 
         <div class="overflow-y-auto p-6 space-y-4 flex-1">
             <h2 class="text-xl font-medium text-center text-primary tracking-wide">Laundry Information</h2>
