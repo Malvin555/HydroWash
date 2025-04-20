@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\IroningController;
 
 Route::middleware('allow.guest')->group(function () {
     Route::get('/', [FeedbackController::class, 'index'])->name('landing');
@@ -25,9 +26,8 @@ Route::middleware('ensure.is.user')->group(function () {
         return view('pages.home-user');
     })->name('home');
 
-    Route::get('/user/iron', function () {
-        return view('pages.ironing-user');
-    })->name('ironing');
+    Route::get('/user/iron',[IroningController::class, 'showCreateFormWithItemTypes'])->name('ironing');
+    Route::post('/user/iron',[IroningController::class, 'store'])->name('ironing');
 
     Route::get('/user/laundry', function () {
         return view('pages.laundry-user');
