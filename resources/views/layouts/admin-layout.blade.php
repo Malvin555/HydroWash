@@ -161,7 +161,9 @@
             </header>
 
 
-            {{ $slot }}
+            <main class="p-6 overflow-y-auto">
+                {{ $slot }}
+            </main>
         </div>
     </div>
 

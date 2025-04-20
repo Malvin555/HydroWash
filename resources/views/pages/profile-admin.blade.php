@@ -1,5 +1,4 @@
 <x-admin-layout>
-    <main class="p-6">
         <div class="mb-6 flex items-center justify-between">
             <div>
                 <h1 class="font-bold text-lg md:text-2xl">Manage Profile</h1>
@@ -82,5 +81,4 @@
                 </div>
             </form>
         </div>
-    </main>
 </x-admin-layout>

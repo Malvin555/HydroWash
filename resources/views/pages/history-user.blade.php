@@ -46,7 +46,7 @@
       </div>
 
       <div class="w-full flex flex-col gap-3">
-        <div id="openModal" class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6">
+        <div data-modal-target="modalInformationUser" class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6">
           <div>
             <h1 class="text-primary md:text-lg font-semibold">Laundry #22872</h1>
             <p class="text-[.6rem] md:text-sm flex items-center gap-1">
@@ -71,7 +71,7 @@
         </div>
 
 
-        <div id="openModal" class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6">
+        <div data-modal-target="modalInformationUser" class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6">
           <div>
             <h1 class="text-primary md:text-lg font-semibold">Laundry #22872</h1>
             <p class="text-[.6rem] md:text-sm flex items-center gap-1">
@@ -96,7 +96,7 @@
         </div>
 
 
-        <div id="openModal" class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6">
+        <div data-modal-target="modalInformationUser" class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6">
           <div>
             <h1 class="text-primary md:text-lg font-semibold">Laundry #22872</h1>
             <p class="text-[.6rem] md:text-sm flex items-center gap-1">

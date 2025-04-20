@@ -23,8 +23,10 @@ Route::middleware('allow.guest')->group(function () {
 // Route::get('/verify-code', [AuthController::class, 'showVerificationForm'])->name('verify-code');
 
 
+
 Route::middleware('ensure.is.user')->group(function () {
     Route::get('/user', function () {
+        // Auth::logout();
         return view('pages.home-user');
     })->name('home');
 
@@ -57,6 +59,7 @@ Route::middleware('ensure.is.user')->group(function () {
 Route::middleware('ensure.is.admin')->group(function () {
 
     Route::get('/admin', function () {
+        // Auth::logout();
         return view('pages.dashboard-admin');
     })->name('admin');
 

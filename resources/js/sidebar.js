@@ -19,7 +19,7 @@ if (currentPage === 'admin') {
 
   sidebarClose.addEventListener('click', function () {
     sidebar.classList.toggle('md:-translate-x-full');
-    // sidebar.classList.toggle('md:hidden')
+    sidebar.classList.toggle('md:hidden');
   
     if (sidebar.classList.contains('md:-translate-x-full')) {
       sidebar.classList.remove('md:translate-x-0');

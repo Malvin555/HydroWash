@@ -1,12 +1,11 @@
 <x-admin-layout>
-    <main class="p-6">
         <div class="mb-6 flex items-center justify-between">
             <div>
                 <h1 class="font-bold text-lg md:text-2xl">Manage User</h1>
                 <p class="text-black/50 text-[.8rem] md:text-base">Manage and respond to user reports.</p>
             </div>
 
-            <button id="" class="bg-primary text-white p-3 rounded-sm cursor-pointer">
+            <button data-modal-target="modalAddUser" class="bg-primary cursor-pointer text-white p-3 rounded-sm cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 448 512">
                     <path
                         d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
@@ -51,42 +50,17 @@
                 <p class="text-sm text-white/50">Joined At</p>
                 <p class="mb-2">30 Januari 2025</p>
                 <div class="grid grid-cols-5 gap-4 w-full">
-                    <button id="" class="bg-white cursor-pointer py-2 rounded-sm text-primary col-span-4">
+                    <button data-modal-target="modalInformationUser" class="bg-white cursor-pointer py-2 rounded-sm text-primary col-span-4">
                         View
                     </button>
-                    <button id="" class="bg-white cursor-pointer rounded-sm p-2 text-primary flex items-center justify-center col-span-1">
-                        <svg xmlns="http://www.w3.org/2000/svg"  class="w-5 h-5" fill="currentColor" viewBox="0 0 512 512"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-primary text-white w-full rounded-sm flex flex-col justify-center py-3 px-2 items-center">
-                <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-25 h-25">
-                <h1 class="text-2xl mb-4">MARIA</h1>
-                <p class="text-sm text-white/50">Joined At</p>
-                <p class="mb-2">30 Januari 2025</p>
-                <div class="grid grid-cols-5 gap-4 w-full">
-                    <button id="" class="bg-white cursor-pointer py-2 rounded-sm text-primary col-span-4">
-                        View
-                    </button>
-                    <button id="" class="bg-white cursor-pointer rounded-sm p-2 text-primary flex items-center justify-center col-span-1">
-                        <svg xmlns="http://www.w3.org/2000/svg"  class="w-5 h-5" fill="currentColor" viewBox="0 0 512 512"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-primary text-white w-full rounded-sm flex flex-col justify-center py-3 px-2 items-center">
-                <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-25 h-25">
-                <h1 class="text-2xl mb-4">MARIA</h1>
-                <p class="text-sm text-white/50">Joined At</p>
-                <p class="mb-2">30 Januari 2025</p>
-                <div class="grid grid-cols-5 gap-4 w-full">
-                    <button id="" class="bg-white cursor-pointer py-2 rounded-sm text-primary col-span-4">
-                        View
-                    </button>
-                    <button id="" class="bg-white cursor-pointer rounded-sm p-2 text-primary flex items-center justify-center col-span-1">
+                    <button data-modal-target="modalEditUser" class="bg-white cursor-pointer rounded-sm p-2 text-primary flex items-center justify-center col-span-1">
                         <svg xmlns="http://www.w3.org/2000/svg"  class="w-5 h-5" fill="currentColor" viewBox="0 0 512 512"><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>
                     </button>
                 </div>
             </div>
         </div>
-    </main>
+
+        @include('pages.modal-add-user')
+        @include('pages.user-information-admin')
+        @include('pages.modal-edit-user')
 </x-admin-layout>
