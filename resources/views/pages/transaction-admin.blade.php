@@ -15,7 +15,6 @@
         <form action="" method="">
             <div class="mb-6 flex items-center justify-between gap-2">
                 <div class="relative inline-block w-64">
-                    <!-- Custom icon that triggers the input -->
                     <span 
                         onclick="const input = document.getElementById('monthInput'); input.focus(); input.click();"
                         class="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer z-10">
@@ -24,8 +23,6 @@
                                 d="M6 2a1 1 0 00-1 1v1H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2h-.002V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM5 8h10v8H5V8z" />
                         </svg>
                     </span>
-                
-                    <!-- Month input -->
                     <input id="monthInput" type="month"
                         class="bg-primary text-white text-center font-bold rounded-sm py-2 w-full pl-10 pr-4 outline-none appearance-none" />
                 </div>
