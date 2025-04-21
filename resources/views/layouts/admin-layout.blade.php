@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-secondary" data-page="admin">
-    <div class="min-h-screen flex flex-col md:flex-row">
+    <div class="min-h-screen flex flex-col md:flex-row ">
 
         {{-- sidebar --}}
         <div id="sidebar"
@@ -24,7 +24,10 @@
                 <div class="flex items-center justify-between px-4">
                     <div class="flex items-center space-x-2">
                         <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-10 h-10">
-                        <span class="text-xl font-bold sidebar-text">HydroWash</span>
+                        <a href="{{ route('admin') }}" class="flex items">
+
+                            <span class="text-xl font-bold sidebar-text">HydroWash</span>
+                        </a>
                     </div>
 
                 </div>
@@ -136,7 +139,7 @@
 
 
         <div class="flex-1 transition-all duration-200 ease-in-out">
-            <header class="bg-primary shadow-md py-4 px-4">
+            <header class="bg-primary shadow-md py-4 px-4 h-16 flex-shrink-0">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <button id="sidebarToggle" class="text-white focus:outline-none md:hidden cursor-pointer">
@@ -161,9 +164,11 @@
             </header>
 
 
-            <main class="p-6 overflow-y-auto">
-                {{ $slot }}
-            </main>
+            <div class="flex-1 overflow-y-auto p-6 h-[calc(100vh-4rem)]"> <!-- 4rem = 16 * 4px (header height) -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </div>
 
