@@ -3,7 +3,7 @@
   <section class="h-full relative py-24">
 
     <div class="px-[5%]">
-      <h1 class="text-center text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)] mb-15">Transaction {{ $serviceType . ' #' . ($transaction?->name_ironing ?? $transaction?->name_laundry) }}</h1>
+      <h1 class="text-center text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)] mb-15">Transaction {{ $transaction?->name_ironing ?? $transaction?->name_laundry }}</h1>
 
       <form action="" method="">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-5 ">

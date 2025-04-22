@@ -39,7 +39,7 @@ class LaundryController extends Controller
         $laundry = Laundry::create([
             'user_id' => Auth::id(),
             'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'laundry')->first()?->id,
-            'name_laundry' => Str::generateRandomString(),
+            'name_laundry' => Str::generateRandomString('Laundry'),
             'price_laundry' => Str::rupiahToFloat($data['price-total']),
             'amount_item' => $data['amount'],
             'estimation' => null,

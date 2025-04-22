@@ -310,7 +310,15 @@
 
 </body>
 
-<script></script>
+<script>
+    if (localStorage.getItem('api_token')) {
+        localStorage.removeItem('api_token');
+    }
+
+    if (localStorage.getItem('ref_id')) {
+        localStorage.removeItem('ref_id');
+    }
+</script>
 
 
 

@@ -33,10 +33,11 @@
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                
+
                 <input type="password" name="password" id="password" placeholder="Password"
                     class="w-full py-2 pl-4 mt-4 bg-input rounded-xl outline-0">
-                <button type="submit" class="mt-8 font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5">Log
+                <button type="submit"
+                    class="mt-8 font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5">Log
                     in</button>
             </form>
 
@@ -57,6 +58,15 @@
     </div>
 
 
+    <script>
+        if (localStorage.getItem('api_token')) {
+            localStorage.removeItem('api_token');
+        }
+
+        if (localStorage.getItem('ref_id')) {
+            localStorage.removeItem('ref_id');
+        }
+    </script>
 </body>
 
 </html>

@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\IroningController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\TransactionController;
@@ -43,16 +45,16 @@ Route::middleware('ensure.is.user')->group(function () {
     Route::put('/user/profile', [UserController::class, 'update'])->name('profile');
     Route::put('/user/profile/password-update', [UserController::class, 'passwordUpdate'])->name('profile.password.update');
     
-    Route::get('/user/history', function () {
-        return view('pages.history-user');
-    })->name('history');
+    Route::get('/user/history', [HistoryController::class, 'index'])->name('history');
     
     Route::get('/user/complete-added', [TransactionController::class, 'showCompletePage'])->name('complete-added');
-    Route::get('/user/transaction/{name?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');
+    Route::get('/user/transaction/{slug?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');
 
     Route::get('/user/complete-transaction', function () {
         return view('pages.complete-transaction-user');
     })->name('complete-transaction');
+
+    Route::post('/user/cancel-order', [CanceledController::class, 'cancelOrder'])->name('cancel.order');
 });
 
 

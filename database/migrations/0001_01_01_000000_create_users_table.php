@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('desc')->nullable(); // Nullable to avoid issues
             $table->string('password');
             $table->string('created_who')->nullable();
+            $table->text('api_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

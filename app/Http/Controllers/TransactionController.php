@@ -21,8 +21,13 @@ class TransactionController extends Controller
         return view('pages.complete-added-user', compact('service'));
     }
 
-    public function showTransactionForm($name = null)
+    public function showTransactionForm($slug = null)
     {
+        $parts = explode('-', $slug);
+        $prefix = ucfirst($parts[0]);
+        $suffix = strtoupper(end($parts));
+        $name = $prefix . ' #' . $suffix;
+
         $ironing = Ironing::where('name_ironing', $name)->first();
         $laundry = null;
         
@@ -35,8 +40,7 @@ class TransactionController extends Controller
         }
         
         $transaction = $ironing ?? $laundry;
-        $serviceType = $ironing ? 'Ironing' : 'Laundry';
         
-        return view('pages.transaction-user', compact('transaction', 'serviceType'));
+        return view('pages.transaction-user', compact('transaction'));
     }
 }

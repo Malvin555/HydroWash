@@ -7,7 +7,7 @@
       <h1 class="text-primary font-bold md:text-lg mb-7 drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)]">Data saved! Please proceed to the next step</h1>
       <div class="grid grid-cols-2 gap-3">
         <a href="{{ route('home') }}" class="w-full text-white text-center bg-primary py-2 rounded-sm">Homepage</a>
-        <a href="{{ route('transaction', ['name' => $service?->name_ironing ?? $service?->name_laundry]) }}" class="w-full text-white text-center bg-primary py-2 rounded-sm">Transaction</a>
+        <a href="{{ route('transaction', ['slug' => Str::slug($service?->name_ironing ?? $service?->name_laundry)]) }}" class="w-full text-white text-center bg-primary py-2 rounded-sm">Transaction</a>
       </div>
     </div>
 

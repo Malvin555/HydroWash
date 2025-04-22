@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
          * 
          * @return string The generated random string.
          */
-        Str::macro('generateRandomString', function (): string {
+        Str::macro('generateRandomString', function (string $type): string {
             $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             $randomLength = rand(6, 8);
 
@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
             
             $uniquePart = substr(uniqid(), -5);
             $combined = str_shuffle($randomPart . $uniquePart);
-            return strtoupper(substr($combined, 0, $randomLength));
+            return $type . ' #' . strtoupper(substr($combined, 0, $randomLength));
         });
     }
 }

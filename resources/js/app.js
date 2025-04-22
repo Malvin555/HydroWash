@@ -5,3 +5,6 @@ import './slider';
 import './sidebar';
 import './star-rating';
 import './modal';
+
+import './api/historyUser';
+import './api/showModalInformationUser';

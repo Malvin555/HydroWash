@@ -27,6 +27,7 @@ class User extends Authenticatable
         'desc',
         'password',
         'created_who',
+        'api_token',
     ];
 
     /**
