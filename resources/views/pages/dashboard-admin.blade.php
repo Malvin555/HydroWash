@@ -71,65 +71,65 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-primary">
-                            <tr>
+                            <tr onclick="window.location.href='{{ route('laundry-admin') }}'" class="cursor-pointer hover:bg-gray-100">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">01</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <p class="text-sm font-medium text-primary"><a href="{{ route('laundry-admin') }}">Laundry #234</a></p>
+                                        <p class="text-sm font-medium text-primary">Laundry #01</p>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">02-07-2025</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">Clothes</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Completed
+                                    </span>
                                 </td>
-                                
                             </tr>
-                            <tr>
+                            <tr onclick="window.location.href='{{ route('laundry-admin') }}'" class="cursor-pointer hover:bg-gray-100">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">02</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <p class="text-sm font-medium text-primary">Laundry #234</p>
+                                        <p class="text-sm font-medium text-primary">Laundry #0234</p>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">02-07-2025</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">Clothes</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Completed
+                                    </span>
                                 </td>
-                                
                             </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">03</td>
+                            <tr onclick="window.location.href='{{ route('ironing-admin') }}'" class="cursor-pointer hover:bg-gray-100">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">01</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <p class="text-sm font-medium text-primary">Laundry #234</p>
+                                        <p class="text-sm font-medium text-primary">Ironing #01</p>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">02-07-2025</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">Clothes</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Processing</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        Processing
+                                    </span>
                                 </td>
-                                
                             </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">03</td>
+                            <tr onclick="window.location.href='{{ route('ironing-admin') }}'" class="cursor-pointer hover:bg-gray-100">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">01</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <p class="text-sm font-medium text-primary">Laundry #234</p>
+                                        <p class="text-sm font-medium text-primary">Ironing #0497</p>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">02-07-2025</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-primary">Clothes</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Processing</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Pending
+                                    </span>
                                 </td>
-                                
                             </tr>
                         </tbody>
                     </table>

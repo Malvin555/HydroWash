@@ -10,6 +10,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\IroningController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\PrintController;
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
@@ -80,18 +81,21 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::get('/admin/laundry', function () {
         return view('pages.laundry-admin');
     })->name('laundry-admin');
-    
+
     Route::get('/admin/ironing', function () {
         return view('pages.ironing-admin');
     })->name('ironing-admin');
     
+    Route::get('/admin/transaction', function () {
+        return view('pages.transaction-admin');
+    })->name('transaction-admin');
+
+    Route::get('/admin/print', [PrintController::class, 'print'])->name('admin.print');
+
     Route::get('/admin/canceled', function () {
         return view('pages.canceled-admin');
     })->name('canceled-admin');
     
-    Route::get('/admin/transaction', function () {
-        return view('pages.transaction-admin');
-    })->name('transaction-admin');
     
     Route::get('/admin/profile', function () {
         return view('pages.profile-admin');

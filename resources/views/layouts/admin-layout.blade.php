@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>HydroWash</title>
 
-    <link rel="icon" type="images/png" href="{{ asset('img/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
 
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
 
@@ -15,7 +15,7 @@
 </head>
 
 <body class="bg-secondary" data-page="admin">
-    <div class="min-h-screen flex flex-col md:flex-row">
+    <div class="min-h-screen flex flex-col md:flex-row ">
 
         {{-- sidebar --}}
         <div id="sidebar"
@@ -25,14 +25,18 @@
                 <div class="flex items-center justify-between px-4">
                     <div class="flex items-center space-x-2">
                         <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-10 h-10">
-                        <span class="text-xl font-bold sidebar-text">HydroWash</span>
+                        <a href="{{ route('admin') }}" class="flex items">
+
+                            <span class="text-xl font-bold sidebar-text">HydroWash</span>
+                        </a>
                     </div>
 
                 </div>
 
                 <nav class="mt-10 text-primary">
 
-                    <a href="{{ route('admin') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                    <a href="{{ route('admin') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200
+                    {{ request()->routeIs('admin') ? 'bg-secondary' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor"
                             viewBox="0 0 576 512">
                             <path
@@ -44,7 +48,8 @@
 
                     <div class="sidebar-dropdown">
                         <button id="toggleDropdownBtn"
-                            class="w-full flex items-center justify-between py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 focus:outline-none">
+                            class="w-full flex items-center justify-between py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 focus:outline-none
+                            {{ request()->routeIs(['item-types','canceled-admin','ironing-admin','laundry-admin']) ? 'bg-gray-200' : '' }}">
                             <div class="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor"
                                     viewBox="0 0 512 512">
@@ -64,7 +69,8 @@
                         <div id="analyticsDropdown" class="pl-4 mt-1 hidden">
 
                             <a href="{{ route('item-types') }}"
-                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200
+                                {{ request()->routeIs('item-types') ? 'bg-secondary' : '' }}">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z" />
                                 </svg>
@@ -73,7 +79,8 @@
 
 
                             <a href="{{ route('laundry-admin') }}"
-                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200
+                                {{ request()->routeIs('laundry-admin') ? 'bg-secondary' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor"
                                     viewBox="0 0 576 512">
                                     <path
@@ -84,7 +91,8 @@
 
 
                             <a href="{{ route('ironing-admin') }}"
-                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200
+                                {{ request()->routeIs('ironing-admin') ? 'bg-secondary' : '' }}">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M4 4h16v4H4V4zm0 6h16v2H4v-2zm0 4h10v6H4v-6z" />
                                 </svg>
@@ -93,7 +101,8 @@
 
 
                             <a href="{{ route('canceled-admin') }}"
-                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200">
+                                class="flex items-center py-2 px-4 rounded transition duration-200 hover:bg-gray-200
+                                {{ request()->routeIs('canceled-admin') ? 'bg-secondary' : '' }}">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.54-11.46a.75.75 0 10-1.06-1.06L10 8.94 7.53 6.47a.75.75 0 00-1.06 1.06L8.94 10l-2.47 2.47a.75.75 0 001.06 1.06L10 11.06l2.47 2.47a.75.75 0 001.06-1.06L11.06 10l2.47-2.47z"
@@ -105,7 +114,8 @@
                     </div>
 
 
-                    <a href="{{ route('transaction-admin') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                    <a href="{{ route('transaction-admin') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200
+                    {{ request()->routeIs('transaction-admin') ? 'bg-secondary' : '' }}"">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M4 4h16v2H4zm0 5h10v2H4zm0 5h16v2H4zm0 5h10v2H4z" />
                         </svg>
@@ -113,7 +123,8 @@
                     </a>
 
 
-                    <a href="{{ route('feedback-admin') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                    <a href="{{ route('feedback-admin') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200
+                    {{ request()->routeIs('feedback-admin') ? 'bg-secondary' : '' }}">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M2 5a2 2 0 012-2h16a2 2 0 012 2v13.586l-4.707-4.707a1 1 0 00-1.414 0L12 18l-3.879-3.879a1 1 0 00-1.414 0L2 20.586V5z" />
@@ -122,7 +133,8 @@
                     </a>
 
 
-                    <a href="{{ route('manage-users') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200">
+                    <a href="{{ route('manage-users') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200
+                    {{ request()->routeIs('manage-users') ? 'bg-secondary' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor"
                             viewBox="0 0 640 512">
                             <path
@@ -137,7 +149,7 @@
 
 
         <div class="flex-1 transition-all duration-200 ease-in-out">
-            <header class="bg-primary shadow-md py-4 px-4">
+            <header class="bg-primary shadow-md py-4 px-4 h-16 flex-shrink-0">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <button id="sidebarToggle" class="text-white focus:outline-none md:hidden cursor-pointer">
@@ -162,9 +174,11 @@
             </header>
 
 
-            <main class="p-6 overflow-y-auto">
-                {{ $slot }}
-            </main>
+            <div class="flex-1 overflow-y-auto p-6 h-[calc(100vh-4rem)]"> <!-- 4rem = 16 * 4px (header height) -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </div>
 

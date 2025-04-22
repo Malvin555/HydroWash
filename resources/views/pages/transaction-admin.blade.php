@@ -4,20 +4,27 @@
                 <h1 class="font-bold text-lg md:text-2xl">Transaction</h1>
                 <p class="text-black/50 text-[.8rem] md:text-base">Manage and respond to user reports.</p>
             </div>
+
+            <button class="bg-primary text-white p-2 rounded-sm cursor-pointer">
+                <a href="{{ route('admin.print', ['type' => 'transaction']) }}" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 512 512"><path d="M128 0C92.7 0 64 28.7 64 64l0 96 64 0 0-96 226.7 0L384 93.3l0 66.7 64 0 0-66.7c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0L128 0zM384 352l0 32 0 64-256 0 0-64 0-16 0-16 256 0zm64 32l32 0c17.7 0 32-14.3 32-32l0-96c0-35.3-28.7-64-64-64L64 192c-35.3 0-64 28.7-64 64l0 96c0 17.7 14.3 32 32 32l32 0 0 64c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-64zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
+                </a>
+            </button>
         </div>
 
         <form action="" method="">
             <div class="mb-6 flex items-center justify-between gap-2">
-                <div class="relative inline-block w-50">
-                    <input type="month"
-                        class="bg-primary text-white text-center font-bold rounded-sm py-2 w-full outline-0 pl-5 appearance-none">
-                    <span class="absolute left-0 top-2.5 pointer-events-none">
+                <div class="relative inline-block w-64">
+                    <span 
+                        onclick="const input = document.getElementById('monthInput'); input.focus(); input.click();"
+                        class="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer z-10">
                         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path
-                                d="M6 2a1 1 0 00-1 1v1H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2h-.002V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM5 8h10v8H5V8z">
-                            </path>
+                                d="M6 2a1 1 0 00-1 1v1H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2h-.002V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM5 8h10v8H5V8z" />
                         </svg>
                     </span>
+                    <input id="monthInput" type="month"
+                        class="bg-primary text-white text-center font-bold rounded-sm py-2 w-full pl-10 pr-4 outline-none appearance-none" />
                 </div>
                 
                 
