@@ -49,6 +49,17 @@
     @include('pages.alert')
 
     @vite('resources/js/app.js')
+
+    {{-- 
+        This script is used to handle the scenario where a form input fails validation, 
+        and a modal needs to be displayed again. The `show_modal` session variable 
+        contains the ID of the modal that should be shown. The `Js::from` helper 
+        is used to safely pass the modal ID from the server-side session to the 
+        client-side JavaScript.
+    --}}
+    <script>
+        window.modalToShow = {{ Js::from(session('show_modal')) }};
+    </script>
 </body>
 </html>
 

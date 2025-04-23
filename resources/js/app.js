@@ -6,5 +6,30 @@ import './sidebar';
 import './star-rating';
 import './modal';
 
-import './api/historyUser';
-import './api/showModalInformationUser';
+
+/**
+ * An object containing module definitions for dynamic imports.
+ * Each module is responsible for fetching data and re-rendering the appropriate view
+ * to ensure smooth operation without errors.
+ *
+ **/
+const modules = {
+    historyUser: [
+        () => import('./api/historyUser'),
+        () => import('./api/showModalInformationUser'),
+    ],
+};
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const moduleName = document.querySelector('[data-module')?.dataset.module;
+    const loaders = modules[moduleName];
+
+    if (Array.isArray(loaders)) {
+        for (const load of loaders) {
+            const module = await load();
+            if (module.default) module.default();
+        }
+    } else {
+        console.warn('Module not found or incorrect format:', moduleName);
+    }
+})

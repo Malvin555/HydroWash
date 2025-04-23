@@ -1,6 +1,6 @@
 <x-user-layout>
     {{-- history --}}
-    <section class="h-screen pt-24">
+    <section class="h-screen pt-24" data-module="historyUser">
 
         <div class="px-[5%]">
             <div class="mb-5">
@@ -73,7 +73,11 @@
                             class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6"
                             data-id="{{ $item->id }}" data-type="{{ $item->type }}">
                             <div>
-                                <h1 class="text-primary md:text-lg font-semibold">{{ $item->name }}</h1>
+                                <h1 class="text-primary flex justify-center items-center gap-3 md:text-lg font-semibold">{{ $item->name }} 
+                                    @if ($item->isCanceled)
+                                        <p class="text-red-500 text-[.6rem] md:text-sm font-semibold">(This data has been canceled)</p>
+                                    @endif
+                                </h1>
                                 <p class="text-[.6rem] md:text-sm flex items-center gap-1">
                                     @if (!$item->address_delivery)
                                         No Address
@@ -94,8 +98,8 @@
                                 ])>
                                     {{ ucfirst($item->status) }}
                                 </h1>
-                                <p class="text-[.6rem] md:text-sm flex items-center gap-1"> <svg
-                                        xmlns="http://www.w3.org/2000/svg" class="w-2 h-2" viewBox="0 0 448 512">
+                                <p class="text-[.6rem] md:text-sm flex items-center gap-1"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-2 h-2" viewBox="0 0 448 512">
                                         <path
                                             d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 48 0c26.5 0 48 21.5 48 48l0 48L0 160l0-48C0 85.5 21.5 64 48 64l48 0 0-32c0-17.7 14.3-32 32-32zM0 192l448 0 0 272c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 192zm80 64c-8.8 0-16 7.2-16 16l0 96c0 8.8 7.2 16 16 16l96 0c8.8 0 16-7.2 16-16l0-96c0-8.8-7.2-16-16-16l-96 0z" />
                                     </svg> Submitted at {{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}
@@ -115,8 +119,6 @@
             <div id="pagination-container">
                 {{ $data->links('pagination.history-user-pagination') }}
             </div>
-
-
 
             <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
     </section>

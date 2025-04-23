@@ -16,10 +16,13 @@ closeButtons.forEach((button) => {
 });
 
 /**
- * Initializes the modal functionality and allows for a callback to be executed before showing the modal.
- * @param {Function} callback - A function to execute before showing the modal.
+ * Initializes a global modal functionality by attaching a click event listener to the document.
+ * The modal is triggered by elements with the `data-modal-target` attribute.
+ * If the `data-fetch` attribute is not set to "false", a callback function is executed before showing the modal.
+ *
+ * @param {Function} callback - An asynchronous function to be executed before showing the modal.
+ *                              Receives the dataset of the clicked element as its argument.
  */
-initializeModal(null);
 export default function initializeModal(callback) {
     document.addEventListener("click", async (event) => {
         const button = event.target.closest("[data-modal-target]");
@@ -28,29 +31,37 @@ export default function initializeModal(callback) {
             const modal = document.getElementById(modalId);
             const modalContent = modal.querySelector(".modal-content");
 
+            const shouldFetch = button.dataset.fetch !== "false";
+
             // Execute the callback before showing the modal
-            if (typeof callback === "function") {
+            if (shouldFetch && typeof callback === "function") {
                 await callback(event.target.dataset);
             }
 
             showModal(modal, modalContent);
-
-            // Close modal when clicking outside the modal content
-            modal.addEventListener("click", (e) => {
-                if (e.target === modal) closeModal(modal);
-            });
-
-            // Close modal when pressing the Escape key
-            document.addEventListener("keydown", handleEscapeKey(modal));
         }
     });
 }
+
+/**
+ * Handles the display of the modal when there is a validation error in the input data.
+ * Ensures the modal is shown again to allow the user to correct their input.
+ **/
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.modalToShow) {
+        const modal = document.getElementById(window.modalToShow);
+        const modalContent = modal.querySelector(".modal-content");
+
+        showModal(modal, modalContent);
+    }
+});
+
 /**
  * Displays the modal with animations.
  * @param {HTMLElement} modal - The modal element to display.
  * @param {HTMLElement} modalContent - The modal content element for scaling animation.
  */
-function showModal(modal, modalContent) {
+export function showModal(modal, modalContent) {
     modal.classList.remove("hidden");
     setTimeout(() => {
         modal.classList.remove("opacity-0");
@@ -58,6 +69,14 @@ function showModal(modal, modalContent) {
         modalContent.classList.remove("scale-95");
         modalContent.classList.add("scale-100");
     }, 10);
+
+    // Close modal when clicking outside the modal content
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal(modal);
+    });
+
+    // Close modal when pressing the Escape key
+    document.addEventListener("keydown", handleEscapeKey(modal));
 }
 
 /**

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CanceledController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HistoryController;
@@ -61,10 +62,7 @@ Route::middleware('ensure.is.user')->group(function () {
 
 Route::middleware('ensure.is.admin')->group(function () {
 
-    Route::get('/admin', function () {
-        // Auth::logout();
-        return view('pages.dashboard-admin');
-    })->name('admin');
+    Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
     Route::get('/admin/item-types', function () {
         return view('pages.item-types-admin');

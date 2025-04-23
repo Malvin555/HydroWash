@@ -102,17 +102,19 @@ function renderModalInformationUser(response) {
             ` : ''}
 
             ${!response.hasCanceled ? ` 
-                <form action="${buildRoute('cancel_order')}" method="post" onsubmit="return confirm('Are you sure to want cancel this order?')">
-                    <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').getAttribute('content')}">
-                    <input type="hidden" name="order_id" value="${data?.id}">
-                    <input type="hidden" name="service_type" value="${response?.serviceType}">
-                    <button class="block w-full px-4 py-2 rounded-md bg-primary text-white font-medium">
-                        Cancel Order
-                    </button>
-                </form>
+                <button data-modal-target="modalCancelService" data-fetch="false" class="block w-full px-4 py-2 rounded-md bg-primary text-white font-medium">
+                    Cancel Order
+                </button>
             ` : '' }
         </div>
     `;
+
+    // Data for the modal cancel service
+    const modalCancelService = document.getElementById('modalCancelService');
+    if (modalCancelService) {
+        modalCancelService.querySelector('input[name="order_id"]').value = data?.id;
+        modalCancelService.querySelector('input[name="service_type"]').value = response?.serviceType;
+    }
 }
 
 function strSlug(text) {

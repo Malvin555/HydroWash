@@ -34,7 +34,13 @@ class HistoryController extends Controller
             'address_delivery', 
             'status',
             'created_at',
-            DB::raw("'ironing' as type"))
+            DB::raw("'ironing' as type"),
+            DB::raw("EXISTS (
+                SELECT 1 FROM canceled
+                WHERE canceled.ironing_id = ironing.id 
+                AND canceled.user_id = $userId
+                ) AS isCanceled")
+            )
             ->where('user_id', $userId)
             ->status($status)
             ->search($search);
@@ -47,7 +53,13 @@ class HistoryController extends Controller
             'address_delivery', 
             'status',
             'created_at',
-            DB::raw("'laundry' as type"))
+            DB::raw("'laundry' as type"),
+            DB::raw("EXISTS (
+                SELECT 1 FROM canceled
+                WHERE canceled.laundry_id = laundry.id 
+                AND canceled.user_id = $userId
+                ) AS isCanceled")
+            )
             ->where('user_id', $userId)
             ->status($status)
             ->search($search);

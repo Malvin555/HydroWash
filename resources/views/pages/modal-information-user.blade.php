@@ -66,16 +66,12 @@
                     class="block w-full text-center px-4 py-2 rounded-md bg-primary text-white font-medium">
                     Transaction
                 </a>
-                <form action="{{ route('cancel.order') }}" method="post" onsubmit="return confirm('Are you sure to want cancel this order?')">
-                    @csrf
-
-                    <input type="hidden" name="order_id" value="">
-                    <input type="hidden" name="service_type" value="">
-                    <button class="block w-full px-4 py-2 rounded-md bg-primary text-white font-medium">
-                        Cancel Order
-                    </button>
-                </form>
+                <button data-modal-target="modalCancelService" data-fetch="false" class="block w-full px-4 py-2 rounded-md bg-primary text-white font-medium">
+                    Cancel Order
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+@include('pages.modal-cancel-service')
