@@ -34,13 +34,10 @@ class HistoryController extends Controller
             'address_delivery', 
             'status',
             'created_at',
-            DB::raw("'ironing' as type"),
-            DB::raw("EXISTS (
-                SELECT 1 FROM canceled
-                WHERE canceled.ironing_id = ironing.id 
-                AND canceled.user_id = $userId
-                ) AS isCanceled")
-            )
+            DB::raw("'ironing' as type"))
+            ->whereDoesntHave('canceled', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
             ->where('user_id', $userId)
             ->status($status)
             ->search($search);
@@ -53,13 +50,10 @@ class HistoryController extends Controller
             'address_delivery', 
             'status',
             'created_at',
-            DB::raw("'laundry' as type"),
-            DB::raw("EXISTS (
-                SELECT 1 FROM canceled
-                WHERE canceled.laundry_id = laundry.id 
-                AND canceled.user_id = $userId
-                ) AS isCanceled")
-            )
+            DB::raw("'laundry' as type"))
+            ->whereDoesntHave('canceled', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
             ->where('user_id', $userId)
             ->status($status)
             ->search($search);
@@ -108,7 +102,6 @@ class HistoryController extends Controller
             $service = Laundry::with(['canceled', 'transaction'])->findOrFail($id);
         }
 
-        $hasCanceled = $service->canceled()->exists();
         $hasTransaction = $service->transaction()->exists();
 
         return response()->json([
@@ -116,7 +109,6 @@ class HistoryController extends Controller
             "message" => "Service details retrieved successfully",
             "data" => $service,
             'serviceType' => ucfirst($serviceType),
-            'hasCanceled' => $hasCanceled,
             'hasTransaction' => $hasTransaction,
         ], 200);
     }
