@@ -28,7 +28,11 @@ const modules = {
     ],
     canceled: [
         () => import("./api/search/canceled"),
-        () => import("./api/show/showModalInfoCanceled"),    
+        () => import("./api/show/showModalInfoCanceled"),
+    ],
+    transaction: [
+        () => import("./api/search/transaction"),
+        () => import("./api/show/showModalInfoTransaction"),
     ],
 };
 

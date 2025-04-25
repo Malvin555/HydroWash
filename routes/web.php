@@ -86,9 +86,8 @@ Route::middleware('ensure.is.admin')->group(function () {
         return view('pages.ironing-admin');
     })->name('ironing-admin');
     
-    Route::get('/admin/transaction', function () {
-        return view('pages.transaction-admin');
-    })->name('transaction-admin');
+    Route::get('/admin/transaction', [TransactionController::class, 'index'])->name('transaction-admin');
+    Route::delete('/admin/transaction/{id}', [TransactionController::class, 'destroy'])->name('transaction-admin.delete');
 
     Route::get('/admin/print', [PrintController::class, 'print'])->name('admin.print');
 

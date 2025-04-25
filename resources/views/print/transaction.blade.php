@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Print Transaction - HydroWash</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-    
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -40,7 +41,8 @@
             font-size: 14px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ccc;
             padding: 10px;
         }
@@ -66,35 +68,45 @@
         }
     </style>
 </head>
+
 <body>
-  <h2>Print Transaction</h2>
+    <h2>Print Transaction</h2>
 
     <div class="header">
         <h1>HydroWash</h1>
-        <p>Date: 30-07-2025</p>
+        @if ($data['date'])
+            <p>Date: {{ \Carbon\Carbon::parse($data['date'])->format('m-Y') }}</p>
+        @endif
     </div>
 
     <table>
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Method</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td>01</td>
-              <td>Ironing #234</td>
-              <td>02-07-2025</td>
-              <td>$8,252</td>
-              <td>Lorem Ipsum</td>
-          </tr>
-      </tbody>
-  </table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($data['transactions'] as $index => $item)
+                <tr>
+                    <td>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                    <td>{{ $item->ironing->name_ironing ?? $item->laundry->name_laundry }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
+                    <td>{{ 'Rp ' . number_format($item->price_transaction, 2, ',', '.') }}</td>
+                    <td>{{ ucfirst($item->method) }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5">No transaction data</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 
-  <p>Overall income: Rp 100.000.00</p>
+    <p>Overall income: {{ 'Rp ' . number_format($data['income'], 2, ',', '.') }}</p>
 </body>
+
 </html>

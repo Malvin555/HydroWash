@@ -6,6 +6,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ItemTypeController;
+use App\Http\Controllers\TransactionController;
 
 Route::middleware('api')->group(function () {
     Route::get('/user', function() {
@@ -25,4 +26,7 @@ Route::middleware('api')->group(function () {
 
     Route::get('/admin/canceled', [CanceledController::class, 'index']);
     Route::get('/admin/canceled/{id}', [CanceledController::class, 'show']);
+
+    Route::get('/admin/transaction', [TransactionController::class, 'index']);
+    Route::get('/admin/transaction/{id}', [TransactionController::class, 'show']);
 });
