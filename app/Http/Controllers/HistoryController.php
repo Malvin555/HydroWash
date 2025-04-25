@@ -81,7 +81,7 @@ class HistoryController extends Controller
                 "message" => "History data retrieved successfully",
                 "data" => $data->items(),
                 'pagination' => $paginationHtml,
-            ]);
+            ], 200);
         }
         
         return view('pages.history-user', compact('data'));

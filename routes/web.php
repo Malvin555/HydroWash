@@ -12,6 +12,7 @@ use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemTyperController;
 use App\Http\Controllers\TransactionController;
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -65,9 +66,10 @@ Route::middleware('ensure.is.admin')->group(function () {
 
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
-    Route::get('/admin/item-types', function () {
-        return view('pages.item-types-admin');
-    })->name('item-types');
+    Route::get('/admin/item-types', [ItemTyperController::class, 'index'])->name('item-types');
+    Route::delete('/admin/item-types/{id}', [ItemTyperController::class, 'destroy'])->name('item-types.delete');
+    Route::post('/admin/item-types', [ItemTyperController::class, 'store'])->name('item-types.add');
+    Route::put('/admin/item-types', [ItemTyperController::class, 'update'])->name('item-types.update');
     
     Route::get('/admin/users', function () {
         return view('pages.manage-users-admin');

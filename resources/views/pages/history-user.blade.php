@@ -71,7 +71,9 @@
                     @foreach ($data as $item)
                         <div data-modal-target="modalInformationUser"
                             class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6"
-                            data-id="{{ $item->id }}" data-type="{{ $item->type }}">
+                            data-id="{{ $item->id }}" 
+                            data-type="{{ $item->type }}"
+                            data-modal-key="showModalInformationUser">
                             <div>
                                 <h1 class="text-primary gap-3 md:text-lg font-semibold">{{ $item->name }}</h1>
                                 <p class="text-[.6rem] md:text-sm flex items-center gap-1">

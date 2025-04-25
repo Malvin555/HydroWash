@@ -1,11 +1,10 @@
-import './bootstrap';
-import './priceAutoCalc';
-import './navbar';
-import './slider';
-import './sidebar';
-import './star-rating';
-import './modal';
-
+import "./bootstrap";
+import "./priceAutoCalc";
+import "./navbar";
+import "./slider";
+import "./sidebar";
+import "./star-rating";
+import "./modal";
 
 /**
  * An object containing module definitions for dynamic imports.
@@ -15,13 +14,18 @@ import './modal';
  **/
 const modules = {
     historyUser: [
-        () => import('./api/historyUser'),
-        () => import('./api/showModalInformationUser'),
+        () => import("./api/search/historyUser"),
+        () => import("./api/show/showModalInformationUser"),
+    ],
+    itemType: [
+        () => import("./api/search/itemType"),
+        () => import("./api/show/showModalInfoItemType"),
+        () => import("./api/show/showModalEditItemType"), 
     ],
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const moduleName = document.querySelector('[data-module')?.dataset.module;
+document.addEventListener("DOMContentLoaded", async () => {
+    const moduleName = document.querySelector("[data-module")?.dataset.module;
     const loaders = modules[moduleName];
 
     if (Array.isArray(loaders)) {
@@ -30,6 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (module.default) module.default();
         }
     } else {
-        console.warn('Module not found or incorrect format:', moduleName);
+        console.warn("Module not found or incorrect format:", moduleName);
     }
-})
+});

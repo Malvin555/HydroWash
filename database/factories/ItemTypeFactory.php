@@ -38,7 +38,7 @@ class ItemTypeFactory extends Factory
         return [
             'name_item' => $item['name'],
             'price_item' => fn (array $attributes) => $attributes['role'] === 'laundry' ? $item['price_laundry'] : $item['price_ironing'],
-            'image_item' => $this->faker->optional()->imageUrl(640, 480, 'clothes', true, 'laundry'),
+            'image_item' => null,
             'created_who' => 'admin'
         ];
     }

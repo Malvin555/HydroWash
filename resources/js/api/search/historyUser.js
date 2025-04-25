@@ -1,47 +1,20 @@
-import api from "./axios";
-import { getUrlParams, updateQueryString } from "../utils/queryStr";
-import { hideLoader, showLoader } from "../utils/loader";
-import { debounce } from "../utils/debounce";
+import initSearchHandler from "./initSearchHandler";
 
 const historyList = document.getElementById("historyList");
-const paginationContainer = document.getElementById('pagination-container');
+const paginationContainer = document.getElementById("pagination-container");
 const searchInput = document.getElementById("search");
 
-async function getHistoryUser(search) {
-    const queryString = getUrlParams("search", search);
-    showLoader();
-
-    try {
-        const response = await api.get(`/user/history${queryString}`);
-        if (response.statusText !== "OK") {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-
-        updateQueryString("search", search);
-
-        if (response.data.status === "success") {
-            renderHistoryList(response.data)
-        }
-    } catch (error) {
-        console.error("Error fetching history user:", error);
-    } finally {
-        hideLoader();
-    }
-}
-
-const debouncedCallApi = debounce(getHistoryUser, 500);
-if (searchInput) {
-    searchInput.addEventListener("input", function (e) {
-        const searchValue = e.target.value.trim();
-
-        debouncedCallApi(searchValue);
+searchInput.addEventListener("input", function (e) {
+    initSearchHandler({
+        searchValue: e.target.value.trim(),
+        apiPath: "/user/history",
+        renderFn: renderHistoryList,
     });
-}
-
+});
 
 function renderHistoryList(data) {
     historyList.innerHTML = "";
-    paginationContainer.innerHTML = '';
+    paginationContainer.innerHTML = "";
 
     if (data.data.length === 0) {
         historyList.innerHTML = `
@@ -56,9 +29,13 @@ function renderHistoryList(data) {
         historyList.innerHTML += `
             <div data-modal-target="modalInformationUser"
                 class="w-full bg-secondary cursor-pointer rounded-sm flex items-center justify-between py-2 px-6"
-                    data-id="${item?.id}" data-type="${item?.type}">
+                    data-id="${item?.id}" 
+                    data-type="${item?.type}"
+                    data-modal-key="showModalInformationUser">
                 <div>
-                    <h1 class="text-primary gap-3 md:text-lg font-semibold">${item?.name}</h1>
+                    <h1 class="text-primary gap-3 md:text-lg font-semibold">${
+                        item?.name
+                    }</h1>
                     <p class="text-[.6rem] md:text-sm flex items-center gap-1">
                     ${
                         !item?.address_delivery
@@ -82,8 +59,10 @@ function renderHistoryList(data) {
                     }">
                     ${
                         item?.status
-                            ? item?.status.charAt(0).toUpperCase() + item?.status.slice(1)
-                            : ""}
+                            ? item?.status.charAt(0).toUpperCase() +
+                            item?.status.slice(1)
+                            : ""
+                    }
                     </h1>
                     <p class="text-[.6rem] md:text-sm flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-2 h-2" viewBox="0 0 448 512">
@@ -101,7 +80,6 @@ function renderHistoryList(data) {
             </div>
         `;
     });
-
 
     paginationContainer.innerHTML = data.pagination;
 }

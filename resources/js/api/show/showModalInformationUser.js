@@ -1,30 +1,15 @@
-import api from "./axios";
-import { hideLoader, showLoader } from "../utils/loader";
-import initializeModal from "../modal";
-import buildRoute from "../utils/buildRoute";
+import initializeModal from "../../modal";
+import buildRoute from "../../utils/buildRoute";
+import fetchDetailToModal from "./fetchDetailToModal";
 
-initializeModal(getUserDetailForModalInformation);
-
-async function getUserDetailForModalInformation({ ...args }) {
-    showLoader();
-    const id = args?.id;
-    const serviceType = args?.type;
-
-    try {
-        const response = await api.get(`/user/history/${id}/${serviceType}`);
-        if (response.statusText !== "OK") {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-
-        if (response.data.status === "success") {
-            renderModalInformationUser(response.data);
-        }
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    } finally {
-        hideLoader();
-    }
-}
+initializeModal('showModalInformationUser', async ({ id, type }) => {
+    await fetchDetailToModal({
+        id: id,
+        type: type,
+        url: "/user/history",
+        renderFn: renderModalInformationUser,
+    });
+});
 
 function renderModalInformationUser(response) {
     const modal = document.getElementById("modalInformationUser");
@@ -49,9 +34,9 @@ function renderModalInformationUser(response) {
                 <div class="bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">${
                     data?.amount_item
                 }Pcs ${new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-    }).format(data.price_ironing ?? data.price_laundry)}</div>
+                        style: "currency",
+                        currency: "IDR",
+                    }).format(data.price_ironing ?? data.price_laundry)}</div>
             </div>
 
             <div>
@@ -118,10 +103,7 @@ function renderModalInformationUser(response) {
             ${
                 !response.hasTransaction
                     ? ` 
-                <a href="${buildRoute(
-                    "transaction",
-                    strSlug(data.name_ironing ?? data.name_laundry)
-                )}"
+                <a href="${buildRoute("transaction", strSlug(data.name_ironing ?? data.name_laundry))}"
                     class="block w-full text-center px-4 py-2 rounded-md bg-primary text-white font-medium">
                     Transaction
                 </a>

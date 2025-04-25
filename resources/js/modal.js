@@ -1,5 +1,6 @@
 const closeIcons = document.querySelectorAll("[data-close-icon]");
-const closeButtons = document.querySelectorAll("[data-close-button]");
+// const closeButtons = document.querySelectorAll("[data-close-button]");
+const closeButtons = document.querySelectorAll(".close-button");
 
 closeIcons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -8,11 +9,13 @@ closeIcons.forEach((button) => {
     });
 });
 
-closeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-close-button]")) {
+        event.stopPropagation();
+        const button = event.target.closest("[data-close-button]");
         const modal = button.closest(".modal");
         closeModal(modal);
-    });
+    }
 });
 
 /**
@@ -23,23 +26,32 @@ closeButtons.forEach((button) => {
  * @param {Function} callback - An asynchronous function to be executed before showing the modal.
  *                              Receives the dataset of the clicked element as its argument.
  */
-export default function initializeModal(callback) {
+const initializedModals = new Set();
+export default function initializeModal(key = null, callback) {
+    const uniqueKey = key || "__default__";
+
+    if (initializedModals.has(uniqueKey)) return;
+    initializedModals.add(uniqueKey);
+
     document.addEventListener("click", async (event) => {
         const button = event.target.closest("[data-modal-target]");
-        if (button) {
-            const modalId = button.getAttribute("data-modal-target");
-            const modal = document.getElementById(modalId);
-            const modalContent = modal.querySelector(".modal-content");
+        if (!button) return;
 
-            const shouldFetch = button.dataset.fetch !== "false";
+        const modalKey = button.getAttribute("data-modal-key");
+        if (key && modalKey !== key) return;
 
-            // Execute the callback before showing the modal
-            if (shouldFetch && typeof callback === "function") {
-                await callback(event.target.dataset);
-            }
+        const modalId = button.getAttribute("data-modal-target");
+        const modal = document.getElementById(modalId);
+        const modalContent = modal.querySelector(".modal-content");
 
-            showModal(modal, modalContent);
+        const shouldFetch = button.dataset.fetch !== "false";
+
+        // Execute the callback before showing the modal
+        if (shouldFetch && typeof callback === "function") {
+            await callback(button.dataset);
         }
+
+        showModal(modal, modalContent);
     });
 }
 
