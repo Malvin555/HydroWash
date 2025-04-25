@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class ItemTyperController extends Controller
+class ItemTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -137,7 +137,20 @@ class ItemTyperController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:item_types,id',
-            'name_item' => 'required|string|max:255|unique:item_types,name_item,' . $request->input('id'),
+            'name_item' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    $exists = ItemType::where('name_item', $value)
+                        ->where('role', $request->input('role'))
+                        ->where('id', '!=', $request->input('id'))
+                        ->exists();
+                    if ($exists) {
+                        $fail('The item name has already been taken for the selected role.');
+                    }
+                },
+            ],
             'role' => 'required|in:ironing,laundry',
             'image_item' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price_item' => 'required',

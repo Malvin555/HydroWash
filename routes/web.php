@@ -12,7 +12,7 @@ use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ItemTyperController;
+use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\TransactionController;
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -66,18 +66,17 @@ Route::middleware('ensure.is.admin')->group(function () {
 
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
-    Route::get('/admin/item-types', [ItemTyperController::class, 'index'])->name('item-types');
-    Route::delete('/admin/item-types/{id}', [ItemTyperController::class, 'destroy'])->name('item-types.delete');
-    Route::post('/admin/item-types', [ItemTyperController::class, 'store'])->name('item-types.add');
-    Route::put('/admin/item-types', [ItemTyperController::class, 'update'])->name('item-types.update');
+    Route::get('/admin/item-types', [ItemTypeController::class, 'index'])->name('item-types');
+    Route::delete('/admin/item-types/{id}', [ItemTypeController::class, 'destroy'])->name('item-types.delete');
+    Route::post('/admin/item-types', [ItemTypeController::class, 'store'])->name('item-types.add');
+    Route::put('/admin/item-types', [ItemTypeController::class, 'update'])->name('item-types.update');
     
     Route::get('/admin/users', function () {
         return view('pages.manage-users-admin');
     })->name('manage-users');
     
-    Route::get('/admin/feedback', function () {
-        return view('pages.feedback-admin');
-    })->name('feedback-admin');
+    Route::get('/admin/feedback', [FeedbackController::class, 'getFeedbacksAdmin'])->name('feedback-admin');
+    Route::delete('/admin/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback-admin.delete');
     
     Route::get('/admin/laundry', function () {
         return view('pages.laundry-admin');

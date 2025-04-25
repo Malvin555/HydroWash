@@ -22,6 +22,10 @@ const modules = {
         () => import("./api/show/showModalInfoItemType"),
         () => import("./api/show/showModalEditItemType"), 
     ],
+    feedback: [
+        () => import("./api/search/feedback"),
+        () => import("./api/show/showModalInfoFeedback"),
+    ],
 };
 
 document.addEventListener("DOMContentLoaded", async () => {

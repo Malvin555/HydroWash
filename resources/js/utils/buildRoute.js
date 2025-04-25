@@ -4,6 +4,7 @@ export default function buildRoute(name, params = {}) {
         cancel_order: () => `/user/cancel-order`,
         item_types_delete: (id) => `/admin/item-types/${id}`, 
         item_types_update: () => `/admin/item-types`, 
+        feedback_admin_delete: (id) => 'admin/feedback'
     };
 
     return routes[name] ? routes[name](params) : null;
