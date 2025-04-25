@@ -23,7 +23,7 @@ class FeedbackController extends Controller
         $starRating = $request->input('star_rating') ?? null;
         $order = $request->input('order') ?? 'desc';
         $search = $request->input('search') ?? '';
-        $perPage = 1;
+        $perPage = 5;
 
         if (!in_array($order, ['asc', 'desc'])) {
             $order = 'desc';
@@ -42,6 +42,7 @@ class FeedbackController extends Controller
             ->withQueryString()
             ->setPath(url(route('feedback-admin')));
 
+        $paginationHtml = null;
         if ($request->ajax() && $feedbacks->count() > 0) {
             $paginationHtml = $feedbacks->links('pagination.history-user-pagination')->toHtml();
         }

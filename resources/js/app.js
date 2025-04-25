@@ -26,6 +26,10 @@ const modules = {
         () => import("./api/search/feedback"),
         () => import("./api/show/showModalInfoFeedback"),
     ],
+    canceled: [
+        () => import("./api/search/canceled"),
+        () => import("./api/show/showModalInfoCanceled"),    
+    ],
 };
 
 document.addEventListener("DOMContentLoaded", async () => {

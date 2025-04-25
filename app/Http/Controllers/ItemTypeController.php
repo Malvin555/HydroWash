@@ -34,7 +34,7 @@ class ItemTypeController extends Controller
             ->withQueryString()
             ->setPath(url(route('item-types')));
 
-            
+        $paginationHtml = null;
         if ($request->ajax() && $itemName->count() > 0) {
             $paginationHtml = $itemType->links('pagination.history-user-pagination')->toHtml();
         }

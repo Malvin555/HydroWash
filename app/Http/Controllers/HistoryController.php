@@ -70,6 +70,7 @@ class HistoryController extends Controller
                 ->paginate($perPage)->withQueryString()->setPath(url(route('history')));
         }
 
+        $paginationHtml = null;
         if ($request->ajax()) {
             $paginationHtml = $data->links('pagination.history-user-pagination')->toHtml();
         }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ItemTypeController;
 
@@ -21,4 +22,7 @@ Route::middleware('api')->group(function () {
 
     Route::get('/admin/feedback', [FeedbackController::class, 'getFeedbacksAdmin']);
     Route::get('/admin/feedback/{id}', [FeedbackController::class, 'show']);
+
+    Route::get('/admin/canceled', [CanceledController::class, 'index']);
+    Route::get('/admin/canceled/{id}', [CanceledController::class, 'show']);
 });

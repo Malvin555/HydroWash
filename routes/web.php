@@ -92,10 +92,7 @@ Route::middleware('ensure.is.admin')->group(function () {
 
     Route::get('/admin/print', [PrintController::class, 'print'])->name('admin.print');
 
-    Route::get('/admin/canceled', function () {
-        return view('pages.canceled-admin');
-    })->name('canceled-admin');
-    
+    Route::get('/admin/canceled', [CanceledController::class, 'index'])->name('canceled-admin');
     
     Route::get('/admin/profile', function () {
         return view('pages.profile-admin');
