@@ -28,7 +28,7 @@ function renderModalInfoTransaction(response) {
                 <label class="text-sm font-bold text-primary">Detail (Completed)</label>
                 <div>
                     <img src="${data?.[serviceName]?.itemType?.image_item ? '/storage/' + data?.[serviceName]?.itemType?.image_item : ''}" alt="" class="rounded-md w-full h-75 my-4">
-                    <input type="text" disabled class="bg-secondary w-full placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" 
+                    <input type="text" disabled class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" 
                     placeholder="${data?.[serviceName]?.amount_item}pcs (${new Intl.NumberFormat('id-ID', {
                         style: 'currency',
                         currency: 'IDR',

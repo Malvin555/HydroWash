@@ -93,9 +93,10 @@ Route::middleware('ensure.is.admin')->group(function () {
 
     Route::get('/admin/canceled', [CanceledController::class, 'index'])->name('canceled-admin');
     
-    Route::get('/admin/profile', function () {
-        return view('pages.profile-admin');
-    })->name('profile-admin');
+    Route::get('/admin/profile', function () { return view('pages.profile-admin'); })->name('profile-admin');
+    Route::put('/admin/profile', [UserController::class, 'update'])->name('profile-admin');
+    Route::put('/admin/profile/password-update', [UserController::class, 'passwordUpdate'])->name('profile-admin.password.update');
+    
 });
 
 // Route::post('/clear-flash-message', function(Request $request) {

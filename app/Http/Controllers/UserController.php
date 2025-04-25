@@ -34,12 +34,12 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator->errors())->withInput();
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $user->update($inputs);
 
-        return back()->with('success', 'Profile successfully updated');
+        return redirect()->back()->with('success', 'Profile successfully updated');
     }
 
     public function passwordUpdate(Request $request)
@@ -47,7 +47,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Your password is incorrect']);
+            return redirect()->back()->withErrors(['password' => 'Your password is incorrect']);
         }
 
         $request->validate([
@@ -58,6 +58,6 @@ class UserController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        return back()->with('success', 'Password successfully updated');
+        return redirect()->back()->with('success', 'Password successfully updated');
     }
 }

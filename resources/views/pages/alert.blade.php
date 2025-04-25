@@ -1,7 +1,7 @@
 <div class="opacity-0 fixed top-0 z-50 left-1/2 -translate-x-1/2 w-max transition-all duration-500" id="alertSuccess">
     <div class="bg-green-400 text-green-800 px-4 py-3 rounded-2xl mb-4" role="alert">
         <strong class="font-bold">Success</strong>
-        <span class="block sm:inline">{{ session('success') || session('error') }}</span>
+        <span class="block sm:inline">{{ session('success') }}</span>
     </div>
 </div>
 
