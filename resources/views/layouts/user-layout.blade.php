@@ -27,7 +27,8 @@
                     </a>
                 </h1>
 
-                <a href="{{ route('history') }}" class="bg-primary rounded-sm w-15 text-center text-sm md:text-base text-white">
+                <a href="{{ route('history') }}"
+                    class="bg-primary rounded-sm w-15 text-center text-sm md:text-base text-white">
                     history
                 </a>
             </div>
@@ -44,8 +45,7 @@
     {{-- @include('pages.modal-information-user') --}}
 
     <x-landing-footer></x-landing-footer>
-
-
+    
     @include('pages.alert')
 
     @vite('resources/js/app.js')
@@ -61,5 +61,5 @@
         window.modalToShow = {{ Js::from(session('show_modal')) }};
     </script>
 </body>
-</html>
 
+</html>

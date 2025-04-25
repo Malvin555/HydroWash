@@ -22,7 +22,7 @@ class VerifyApiToken
         $hashedUserId = $request->header('X-USER-ID');
 
         if (!$token || !$hashedUserId) {
-            return response()->json(['error' => "Unauthorized"], 401);
+            return response()->json(['error' => "not_found"], 401);
         }
 
         $user = User::where('api_token', $token)->first();

@@ -20,21 +20,21 @@ class DatabaseSeeder extends Seeder
     {
         // 1. For Admin
         User::factory()->create([
-            'name' => 'Admin',
+            'name' => 'admin',
             'email' => 'admin@example.com',
             'role' => 'admin',
             'telp' => '081234567890',
             'address' => 'Jl. Admin No. 1',
             'desc' => 'Admin utama',
-            'password' => bcrypt('pass123'),
+            'password' => bcrypt('adm123'),
         ]);
 
         // 2. Users
         $users = User::factory(10)->create();
 
         // 3. Item Types
-        $itemIroning = ItemType::factory(5)->create(['role' => 'ironing']);
-        $itemLaundry = ItemType::factory(5)->create(['role' => 'laundry']);
+        $itemIroning = ItemType::factory(6)->create(['role' => 'ironing']);
+        $itemLaundry = ItemType::factory(6)->create(['role' => 'laundry']);
 
         // 4. Ironings
         $ironings = Ironing::factory(10)

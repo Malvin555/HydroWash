@@ -15,8 +15,8 @@
                 onsubmit="return confirm('Are you sure to want cancel this order?')">
                 @csrf
 
-                <input type="hidden" name="order_id" value="">
-                <input type="hidden" name="service_type" value="">
+                <input type="hidden" name="order_id" value="{{ old('order_id') }}">
+                <input type="hidden" name="service_type" value="{{ old('service_type') }}">
 
                 <div class="flex flex-col">
                     <label for="notes" class="text-sm font-bold text-primary mb-1">Issue</label>

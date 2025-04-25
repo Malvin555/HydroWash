@@ -1,17 +1,18 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CanceledController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\IroningController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\CanceledController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\PrintController;
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
@@ -99,3 +100,14 @@ Route::middleware('ensure.is.admin')->group(function () {
         return view('pages.profile-admin');
     })->name('profile-admin');
 });
+
+// Route::post('/clear-flash-message', function(Request $request) {
+//     $request->session()->forget('success');
+//     $request->session()->save();
+    
+//     return response()->json([
+//         'status' => 'success',
+//         'message' => 'Flash message cleared',
+//         'session_verified' => !$request->session()->has('success')
+//     ]);
+// })->middleware('web');

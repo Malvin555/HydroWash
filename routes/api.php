@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HistoryController;
 
 Route::middleware('api')->group(function () {
     Route::get('/user', function() {

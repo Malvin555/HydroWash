@@ -33,6 +33,7 @@ class UserFactory extends Factory
             'address' => fake()->address(),
             'desc' => fake()->optional()->sentence(),
             'password' => static::$password ??= Hash::make('password'),
+            'api_token' => null,
             'remember_token' => Str::random(10),
             'created_who' => $name,
         ];
