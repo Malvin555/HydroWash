@@ -55,9 +55,7 @@ Route::middleware('ensure.is.user')->group(function () {
     Route::get('/user/complete-added', [TransactionController::class, 'showCompletePage'])->name('complete-added');
     Route::get('/user/transaction/{slug?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');
 
-    Route::get('/user/complete-transaction', function () {
-        return view('pages.complete-transaction-user');
-    })->name('complete-transaction');
+    Route::get('/user/complete-transaction', [TransactionController::class, 'showCompleteTransaction'])->name('complete-transaction');
 
     Route::post('/user/cancel-order', [CanceledController::class, 'cancelOrder'])->name('cancel.order');
 });

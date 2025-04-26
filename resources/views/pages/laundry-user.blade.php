@@ -19,7 +19,7 @@
                                 class="cursor-pointer flex-shrink-0  transition-all duration-150 border-4 rounded-lg
                                     {{ old('type') === Str::lower($item->name_item) ? 'border-primary' : 'border-transparent' }}">
                                 <div class="bg-cover bg-center rounded-sm h-40 flex items-end w-60 relative price-box"
-                                    style="background-image: url('{{ asset('img/transaction-img.png') }}')">
+                                    style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
                                     <div
                                         class="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs font-bold px-2 py-1 rounded-sm">
                                         Rp {{ number_format($item->price_item, 2, ',', '.') }}

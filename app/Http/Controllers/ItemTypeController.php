@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemType;
+use App\Rules\UniqueItemNamePerRole;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,14 +71,10 @@ class ItemTypeController extends Controller
                 'required',
                 'string',
                 'max:255',
-                function ($attribute, $value, $fail) use ($request) {
-                    $exists = ItemType::where('name_item', $value)
-                        ->where('role', $request->input('role'))
-                        ->exists();
-                    if ($exists) {
-                        $fail('The item name has already been taken for the selected role.');
-                    }
-                },
+                new UniqueItemNamePerRole(
+                    role: $request->input('role'), 
+                    exceptedId: null
+                ),
             ],
             'role' => 'required|in:ironing,laundry',
             'image_item' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -141,15 +138,10 @@ class ItemTypeController extends Controller
                 'required',
                 'string',
                 'max:255',
-                function ($attribute, $value, $fail) use ($request) {
-                    $exists = ItemType::where('name_item', $value)
-                        ->where('role', $request->input('role'))
-                        ->where('id', '!=', $request->input('id'))
-                        ->exists();
-                    if ($exists) {
-                        $fail('The item name has already been taken for the selected role.');
-                    }
-                },
+                new UniqueItemNamePerRole(
+                    role: $request->input('role'), 
+                    exceptedId: $request->input('id')
+                ),
             ],
             'role' => 'required|in:ironing,laundry',
             'image_item' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

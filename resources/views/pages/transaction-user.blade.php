@@ -53,9 +53,6 @@
           </div>
         </div>
         
-        
-        
-
         <div class="grid grid-cols-10 gap-3 items-center mb-5">
           <div class="relative inline-block w-full">
             <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full">
