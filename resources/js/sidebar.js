@@ -74,14 +74,17 @@ if (currentPage === 'admin') {
   
   
 }
-profileBtn.addEventListener('click', function (e) {
-  e.stopPropagation();
-  profileMenu.classList.toggle('hidden');
-});
 
-
-window.addEventListener('click', function (e) {
-  if (!profileMenu.contains(e.target) && !profileBtn.contains(e.target)) {
-    profileMenu.classList.add('hidden');
-  }
-});
+if (currentPage === 'user' || currentPage === 'admin') {
+  profileBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    profileMenu.classList.toggle('hidden');
+  });
+  
+  
+  window.addEventListener('click', function (e) {
+    if (!profileMenu.contains(e.target) && !profileBtn.contains(e.target)) {
+      profileMenu.classList.add('hidden');
+    }
+  });
+}
