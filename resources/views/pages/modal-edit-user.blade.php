@@ -8,26 +8,41 @@
         <x-modal-header title="Edit Form User"></x-modal-header>
 
 
-        <div class="overflow-y-auto p-6 flex-1">
+        <div class="modal-data overflow-y-auto p-6 flex-1">
             <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Edit User</h2>
 
-            <form action="" method="" class="space-y-4">
+            <form action="{{ route('manage-users.update') }}" method="post" class="space-y-4">
+                @csrf
+                @method('PUT')
 
+                <input type="hidden" name="id" value="{{ old('id') }}">
                 <div>
                     <label for="username" class="text-sm font-bold text-primary">Username</label>
-                    <input type="text" name="username" id="username" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0">
+                    <input type="text" name="username" id="username" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" value="{{ old('username') }}">
+                    @error('username')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label for="email" class="text-sm font-bold text-primary">Email</label>
-                    <input type="email" name="email" id="email" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0">
+                    <input type="email" name="email" id="email" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" value="{{ old('email') }}">
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label for="address" class="text-sm font-bold text-primary">Address</label>
-                    <input type="text" name="address" id="address" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0">
+                    <input type="text" name="address" id="address" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" value="{{ old('address') }}">
+                    @error('address')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label for="telp" class="text-sm font-bold text-primary">Telp Number</label>
-                    <input type="text" name="telp" id="telp" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0">
+                    <input type="text" name="telp" id="telp" class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" value="{{ old('telp') }}">
+                    @error('telp')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="flex gap-2 bg-white">

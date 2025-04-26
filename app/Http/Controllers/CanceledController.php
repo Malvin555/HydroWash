@@ -90,6 +90,10 @@ class CanceledController extends Controller
             'created_who' => $order?->user->name,
         ]);
 
+        $order->update([
+            'status_report' => 'deleted'
+        ]);
+
         return redirect()->back()->with('success', 'Order canceled successfully');
     }
 }

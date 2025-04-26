@@ -26,6 +26,7 @@ document.addEventListener("click", (event) => {
  * @param {Function} callback - An asynchronous function to be executed before showing the modal.
  *                              Receives the dataset of the clicked element as its argument.
  */
+// initializeModal(null, null);
 const initializedModals = new Set();
 export default function initializeModal(key = null, callback) {
     const uniqueKey = key || "__default__";
@@ -38,15 +39,16 @@ export default function initializeModal(key = null, callback) {
         if (!button) return;
 
         const modalKey = button.getAttribute("data-modal-key");
-        if (key && modalKey !== key) return;
+        const shouldFetch = button.dataset.fetch !== "false";
+
+        // Allow modals with shouldFetch to bypass key and callback checks
+        if (shouldFetch && key && modalKey !== key) return;
 
         const modalId = button.getAttribute("data-modal-target");
         const modal = document.getElementById(modalId);
         const modalContent = modal.querySelector(".modal-content");
 
-        const shouldFetch = button.dataset.fetch !== "false";
-
-        // Execute the callback before showing the modal
+        // Execute the callback only if shouldFetch is true and a callback is provided
         if (shouldFetch && typeof callback === "function") {
             await callback(button.dataset);
         }

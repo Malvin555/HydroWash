@@ -13,6 +13,7 @@ use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemTypeController;
+use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TransactionController;
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -71,9 +72,10 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::post('/admin/item-types', [ItemTypeController::class, 'store'])->name('item-types.add');
     Route::put('/admin/item-types', [ItemTypeController::class, 'update'])->name('item-types.update');
     
-    Route::get('/admin/users', function () {
-        return view('pages.manage-users-admin');
-    })->name('manage-users');
+    Route::get('/admin/users', [ManageUserController::class, 'index'])->name('manage-users');
+    Route::post('/admin/users', [ManageUserController::class, 'store'])->name('manage-users.add');
+    Route::put('/admin/users', [ManageUserController::class, 'update'])->name('manage-users.update');
+    Route::delete('/admin/users/{id}', [ManageUserController::class, 'destroy'])->name('manage-users.delete');
     
     Route::get('/admin/feedback', [FeedbackController::class, 'getFeedbacksAdmin'])->name('feedback-admin');
     Route::delete('/admin/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback-admin.delete');
@@ -96,7 +98,7 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::get('/admin/profile', function () { return view('pages.profile-admin'); })->name('profile-admin');
     Route::put('/admin/profile', [UserController::class, 'update'])->name('profile-admin');
     Route::put('/admin/profile/password-update', [UserController::class, 'passwordUpdate'])->name('profile-admin.password.update');
-    
+
 });
 
 // Route::post('/clear-flash-message', function(Request $request) {

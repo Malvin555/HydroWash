@@ -34,6 +34,11 @@ const modules = {
         () => import("./api/search/transaction"),
         () => import("./api/show/showModalInfoTransaction"),
     ],
+    manageUser: [
+        () => import("./api/search/user"),
+        () => import("./api/show/showModalInfoUser"),
+        () => import("./api/show/showModalEditUser"),
+    ],
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
