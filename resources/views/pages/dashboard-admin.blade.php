@@ -43,7 +43,7 @@
     </div>
 
 
-<div class="flex flex-col lg:flex-row gap-6 lg:h-[600px]">
+<div class="flex flex-col lg:flex-row gap-6">
 
     <!-- Left Column (Recent Services) -->
     <div class="w-full lg:w-2/3 flex flex-col">
