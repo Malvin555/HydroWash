@@ -26,9 +26,9 @@
 
                 <ul id="menu"
                     class="absolute top-[100%] left-0 h-screen w-[70%] bg-primary text-white font-bold transform -translate-x-full transition-transform duration-300 md:static md:translate-x-0 md:flex md:gap-6 md:bg-transparent md:h-auto md:w-auto md:items-center">
-                    <li class="p-4 border-b md:p-0 md:border-none"><a href="#">HOME</a></li>
-                    <li class="p-4 border-b md:p-0 md:border-none"><a href="#services">SERVICE</a></li>
-                    <li class="p-4 md:p-0 md:border-none"><a href="#review">REVIEW</a></li>
+                    <li class="p-4 border-b md:p-0 md:border-none"><a class="nav__link border-b-2 border-white" href="#">HOME</a></li>
+                    <li class="p-4 border-b md:p-0 md:border-none"><a class="nav__link" href="#services">SERVICE</a></li>
+                    <li class="p-4 md:p-0 md:border-none"><a class="nav__link" href="#review">REVIEW</a></li>
                     <a href="{{ route('login') }}"
                         class="bg-btn w-20 text-center ml-4 p-2 rounded-lg text-primary font-bold block md:hidden">Log
                         in</a>
@@ -51,7 +51,7 @@
 
 
     {{-- home section --}}
-    <section class="h-screen relative bg-cover bg-center pt-24" style="background-image: url('{{ asset('img/main-img.png') }}');">
+    <section class="h-screen relative bg-cover bg-center pt-24" style="background-image: url('{{ asset('img/main-img.png') }}');" id="home">
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
 
         <div  class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%] flex items-center z-50 relative">
