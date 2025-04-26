@@ -57,9 +57,21 @@
         
 
         <div class="grid grid-cols-10 gap-3 items-center mb-5">
-          <div class="col-span-1 h-14">
-            <img src="{{ asset('img/visa.png') }}" alt="visa" class="w-full h-full object-contain">
-          </div>
+          <div class="relative inline-block w-full">
+            <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full">
+                <option value="" disabled selected>Card</option>
+                <option value="Visa">Visa</option>
+                <option value="DLL">DLL</option>
+            </select>
+
+            <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20">
+                    <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
+                </svg>
+            </div>
+        </div>
         
           <div class="col-span-6">
             <input type="text" id="card-number" name="card-number" placeholder="Card Number"
