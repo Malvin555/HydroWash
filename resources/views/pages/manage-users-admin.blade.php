@@ -54,7 +54,7 @@
         @if (!$users->isEmpty())
             @foreach ($users as $index => $user)
                 <div
-                    class="bg-primary text-white w-full rounded-sm flex flex-col justify-center py-3 px-2 items-center">
+                    class="bg-primary shadow-sm text-white w-full rounded-sm flex flex-col justify-center py-3 px-2 items-center">
                     <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-25 h-25">
                     <h1 class="text-2xl mb-4">{{ $user->name }}</h1>
                     <p class="text-sm text-white/50">Joined At</p>
