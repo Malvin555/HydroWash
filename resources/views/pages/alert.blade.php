@@ -18,6 +18,7 @@
         {!! session('success') ? '"alertSuccess"' : '"alertError"' !!}
     );
 
+    // Show the alert
     setTimeout(() => {
         alertBox.classList.remove('opacity-0', 'top-0');
         alertBox.classList.add('opacity-100', 'top-20');
@@ -27,5 +28,21 @@
         alertBox.classList.remove('opacity-100', 'top-20');
         alertBox.classList.add('opacity-0', 'top-0');
     }, 3000);
+
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            if (alertBox) {
+                alertBox.remove();
+            }
+        }
+    });
+
+    window.addEventListener("beforeunload", function () {
+        if (alertBox) {
+            alertBox.remove();
+        }
+    });
 </script>
+
 @endif
+
