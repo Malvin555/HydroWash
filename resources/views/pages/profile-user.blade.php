@@ -119,7 +119,7 @@
             </div>
 
         </div>
-
+  
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
-    </section>
+      </section>
 </x-user-layout>

@@ -5,13 +5,17 @@ import "./slider";
 import "./sidebar";
 import "./star-rating";
 import "./modal";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
-/**
- * An object containing module definitions for dynamic imports.
- * Each module is responsible for fetching data and re-rendering the appropriate view
- * to ensure smooth operation without errors.
- *
- **/
+document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+        duration: 400,
+        easing: 'ease-in-out',
+    });
+})
+
+
 const modules = {
     historyUser: [
         () => import("./api/search/historyUser"),

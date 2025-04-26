@@ -6,21 +6,23 @@
       <h1 class="text-center text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)] mb-15">Transaction {{ $transaction?->name_ironing ?? $transaction?->name_laundry }}</h1>
 
       <form action="" method="">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-5 ">
-          <div class="col-span-1 flex justify-center">
-            <img src="{{ asset('img/transaction-img.png') }}" alt="transaction" class="object-contain md:w-full h-full">
+        <div class="grid grid-cols-1 gap-2 mb-5 ">
+          <div class=" bg-secondary rounded-sm flex justify-center w-full h-50 max-h-50">
+            <img src="{{ asset('img/bedding.png') }}" alt="transaction" class="w-full h-full">
           </div>
 
-          <div class="col-span-2 h-full md:flex md:flex-col md:justify-between">
-            <div class="mb-3">
-              <label for="address-taking" class="text-sm font-bold">Address Taking : </label>
-              <input type="text" disabled id="address-taking" value="Jln dauh kangin" name="address-taking" class="w-full p-2 bg-secondary rounded-sm text-primary/50 h-full">
+          <div class="h-full">
+            <div class="grid grid-cols-2 gap-2 mb-10">
+              <div>
+                <label for="address-taking" class="text-sm font-bold">Address Taking : </label>
+                <input type="text" disabled id="address-taking" value="Jln dauh kangin" name="address-taking" class="w-full p-2 bg-secondary rounded-sm text-primary/50 h-full">
+              </div>
+              <div>
+                <label for="address-taking" class="text-sm font-bold">Address Delivery :</label>
+                <input type="text" disabled id="address-taking" value="Jln dauh kangin" name="address-taking" class="w-full p-2 bg-secondary rounded-sm text-primary/50 h-full">
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="address-taking" class="text-sm font-bold">Address Delivery :</label>
-              <input type="text" disabled id="address-taking" value="Jln dauh kangin" name="address-taking" class="w-full p-2 bg-secondary rounded-sm text-primary/50 h-full">
-            </div>
-            <div class="flex gap-2">
+            <div class="grid grid-cols-2 gap-2">
               <input type="text" disabled value="Amount item" id="amount-item" name="amount-item" class="w-full bg-secondary p-2 rounded-sm text-primary h-full">
               <input type="text" disabled value="Take away" id="take-away" name="take-away" class="w-full bg-secondary p-2 rounded-sm text-primary h-full">
             </div>
@@ -53,10 +55,13 @@
           </div>
         </div>
         
-        <div class="grid grid-cols-10 gap-3 items-center mb-5">
-          <div class="relative inline-block w-full">
+        
+        
+
+        <div class="grid grid-cols-14 md:grid-cols-10 gap-3 items-center mb-5">
+          <div class="col-span-4 md:col-span-1 relative inline-block w-full">
             <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full">
-                <option value="" disabled selected>Card</option>
+                <option value="" disabled selected class="">Card</option>
                 <option value="Visa">Visa</option>
                 <option value="DLL">DLL</option>
             </select>
@@ -70,12 +75,12 @@
             </div>
         </div>
         
-          <div class="col-span-6">
+          <div class="col-span-6 md:col-span-7">
             <input type="text" id="card-number" name="card-number" placeholder="Card Number"
               class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
           </div>
         
-          <div class="col-span-3">
+          <div class="col-span-4 md:col-span-2">
             <input type="text" id="postal-code" name="postal-code" placeholder="Postal code"
               class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
           </div>
