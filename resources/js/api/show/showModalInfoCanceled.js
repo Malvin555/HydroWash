@@ -18,7 +18,7 @@ function renderModalInfoCanceled(response) {
     if (!data) return;
 
     modalContent.innerHTML = `
-        <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Canceled [02]</h2>
+        <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Canceled [${data?.id}]</h2>
 
         <form action="" method="" class="space-y-4">
 

@@ -79,8 +79,7 @@ php artisan serve
 | Role  | Email             | Password  |
 |-------|-------------------|-----------|
 | Admin | admin@hydro.com   | admin123  |
-| Staff | staff@hydro.com   | staff123  |
-| User  | user@hydro.com    | user123   |
+| User  | user@hydro.com    | usr123   |
 
 > ⚠️ **Important:** Please update the default credentials after your first login for security.
 
