@@ -11,7 +11,7 @@
                 @csrf
 
                 <input type="hidden" name="service-type"
-                    value="{{ $transaction?->name_ironing ?? $transaction?->name_laundry }}">
+                    value="{{ $transaction?->name_ironing ?? $transaction?->name_laundry ?? old('service-type') }}">
                 <div class="grid grid-cols-1 gap-2 mb-5 ">
                     <div class=" bg-secondary rounded-sm flex justify-center w-full h-50 max-h-50">
                         <img src="{{ Storage::url($transaction->item_type?->image_item) ?? asset('img/bedding.png') }}"
@@ -24,7 +24,7 @@
                                 <div>
                                     <label for="address-taking" class="text-sm font-bold">Address Taking : </label>
                                     <input type="text" disabled id="address-taking"
-                                        value="{{ $transaction->address_taking }}" name="address-taking"
+                                        value="{{ $transaction->address_taking ?? old('address-taking') }}" name="address-taking"
                                         class="w-full p-2 bg-secondary rounded-sm text-primary h-full">
                                     @error('address-taking')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -33,7 +33,7 @@
                                 <div>
                                     <label for="address-taking" class="text-sm font-bold">Address Delivery :</label>
                                     <input type="text" disabled id="address-delivery"
-                                        value="{{ $transaction->address_delivery }}" name="address-delivery"
+                                        value="{{ $transaction->address_delivery ?? old('address-delivery') }}" name="address-delivery"
                                         class="w-full p-2 bg-secondary rounded-sm text-primary h-full">
                                     @error('address-delivery')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -44,17 +44,17 @@
                         <div class="grid grid-cols-2 gap-2">
                             <input type="text" disabled id="amount-item" name="amount-item"
                                 class="w-full bg-secondary p-2 rounded-sm text-primary h-full"
-                                value="{{ $transaction->amount_item }}">
+                                value="{{ $transaction->amount_item ?? old('amount-item') }}">
                             <input type="text" disabled id="retrieval-method" name="retrieval_method"
                                 class="w-full bg-secondary p-2 rounded-sm text-primary h-full"
-                                value="{{ $transaction->retrieval_method }}">
+                                value="{{ $transaction->retrieval_method ?? old('retrieval-method') }}">
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <input type="radio" name="payment-method" value="debit" id="debit" class="peer hidden" />
+                        <input type="radio" name="payment-method" value="debit" id="debit" class="peer hidden" @checked(old('payment-method') == 'debit') />
                         <label for="debit"
                             class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
                             <h1 class="md:text-lg lg:text-xl text-center">Debit</h1>
@@ -66,7 +66,7 @@
                     </div>
 
                     <div>
-                        <input type="radio" name="payment-method" value="cash" id="cash" class="peer hidden" />
+                        <input type="radio" name="payment-method" value="cash" id="cash" class="peer hidden" @checked(old('payment-method') == 'cash') />
                         <label for="cash"
                             class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
                             <h1 class="md:text-lg lg:text-xl text-center">Cash</h1>
@@ -85,7 +85,7 @@
                     <div class="col-span-4 md:col-span-1 relative inline-block w-full">
                         <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full"
                             name="bank-name">
-                            <option value="" disabled selected>Card</option>
+                            <option value="card" @selected(old('card') == 'card')>Card</option>
                             <option value="visa" @selected(old('card') == 'visa')>Visa</option>
                             <option value="dll" @selected(old('card') == 'dll')>DLL</option>
                         </select>
@@ -104,7 +104,7 @@
 
                     <div class="col-span-6 md:col-span-7">
                         <input type="text" id="card-number" name="card-number" placeholder="Card Number"
-                            class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
+                            class="text-primary bg-secondary w-full p-2 rounded-sm outline-0" value="{{ old('card-number') }}">
                         @error('card-number')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -112,7 +112,7 @@
 
                     <div class="col-span-4 md:col-span-2">
                         <input type="text" id="postal-code" name="postal-code" placeholder="Postal code"
-                            class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
+                            class="text-primary bg-secondary w-full p-2 rounded-sm outline-0" value="{{ old('postal-code') }}">
                         @error('postal-code')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
