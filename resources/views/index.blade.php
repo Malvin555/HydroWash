@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
 
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     @vite('resources/css/app.css')
 </head>
 
@@ -52,21 +54,19 @@
     <section class="h-screen bg-cover bg-center pt-24" style="background-image: url('{{ asset('img/main-img.png') }}');">
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
 
-        <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%] flex items-center z-50 relative">
-            <div class="text-center md:text-left space-y-6 md:max-w-[55%] lg:max-w-[65%]"
-                data-aos="fade-right" data-aos-duration="800" data-aos-once="false">
-                <h1 class="text-white text-3xl md:text-6xl lg:text-8xl font-bold leading-tight"
-                    data-aos="fade-down" data-aos-delay="100" data-aos-duration="1000">
+        <div  class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%] flex items-center z-50 relative">
+            <div data-aos="zoom-in" data-aos-duration="600" class="text-center md:text-left space-y-6 md:max-w-[55%] lg:max-w-[65%]">
+                <h1  class="text-white text-3xl md:text-6xl lg:text-8xl font-bold leading-tight"
+                    >
                     The best web for your laundry
                 </h1>
-                <p class="text-white text-lg md:text-2xl lg:text-4xl"
-                    data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
+                <p class="text-white text-lg md:text-2xl lg:text-4xl">
                     Welcome to HydroWash Service, where we
                     transform your laundry day into a breeze!
                 </p>
-                <a href="{{ route('register') }}"
+                <a  href="{{ route('register') }}"
                     class="inline-block bg-btn text-center text-primary font-bold py-2 px-6 rounded-full shadow-md transition duration-300 hover:bg-gray-200"
-                    data-aos="" data-aos-delay="500" data-aos-duration="800">
+                    >
                     Start Cleaning
                 </a>
             </div>
@@ -83,17 +83,17 @@
 
         <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%]">
             <div class="w-full mb-15 md:mb-35 flex flex-col gap-5 md:flex-row md:justify-between md:items-center pt-24">
-                <h1 data-aos="fade-up"
+                <h1 data-aos="fade-right"
                     class="font-bold text-xl md:text-2xl lg:text-4xl md:w-[50%] drop-shadow-[0_5px_1px_rgba(0,0,0,0.2)]">
                     your trusted partner in achieving pristine.</h1>
-                <p class="text-sm lg:text-base md:w-[50%]">Established with the mission to simplify your life and
+                <p data-aos="fade-left" class="text-sm lg:text-base md:w-[50%]">Established with the mission to simplify your life and
                     elevate your laundry experience, we bring a blend of modern technology and eco-friendly practices.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-25 lg:mb-35 md:justify-center">
                 <div class="w-full px-4">
-                    <div class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
+                    <div data-aos="fade-left" class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
                         <div class="bg-btn w-12 h-12 rounded-sm flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-6 h-6 fill-primary">
                                 <path
@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="w-full px-4">
-                    <div class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
+                    <div data-aos="fade-left" data-aos-delay="100" class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
                         <div class="bg-btn w-12 h-12 rounded-sm flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-primary">
                                 <path
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="w-full px-4">
-                    <div class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
+                    <div data-aos="fade-left" data-aos-delay="200" class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
                         <div class="bg-btn w-12 h-12 rounded-sm flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-6 h-6 fill-primary">
                                 <path
@@ -142,7 +142,7 @@
 
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-15">
-                <div class="w-full px-4">
+                <div data-aos="fade-right" data-aos-delay="300" class="w-full px-4">
                     <div class="border-b-2 pb-4 lg:border-b-0 mb-10">
                         <h1 class="text-6xl mb-3 font-bold">90%</h1>
                         <p class="text-base">Of our customers enjoy the time-saving convenience of our reliable pickup
@@ -152,7 +152,7 @@
                     </div>
                 </div>
 
-                <div class="w-full px-4">
+                <div data-aos="fade-right" data-aos-delay="200" class="w-full px-4">
                     <div class="border-b-2 pb-4 lg:border-b-0 lg:border-l-3 lg:pl-4 mb-10">
                         <h1 class="text-6xl mb-3 font-bold">99%</h1>
                         <p class="text-base">Customer satisfaction rate with our expert dry cleaning service, perfect
@@ -162,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="w-full px-4">
+                <div data-aos="fade-right" data-aos-delay="100" class="w-full px-4">
                     <div class="border-b-2 pb-4 md:border-b-0 lg:border-l-3 lg:pl-4 mb-10">
                         <h1 class="text-6xl mb-3 font-bold">100%</h1>
                         <p class="text-base">Of our detergents and cleaning agents are eco-friendly, ensuring safe and
@@ -171,7 +171,7 @@
                     </div>
                 </div>
 
-                <div class="w-full px-4">
+                <div data-aos="fade-right" class="w-full px-4">
                     <div class="pb-4 lg:border-l-3 lg:pl-4 mb-10">
                         <h1 class="text-6xl mb-3 font-bold">20%</h1>
                         <p class="text-base">Lower prices on average compared to other premium laundry services,
@@ -185,13 +185,13 @@
 
             <div class="flex flex-wrap gap-2 lg:gap-0 justify-center lg:justify-between">
                 <div class="flex flex-col justify-center lg:w-[40%]">
-                    <div class="mb-6 md:mb-8">
+                    <div data-aos="fade-down" class="mb-6 md:mb-8">
                         <h1 class="font-bold text-3xl md:text-4xl mb-1">Why Choose Us?</h1>
                         <p>Experience the ultimate in convenience and quality with Bubbles Laundry Services Wash & Fold.
                         </p>
                     </div>
 
-                    <div class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-10">
+                    <div data-aos="fade-right" data-aos-delay="100" class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-10">
                         <div
                             class="w-10 h-10 rounded-full bg-btn absolute top-1.5 left-1 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5 fill-primary">
@@ -205,7 +205,7 @@
                             laundry.</p>
                     </div>
 
-                    <div class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-10">
+                    <div data-aos="fade-right" data-aos-delay="200" class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-10">
                         <div
                             class="w-10 h-10 rounded-full bg-btn absolute top-1.5 left-1 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-5 h-5 fill-primary">
@@ -220,7 +220,7 @@
                             they look and feel their best.</p>
                     </div>
 
-                    <div class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-12">
+                    <div data-aos="fade-right" data-aos-delay="300" class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-12">
                         <div
                             class="w-10 h-10 rounded-full bg-btn absolute top-1.5 left-1 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5 fill-primary">
@@ -236,14 +236,14 @@
                     </div>
 
                     <div class="w-full flex justify-center mb-12">
-                        <a href="{{ route('register') }}"
+                        <a data-aos="fade-up" data-aos-delay="300" href="{{ route('register') }}"
                             class="inline-block w-3xs bg-btn text-center border-1 text-primary font-bold py-2 px-6  rounded-full shadow-md transition duration-300 hover:bg-gray-200">
                             Start Cleaning
                         </a>
                     </div>
                 </div>
 
-                <div class="lg:w-[60%] flex justify-center">
+                <div data-aos="zoom-in" data-aos-delay="400" class="lg:w-[60%] flex justify-center">
                     <img src="{{ asset('img/service-img.png') }}" alt="service" class="">
                 </div>
             </div>
@@ -261,12 +261,12 @@
     <section class="h-screen pt-25 bg-primary relative" id="review">
         <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%]">
             <div class="w-full flex justify-end mb-5 md:mb-20">
-                <div class="w-35 md:w-75 bg-white py-3 rounded">
+                <div data-aos="fade-left" class="w-35 md:w-75 bg-white py-3 rounded">
                     <h1 class="text-center text-primary text-sm md:text-2xl">What our clients say</h1>
                 </div>
             </div>
 
-            <div class="w-full relative">
+            <div data-aos="zoom-in" class="w-full relative">
                 <div class="absolute left-[-3rem] top-1/2 z-10">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 text-white cursor-pointer"
@@ -322,14 +322,14 @@
 
 
         <div class="relative z-10 max-w-3xl space-y-6">
-            <h1 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 data-aos="fade-up" class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 Ready to Experience <br class="hidden sm:block" /> the Fresh & Clean Difference?
             </h1>
-            <p class="text-white text-base sm:text-lg md:text-xl lg:text-2xl px-2">
+            <p data-aos="fade-up" class="text-white text-base sm:text-lg md:text-xl lg:text-2xl px-2">
                 Take the hassle out of laundry day and enjoy pristine, professionally cleaned clothes with Bubbles
                 Laundry Services.
             </p>
-            <a href="{{ route('register') }}"
+            <a data-aos="zoom-in" data-aos-delay="100" href="{{ route('register') }}"
                 class="inline-block bg-btn text-primary font-bold py-3 px-8 rounded-full shadow-md transition duration-300 hover:bg-gray-200">
                 Start Cleaning
             </a>
@@ -344,8 +344,22 @@
     {{-- footer --}}
     <x-landing-footer></x-landing-footer>
 
+    {{-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> --}}
 
     @vite('resources/js/app.js')
 </body>
+
+
+<script>
+    if (localStorage.getItem('api_token')) {
+        localStorage.removeItem('api_token');
+    }
+
+    if (localStorage.getItem('ref_id')) {
+        localStorage.removeItem('ref_id');
+    }
+</script>
+
+
 
 </html>

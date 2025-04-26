@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ItemType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,15 +17,28 @@ class ItemTypeFactory extends Factory
      */
     public function definition(): array
     {
-        $role = $this->faker->randomElement(['laundry', 'ironing']);
+        $items = [
+            ['name' => 'Clothing', 'price_laundry' => 12000, 'price_ironing' => 8000],
+            ['name' => 'Towels', 'price_laundry' => 10000, 'price_ironing' => 6000],
+            ['name' => 'Bedding', 'price_laundry' => 22000, 'price_ironing' => 15000],
+            ['name' => 'Accessories', 'price_laundry' => 4000, 'price_ironing' => 3000],
+            ['name' => 'Curtains', 'price_laundry' => 10000, 'price_ironing' => 7000],
+            ['name' => 'Blankets', 'price_laundry' => 8000, 'price_ironing' => 5000],
+        ];
+
+        static $index = 0;
+
+        if ($index >= count($items)) {
+            $index = 0; // Reset index if it exceeds the array length
+        }
+
+        $item = $items[$index];
+        $index++;
 
         return [
-            'name_item' => $this->faker->words(2, true),
-            'price_item' => $role === 'laundry' ?
-                $this->faker->randomFloat(2, 7000, 25000) : 
-                $this->faker->randomFloat(2, 3000, 10000),
-            'image_item' => $this->faker->optional()->imageUrl(640, 480, 'clothes', true, 'Laundry'),
-            'role' => $role,
+            'name_item' => $item['name'],
+            'price_item' => fn (array $attributes) => $attributes['role'] === 'laundry' ? $item['price_laundry'] : $item['price_ironing'],
+            'image_item' => null,
             'created_who' => 'admin'
         ];
     }

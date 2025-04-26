@@ -38,7 +38,7 @@ class IroningController extends Controller
         $ironing = Ironing::create([
             'user_id' => Auth::id(),
             'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'ironing')->first()?->id,
-            'name_ironing' => Str::generateRandomString(),
+            'name_ironing' => Str::generateRandomString('Ironing'),
             'price_ironing' => Str::rupiahToFloat($data['price-total']),
             'amount_item' => $data['amount'],
             'estimation' => null,

@@ -82,6 +82,15 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            $user->api_token = bin2hex(openssl_random_pseudo_bytes(30));
+            $user->save();
+            
+            session()->put('api_token', $user->api_token);
+            session()->put('user_id', Hash::make($user->id));
+
             return redirect()->route($this->isAdminAuthenticated($request) ? 'admin' : 'home');
         }
 
@@ -92,7 +101,15 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $isAdmin = $this->isAdminAuthenticated(Auth::user());
+        $user = Auth::user();
+        $user->api_token = null;
+        $user->save();
+
+        session()->forget('api_token');
+        session()->forget('user_id');
+
+        $isAdmin = $this->isAdminAuthenticated($user);
+        
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

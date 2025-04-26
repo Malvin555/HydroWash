@@ -8,7 +8,7 @@
         <x-modal-header title="Pay Transaction"></x-modal-header>
 
 
-        <div class="overflow-y-auto p-6 flex-1">
+        <div class="modal-data overflow-y-auto p-6 flex-1">
             <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Pay Laundry #244</h2>
 
             <form action="" method="" class="space-y-4">

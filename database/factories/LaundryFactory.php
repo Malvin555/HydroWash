@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\ItemType;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -33,7 +34,7 @@ class LaundryFactory extends Factory
         return [
             'user_id' => $user->id,
             'item_id' => $item->id,
-            'name_laundry' => $item->name_item,
+            'name_laundry' => Str::generateRandomString('Laundry'),
             'price_laundry' => $totalPrice,
             'amount_item' => $amount,
             'estimation' => $this->faker->dateTimeBetween('now', '+5 days')?->format('Y-m-d'),

@@ -2,9 +2,9 @@
     <div class="relative" id="profileDropdown">
         <button class="flex gap-1 items-center cursor-pointer focus:outline-none">
             <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
-                {{ Str::substr(Auth::user()->name, 0, 2) }}
+                {{ Str::substr(Auth::user()?->name, 0, 2) }}
             </div>
-            <h1 class="text-sm text-white md:text-base">{{ Auth::user()->name ?? 'user' }}</h1>
+            <h1 class="text-sm text-white md:text-base">{{ Auth::user()?->name ?? 'user' }}</h1>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 512 512">
                 <path
                     d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />

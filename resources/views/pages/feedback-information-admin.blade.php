@@ -8,17 +8,17 @@
         <x-modal-header title="Feedback Information"></x-modal-header>
 
 
-        <div class="overflow-y-auto p-6 flex-1">
+        <div class="modal-data overflow-y-auto p-6 flex-1">
             <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Feedback #41</h2>
 
-            <form action="" method="" class="space-y-4">
+            <div class="space-y-4">
 
                 <x-modal-profile></x-modal-profile>
 
                 <div class="flex flex-col space-y-4">
                     <label class="text-sm font-bold text-primary mb-1">Giving Comment</label>
-                    <div class="bg-secondary flex flex-col justify-center items-center placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">
-                        <div class="flex gap-1">
+                    <div class="bg-secondary flex flex-col justify-start items-start placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">
+                        <div class="flex gap-1 mb-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
                                                 class="w-3 h-3 md:w-5 md:h-5 text-yellow-500 cursor-pointer">
                                                 <path fill="currentColor"
@@ -52,7 +52,7 @@
                 <div class=" bg-white">
                     <x-close-modal-btn></x-close-modal-btn>
                 </div>
-            </form>
+            </div>
         </div>
 
         

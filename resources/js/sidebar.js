@@ -44,7 +44,9 @@ if (currentPage === 'admin') {
 
     if (isDropdownOpen) {
       analyticsDropdown.classList.remove('hidden');
-      analyticsArrow.classList.add('rotate-180');
+
+      // Add the rotate-180 class to the arrow - remove make it more clear :D
+      // analyticsArrow.classList.add('rotate-180');
     }
   });
 
@@ -58,18 +60,20 @@ if (currentPage === 'admin') {
     localStorage.setItem('analyticsDropdownOpen', isHidden ? 'true' : 'false');
   });
 
-  window.addEventListener('click', function (e) {
-    if (
-      !analyticsDropdown.classList.contains('hidden') &&
-      !analyticsDropdown.contains(e.target) &&
-      !toggleDropdownBtn.contains(e.target)
-    ) {
-      analyticsDropdown.classList.add('hidden');
-      analyticsArrow.classList.remove('rotate-180');
+  // close dropdown when clicking outside ;M
 
-      localStorage.setItem('analyticsDropdownOpen', 'false');
-    }
-  });
+  // window.addEventListener('click', function (e) {
+  //   if (
+  //     !analyticsDropdown.classList.contains('hidden') &&
+  //     !analyticsDropdown.contains(e.target) &&
+  //     !toggleDropdownBtn.contains(e.target)
+  //   ) {
+  //     analyticsDropdown.classList.add('hidden');
+  //     analyticsArrow.classList.remove('rotate-180');
+
+  //     localStorage.setItem('analyticsDropdownOpen', 'true');
+  //   }
+  // });
 
   
   

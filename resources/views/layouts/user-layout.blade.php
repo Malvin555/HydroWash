@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>HydroWash</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
@@ -26,7 +27,8 @@
                     </a>
                 </h1>
 
-                <a href="{{ route('history') }}" class="bg-primary rounded-sm w-15 text-center text-sm md:text-base text-white">
+                <a href="{{ route('history') }}"
+                    class="bg-primary rounded-sm w-15 text-center text-sm md:text-base text-white">
                     history
                 </a>
             </div>
@@ -43,11 +45,21 @@
     {{-- @include('pages.modal-information-user') --}}
 
     <x-landing-footer></x-landing-footer>
-
-
+    
     @include('pages.alert')
 
     @vite('resources/js/app.js')
-</body>
-</html>
 
+    {{-- 
+        This script is used to handle the scenario where a form input fails validation, 
+        and a modal needs to be displayed again. The `show_modal` session variable 
+        contains the ID of the modal that should be shown. The `Js::from` helper 
+        is used to safely pass the modal ID from the server-side session to the 
+        client-side JavaScript.
+    --}}
+    <script>
+        window.modalToShow = {{ Js::from(session('show_modal')) }};
+    </script>
+</body>
+
+</html>

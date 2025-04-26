@@ -48,4 +48,9 @@
 
     <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
   </section>
+
+  <script>
+    localStorage.setItem('api_token', {{ Js::from(session("api_token")) }});
+    localStorage.setItem('ref_id', {{ Js::from(session("user_id")) }});
+  </script>
 </x-user-layout>
