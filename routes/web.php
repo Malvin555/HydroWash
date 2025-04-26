@@ -54,6 +54,7 @@ Route::middleware('ensure.is.user')->group(function () {
     
     Route::get('/user/complete-added', [TransactionController::class, 'showCompletePage'])->name('complete-added');
     Route::get('/user/transaction/{slug?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');
+    Route::post('/user/transaction', [TransactionController::class, 'store'])->name('transaction.add');
 
     Route::get('/user/complete-transaction', [TransactionController::class, 'showCompleteTransaction'])->name('complete-transaction');
 

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    amountInput.addEventListener("input", function () {
+    amountInput?.addEventListener("input", function () {
         setPriceTotal();
     });
 
@@ -36,19 +36,19 @@ document.addEventListener("DOMContentLoaded", function () {
         priceTotalInput.value = `Rp ${amount.toLocaleString("id-ID")}`;
     }
 
-    retrivalMethodInput.addEventListener("change", function () {
+    retrivalMethodInput?.addEventListener("change", function () {
         toggleDeliveryAddressBox();
     });
 
     toggleDeliveryAddressBox();
 
     function toggleDeliveryAddressBox() {
-        if (retrivalMethodInput.value === "delivery") {
-            deliveryAddressBox.classList.add("flex");
-            deliveryAddressBox.classList.remove("hidden");
+        if (retrivalMethodInput?.value === "delivery") {
+            deliveryAddressBox?.classList.add("flex");
+            deliveryAddressBox?.classList.remove("hidden");
         } else {
-            deliveryAddressBox.classList.add("hidden");
-            deliveryAddressBox.classList.remove("flex");
+            deliveryAddressBox?.classList.add("hidden");
+            deliveryAddressBox?.classList.remove("flex");
         }
     }
 });

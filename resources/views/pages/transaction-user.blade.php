@@ -1,96 +1,149 @@
 <x-user-layout>
     {{-- transaction --}}
-  <section class="h-full relative py-24">
+    <section class="h-full relative py-24">
 
-    <div class="px-[5%]">
-      <h1 class="text-center text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)] mb-15">Transaction {{ $transaction?->name_ironing ?? $transaction?->name_laundry }}</h1>
+        <div class="px-[5%]">
+            <h1
+                class="text-center text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)] mb-15">
+                Transaction {{ $transaction?->name_ironing ?? $transaction?->name_laundry }}</h1>
 
-      <form action="" method="">
-        <div class="grid grid-cols-1 gap-2 mb-5 ">
-          <div class=" bg-secondary rounded-sm flex justify-center w-full h-50 max-h-50">
-            <img src="{{ asset('img/bedding.png') }}" alt="transaction" class="w-full h-full">
-          </div>
+            <form action="{{ route('transaction.add') }}" method="post">
+                @csrf
 
-          <div class="h-full">
-            <div class="grid grid-cols-2 gap-2 mb-10">
-              <div>
-                <label for="address-taking" class="text-sm font-bold">Address Taking : </label>
-                <input type="text" disabled id="address-taking" value="Jln dauh kangin" name="address-taking" class="w-full p-2 bg-secondary rounded-sm text-primary/50 h-full">
-              </div>
-              <div>
-                <label for="address-taking" class="text-sm font-bold">Address Delivery :</label>
-                <input type="text" disabled id="address-taking" value="Jln dauh kangin" name="address-taking" class="w-full p-2 bg-secondary rounded-sm text-primary/50 h-full">
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <input type="text" disabled value="Amount item" id="amount-item" name="amount-item" class="w-full bg-secondary p-2 rounded-sm text-primary h-full">
-              <input type="text" disabled value="Take away" id="take-away" name="take-away" class="w-full bg-secondary p-2 rounded-sm text-primary h-full">
-            </div>
-          </div>
-        </div>
+                <input type="hidden" name="service-type"
+                    value="{{ $transaction?->name_ironing ?? $transaction?->name_laundry }}">
+                <div class="grid grid-cols-1 gap-2 mb-5 ">
+                    <div class=" bg-secondary rounded-sm flex justify-center w-full h-50 max-h-50">
+                        <img src="{{ Storage::url($transaction->item_type?->image_item) ?? asset('img/bedding.png') }}"
+                            alt="transaction" class="w-full h-full">
+                    </div>
 
-        <div class="grid grid-cols-2 gap-3 mb-5">
-          <div>
-            <input type="radio" name="payment_method" value="debit" id="debit" class="peer hidden" />
-            <label for="debit"
-              class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
-              <h1 class="md:text-lg lg:text-xl text-center">Debit</h1>
-              <div class="flex flex-col items-center p-2">
-                <img src="{{ asset('img/debit.svg') }}" alt="debit"
-                  class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40" />
-              </div>
-            </label>
-          </div>
-        
-          <div>
-            <input type="radio" name="payment_method" value="cash" id="cash" class="peer hidden" />
-            <label for="cash"
-              class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
-              <h1 class="md:text-lg lg:text-xl text-center">Cash</h1>
-              <div class="flex flex-col items-center p-2">
-                <img src="{{ asset('img/cash.svg') }}" alt="cash"
-                  class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40" />
-              </div>
-            </label>
-          </div>
-        </div>
-        
-        
-        
+                    <div class="h-full">
+                        @if ($transaction->retrieval_method === 'delivery')
+                            <div class="grid grid-cols-2 gap-2 mb-10">
+                                <div>
+                                    <label for="address-taking" class="text-sm font-bold">Address Taking : </label>
+                                    <input type="text" disabled id="address-taking"
+                                        value="{{ $transaction->address_taking }}" name="address-taking"
+                                        class="w-full p-2 bg-secondary rounded-sm text-primary h-full">
+                                    @error('address-taking')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="address-taking" class="text-sm font-bold">Address Delivery :</label>
+                                    <input type="text" disabled id="address-delivery"
+                                        value="{{ $transaction->address_delivery }}" name="address-delivery"
+                                        class="w-full p-2 bg-secondary rounded-sm text-primary h-full">
+                                    @error('address-delivery')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endif
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" disabled id="amount-item" name="amount-item"
+                                class="w-full bg-secondary p-2 rounded-sm text-primary h-full"
+                                value="{{ $transaction->amount_item }}">
+                            <input type="text" disabled id="retrieval-method" name="retrieval_method"
+                                class="w-full bg-secondary p-2 rounded-sm text-primary h-full"
+                                value="{{ $transaction->retrieval_method }}">
+                        </div>
+                    </div>
+                </div>
 
-        <div class="grid grid-cols-14 md:grid-cols-10 gap-3 items-center mb-5">
-          <div class="col-span-4 md:col-span-1 relative inline-block w-full">
-            <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full">
-                <option value="" disabled selected class="">Card</option>
-                <option value="Visa">Visa</option>
-                <option value="DLL">DLL</option>
-            </select>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <input type="radio" name="payment-method" value="debit" id="debit" class="peer hidden" />
+                        <label for="debit"
+                            class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+                            <h1 class="md:text-lg lg:text-xl text-center">Debit</h1>
+                            <div class="flex flex-col items-center p-2">
+                                <img src="{{ asset('img/debit.svg') }}" alt="debit"
+                                    class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40" />
+                            </div>
+                        </label>
+                    </div>
+
+                    <div>
+                        <input type="radio" name="payment-method" value="cash" id="cash" class="peer hidden" />
+                        <label for="cash"
+                            class="block peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary p-2 rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+                            <h1 class="md:text-lg lg:text-xl text-center">Cash</h1>
+                            <div class="flex flex-col items-center p-2">
+                                <img src="{{ asset('img/cash.svg') }}" alt="cash"
+                                    class="w-20 h-20 md:w-30 md:h-30 lg:w-40 lg:h-40" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                @error('payment-method')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+
+                <div class="grid grid-cols-14 md:grid-cols-10 gap-3 items-center mt-5" id="debitBox">
+                    <div class="col-span-4 md:col-span-1 relative inline-block w-full">
+                        <select class="appearance-none bg-secondary font-bold rounded-sm py-2 pl-3 w-full"
+                            name="bank-name">
+                            <option value="" disabled selected>Card</option>
+                            <option value="visa" @selected(old('card') == 'visa')>Visa</option>
+                            <option value="dll" @selected(old('card') == 'dll')>DLL</option>
+                        </select>
+                        @error('bank-name')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20">
+                                <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="col-span-6 md:col-span-7">
+                        <input type="text" id="card-number" name="card-number" placeholder="Card Number"
+                            class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
+                        @error('card-number')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="col-span-4 md:col-span-2">
+                        <input type="text" id="postal-code" name="postal-code" placeholder="Postal code"
+                            class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
+                        @error('postal-code')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <button type="submit" class="mt-5 w-full bg-primary rounded-sm cursor-pointer text-white py-2">Pay ( Rp
+                    {{ number_format($transaction->price_ironing ?? $transaction->price_laundry, 2, ',', '.') }}
+                    )</button>
+            </form>
 
             <div
-                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20">
-                    <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
-                </svg>
+                class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-0 pointer-events-none">
             </div>
         </div>
-        
-          <div class="col-span-6 md:col-span-7">
-            <input type="text" id="card-number" name="card-number" placeholder="Card Number"
-              class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
-          </div>
-        
-          <div class="col-span-4 md:col-span-2">
-            <input type="text" id="postal-code" name="postal-code" placeholder="Postal code"
-              class="text-primary bg-secondary w-full p-2 rounded-sm outline-0">
-          </div>
-        </div>
-        
-        <button type="submit" class="w-full bg-primary rounded-sm cursor-pointer text-white py-2">Pay ( Rp 12.000.0000000000.00 )</button>
-      </form>
 
-      <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-0 pointer-events-none"></div>
-    </div>
+    </section>
+    <script>
+        const paymentMethod = document.querySelectorAll('input[name="payment_method"]');
 
-  </section>
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('input[name="payment-method"]')) {
+                const paymentMethod = e.target.closest('input[name="payment-method"]');
+                if (paymentMethod.value === 'cash') {
+                    debitBox.classList.remove('grid');
+                    debitBox.classList.add('hidden');
+                } else {
+                    debitBox.classList.remove('hidden');
+                    debitBox.classList.add('grid');
+                }
+            }
+        })
+    </script>
 </x-user-layout>

@@ -128,32 +128,38 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'service_type' => ['required', new ExistsInIroningsOrLaundries()],
-            'method' => 'required|in:cash,debit',
-            'bank_name' => 'required_if:method,debit|string',
-            'card_number' => 'required_if:method,debit|string',
-            'postal_code' => 'required_if:method,debit|string',
+            'service-type' => ['required', new ExistsInIroningsOrLaundries()],
+            'payment-method' => 'required|in:cash,debit',
+            'bank-name' => 'required_if:payment-method,debit',
+            'card-number' => 'required_if:payment-method,debit',
+            'postal-code' => 'required_if:payment-method,debit',
+        ], [
+            'bank-name.required_if' => 'Bank name is required',
+            'card-number.required_if' => 'Card number is required',
+            'postal-code.required_if' => 'Postal code is required',
         ]);
 
-        if (str_starts_with(strtolower($request->service_type), 'ironing')) {
-            $model = Ironing::where('name_ironing', $request->service_type)->first();
+        $serviceName = str_starts_with(strtolower($request->input('service-type')), 'ironing') ? 'ironing' : 'laundry';
+        
+        if ($serviceName === 'ironing') {
+            $model = Ironing::where('name_ironing', $request->input('service-type'))->first();
         } else {
-            $model = Laundry::where('name_laundry', $request->service_type)->first();
+            $model = Laundry::where('name_laundry', $request->input('service-type'))->first();
         }
 
         $price_transaction =  $model?->price_ironing ?? $model?->price_laundry;
-        $decimalPrice = number_format($price_transaction, 0, ',', '.');
+        $decimalPrice = number_format($price_transaction, 2, ',', '.');
 
         $transaction = Transaction::create([
             'user_id' => Auth::user()->id,
-            'ironing_id' => $model?->id ?? null,
-            'laundry_id' => $model?->id ?? null,
-            'method' => $request->method,
-            'price_transaction' => $decimalPrice,
+            'ironing_id' => $serviceName === 'ironing' ? $model?->id ?? null : null,
+            'laundry_id' => $serviceName === 'laundry' ? $model?->id ?? null : null,
+            'method' => $request->input('payment-method'),
+            'price_transaction' => $price_transaction,
             'user_transaction' => 'Rp ' . $decimalPrice,
-            'card_number' => $request->card_number,
-            'postal_code' => $request->postal_code,
-            'bank_name' => $request->bank_name,
+            'card_number' => $request->input('card-number'),
+            'postal_code' => $request->input('postal-code'),
+            'bank_name' => $request->input('bank-name'),
             'created_who' => Auth::user()->name,
         ]);
 
