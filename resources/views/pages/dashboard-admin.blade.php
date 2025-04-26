@@ -43,10 +43,10 @@
     </div>
 
 
-<div class="flex flex-col lg:flex-row gap-6 lg:h-[600px]">
+<div class="flex flex-col lg:flex-row gap-6">
 
     <!-- Left Column (Recent Services) -->
-    <div class="w-full lg:w-2/3 flex flex-col">
+    <div class="w-full lg:w-3/3 flex flex-col">
         <div class="h-full flex flex-col bg-white rounded-sm shadow-lg overflow-hidden">
             <!-- Header -->
             <div class="bg-primary px-4 py-3">
