@@ -45,15 +45,12 @@
 
 <div class="flex flex-col lg:flex-row gap-6">
 
-    <!-- Left Column (Recent Services) -->
     <div class="w-full lg:w-2/3 flex flex-col">
         <div class="h-full flex flex-col bg-white rounded-sm shadow-lg overflow-hidden">
-            <!-- Header -->
             <div class="bg-primary px-4 py-3">
                 <h2 class="text-white text-lg font-semibold">Recent Services</h2>
             </div>
 
-            <!-- Table Wrapper -->
             <div class="flex-1 overflow-x-auto">
                 <div class="min-w-full inline-block align-middle">
                     <div class="overflow-hidden rounded-sm">
@@ -102,15 +99,12 @@
         </div>
     </div>
 
-    <!-- Right Column (Recent Users) -->
     <div class="w-full lg:w-1/3 flex flex-col">
         <div class="h-full flex flex-col bg-white rounded-sm shadow-lg overflow-hidden">
-            <!-- Header -->
             <div class="bg-primary px-4 py-3">
                 <h2 class="text-white text-lg font-semibold">Recent Users</h2>
             </div>
 
-            <!-- Scrollable Content -->
             <div class="flex-1 overflow-y-auto p-4">
                 @if ($recentUsers)
                     @foreach ($recentUsers as $user)
