@@ -44,7 +44,7 @@
 
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <div class="bg-primary px-2 rounded-sm shadow-md mb-6 col-span-2">
+        <div class="bg-primary px-2 rounded-sm shadow-md md:col-span-2 mb-6">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y bg-primary divide-gray-200 rounded-sm">
                     <thead class="bg-primary">
@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <div class="col-span-1">
+        <div class="lg:col-span-1">
             <div class="bg-primary w-full rounded-t-sm px-5 py-2">
                 <h1 class="text-white text-xl">Recent Users</h1>
             </div>

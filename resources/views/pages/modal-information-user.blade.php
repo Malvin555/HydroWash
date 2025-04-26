@@ -1,12 +1,12 @@
 <!-- Modal -->
 <div id="modalInformationUser"
-    class="modal fixed inset-0 hidden flex items-center justify-center z-50 transition-opacity duration-300 opacity-0">
+    class="modal fixed inset-0 hidden flex items-center justify-center z-50 transition-opacity duration-300 opacity-0 bg-black/30">
     
     <div class="modal-content bg-white rounded-md w-full max-w-md mx-4 shadow-xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col overflow-hidden">
         
         <x-modal-header title="Laundry #22872"></x-modal-header>
 
-        <div class="modal-data w-full max-w-md mx-4 transform scale-95 transition-transform duration-300 flex flex-col overflow-hidden">
+        <div class="modal-data w-full max-w-md transform scale-95 transition-transform duration-300 flex flex-col overflow-hidden">
 
             <div class="overflow-y-auto p-6 space-y-4 flex-1">
                 <h2 class="text-xl font-medium text-center text-primary tracking-wide">Laundry Information</h2>

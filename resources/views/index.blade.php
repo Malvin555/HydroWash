@@ -51,7 +51,7 @@
 
 
     {{-- home section --}}
-    <section class="h-screen bg-cover bg-center pt-24" style="background-image: url('{{ asset('img/main-img.png') }}');">
+    <section class="h-screen relative bg-cover bg-center pt-24" style="background-image: url('{{ asset('img/main-img.png') }}');">
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
 
         <div  class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%] flex items-center z-50 relative">
@@ -78,7 +78,7 @@
 
 
     {{-- services section --}}
-    <section class="h-full  relative pb-13" id="services">
+    <section class="h-full relative pb-13" id="services">
         <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary to-transparent z-10"></div>
 
         <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%]">
@@ -259,7 +259,7 @@
 
     {{-- review section --}}
     <section class="h-screen pt-25 bg-primary relative" id="review">
-        <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%]">
+        <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%">
             <div class="w-full flex justify-end mb-5 md:mb-20">
                 <div data-aos="fade-left" class="w-35 md:w-75 bg-white py-3 rounded">
                     <h1 class="text-center text-primary text-sm md:text-2xl">What our clients say</h1>
