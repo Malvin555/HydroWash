@@ -20,7 +20,7 @@ class ExistsInIroningsOrLaundries implements ValidationRule
         $existsInLaundries = Laundry::where('name_laundry', $value)->exists();
 
         if (!$existsInIronings && !$existsInLaundries) {
-            $fail('The service type does not exist in ironings or laundries.');
+            $fail('The transaction type is invalid.');
         }
     }
 }

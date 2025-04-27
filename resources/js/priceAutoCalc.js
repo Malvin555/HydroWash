@@ -1,3 +1,5 @@
+import { formatCurrency } from "./utils/formatter";
+
 document.addEventListener("DOMContentLoaded", function () {
     let price = 0;
     const amountInput = document.querySelector('input[name="amount"]');
@@ -14,10 +16,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const elemInputs = document.querySelectorAll('input[name="type"]');
             elemInputs.forEach(elem => {
-                elem.closest("label").style.border = "4px solid transparent";
+                if (elem.closest('label')) {
+                    elem.closest("label").style.border = "4px solid transparent";
+                }
             });
 
-            e.target.closest('input[name="type"]').closest("label").style.border = "4px solid #00879E";
+            if (e.target.closest('input[name="type"]').closest('label')) {
+                e.target.closest('input[name="type"]').closest("label").style.border =
+                    "4px solid #00879E";
+            }
 
             setPriceTotal();
         }
@@ -33,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             amount = 0;
         }
 
-        priceTotalInput.value = `Rp ${amount.toLocaleString("id-ID")}`;
+        priceTotalInput.value = formatCurrency(amount);
     }
 
     retrivalMethodInput?.addEventListener("change", function () {

@@ -63,7 +63,7 @@ function renderFeedbackList(data) {
                                     d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24l0 112c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-112c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
                             </svg>
                         </button>
-                        <form action="${buildRoute('feedback_admin_delete'), item?.id}" method="POST"
+                        <form action="${buildRoute('feedback_admin_delete', item?.id)}" method="POST"
                             onsubmit="return confirm('Are you sure to want delete this?')">
                             <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
                             <input type="hidden" name="_method" value="DELETE">

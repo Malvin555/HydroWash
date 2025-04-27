@@ -11,7 +11,7 @@
         <button class="bg-primary text-white p-2 rounded-sm cursor-pointer">
             <a href="{{ route('admin.print', [
                 'type' => 'transaction',
-                'search' => request()->query('search'),
+                'search' => request('search'),
                 'time' => request('time'),
             ]) }}"
                 target="_blank" id="printLink">
@@ -109,7 +109,11 @@
         document.getElementById('search').addEventListener('input', function() {
             const search = this.value;
             document.getElementById('printLink').href = 
-            '{!! route("admin.print", ["type" => "transaction", "search" => "SEARCH", "time" => request("time")]) !!}'
+            `{!! route("admin.print", [
+                    "type" => "transaction", 
+                    "search" => "SEARCH", 
+                    "time" => request("time")
+            ]) !!}`
             .replace('SEARCH', encodeURIComponent(search));
         });
     </script>

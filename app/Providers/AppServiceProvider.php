@@ -30,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
          * @return float The converted float value.
          */
         Str::macro('rupiahToFloat', function (string $value): float {
+            $value = str_replace("\u{A0}", ' ', $value);
             // Remove the 'Rp' prefix and any spaces or dots following it.
             $cleanedValue = preg_replace('/^Rp[\s\.]?/', '', $value);
 

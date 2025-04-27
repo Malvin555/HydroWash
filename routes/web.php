@@ -83,12 +83,14 @@ Route::middleware('ensure.is.admin')->group(function () {
         return view('pages.laundry-admin');
     })->name('laundry-admin');
 
-    Route::get('/admin/ironing', function () {
-        return view('pages.ironing-admin');
-    })->name('ironing-admin');
+    Route::get('/admin/ironing', [IroningController::class, 'index'])->name('ironing-admin');
+    Route::post('/admin/ironing', [IroningController::class, 'store'])->name('ironing-admin.add');
+    Route::put('/admin/ironing', [IroningController::class, 'update'])->name('ironing-admin.update');
+    Route::delete('/admin/ironing/{id}', [IroningController::class, 'destroy'])->name('ironing-admin.delete');
     
     Route::get('/admin/transaction', [TransactionController::class, 'index'])->name('transaction-admin');
     Route::delete('/admin/transaction/{id}', [TransactionController::class, 'destroy'])->name('transaction-admin.delete');
+    Route::post('/admin/transaction', [TransactionController::class, 'store'])->name('transaction-admin.add');
 
     Route::get('/admin/print', [PrintController::class, 'print'])->name('admin.print');
 

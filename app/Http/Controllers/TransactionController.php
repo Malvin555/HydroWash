@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Ironing;
 use App\Models\Laundry;
 use App\Models\Transaction;
-use App\Rules\ExistsInIroningsOrLaundries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\ExistsInIroningsOrLaundries;
 
 class TransactionController extends Controller
 {
@@ -96,7 +97,7 @@ class TransactionController extends Controller
         return view('pages.complete-transaction-user');
     }
 
-    public function showTransactionForm($slug = null)
+    public function showTransactionForm(Request $request, $slug = null)
     {
         $parts = explode('-', $slug);
         $prefix = ucfirst($parts[0]);
@@ -122,22 +123,42 @@ class TransactionController extends Controller
 
         $transaction = $ironing ?? $laundry;
 
+        if ($request->ajax()) {
+            return response()->json([
+                "status" => "success",
+                "message" => "Transaction retrieved successfully",
+                "data" => $transaction,
+            ], 200);
+        }
+
         return view('pages.transaction-user', compact('transaction'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $isRequestAdmin = $request->routeIs('transaction-admin.add');
+
+        $validator = Validator::make($request->all(), [
             'service-type' => ['required', new ExistsInIroningsOrLaundries()],
             'payment-method' => 'required|in:cash,debit',
             'bank-name' => 'required_if:payment-method,debit',
             'card-number' => 'required_if:payment-method,debit',
             'postal-code' => 'required_if:payment-method,debit',
         ], [
-            'bank-name.required_if' => 'Bank name is required',
+            'bank-name.required_if' => 'Payment name is required.',
             'card-number.required_if' => 'Card number is required',
             'postal-code.required_if' => 'Postal code is required',
         ]);
+
+        if ($validator->fails()) {
+            $redirect = redirect()->back()->withErrors($validator->errors())->withInput();
+
+            if ($isRequestAdmin) {
+            $redirect = $redirect->with('show_modal', 'modalTransaction');
+            }
+
+            return $redirect;
+        }
 
         $serviceName = str_starts_with(strtolower($request->input('service-type')), 'ironing') ? 'ironing' : 'laundry';
         
@@ -169,6 +190,10 @@ class TransactionController extends Controller
                 'status_transaction' => 'completed',
                 'status' => 'process'
             ]);
+        }
+
+        if ($isRequestAdmin) {
+            return redirect()->back()->with('success', 'Transaction added successfully');
         }
 
         return redirect()->route('complete-transaction')

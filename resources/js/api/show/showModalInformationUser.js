@@ -1,6 +1,7 @@
 import initializeModal from "../../modal";
 import buildRoute from "../../utils/buildRoute";
 import fetchDetailToModal from "./fetchDetailToModal";
+import { strSlug } from "../../utils/string";
 
 initializeModal('showModalInformationUser', async ({ id, type }) => {
     await fetchDetailToModal({
@@ -116,13 +117,4 @@ function renderModalInformationUser(response) {
         modalCancelService.querySelector('input[name="service_type"]').value =
             response?.serviceType;
     }
-}
-
-function strSlug(text) {
-    return text
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-");
 }

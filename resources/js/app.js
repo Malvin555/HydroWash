@@ -43,6 +43,12 @@ const modules = {
         () => import("./api/show/showModalInfoUser"),
         () => import("./api/show/showModalEditUser"),
     ],
+    ironing: [
+        () => import("./api/search/ironing"),
+        () => import("./api/show/showModalTransactionIroning"),
+        () => import("./api/show/showModalInfoIroning"),
+        () => import("./api/show/showModalEditIroning"),
+    ]
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
