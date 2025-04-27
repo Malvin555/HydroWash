@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     amountInput?.addEventListener("input", function () {
+        const elemInputs = document.querySelectorAll('input[name="type"]');
+        elemInputs.forEach(elem => {
+            if (elem.checked) {
+                price = elem.dataset.price;
+            }
+        });
         setPriceTotal();
     });
 

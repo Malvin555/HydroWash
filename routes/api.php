@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\IroningController;
+use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\CanceledController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ItemTypeController;
@@ -39,5 +40,9 @@ Route::middleware('api')->group(function () {
     Route::get('/admin/ironing', [IroningController::class, 'index']);
     Route::get('/admin/ironing/{id}', [IroningController::class, 'show']);
     Route::get('/admin/ironing/edit/{id}', [IroningController::class, 'edit']);
-    Route::get('/admin/ironing/transaction/{slug?}', [TransactionController::class, 'showTransactionForm']);
+    Route::get('/admin/service/transaction/{slug?}', [TransactionController::class, 'showTransactionForm']);
+
+    Route::get('/admin/laundry',[LaundryController::class, 'index']);
+    Route::get('/admin/laundry/{id}', [LaundryController::class, 'show']);
+    Route::get('/admin/laundry/edit/{id}', [LaundryController::class, 'edit']);
 });

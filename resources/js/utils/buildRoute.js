@@ -10,6 +10,8 @@ export default function buildRoute(name, params = {}) {
         manage_users_update: () => `/admin/users`,
         ironing_delete: (id) => `/admin/ironing/${id}`,
         ironing_admin_update: () => `/admin/ironing`,
+        laundry_delete: (id) => `/admin/laundry/${id}`,
+        laundry_admin_update: () => `/admin/laundry`,
     };
 
     return routes[name] ? routes[name](params) : null;

@@ -79,9 +79,10 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::get('/admin/feedback', [FeedbackController::class, 'getFeedbacksAdmin'])->name('feedback-admin');
     Route::delete('/admin/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback-admin.delete');
     
-    Route::get('/admin/laundry', function () {
-        return view('pages.laundry-admin');
-    })->name('laundry-admin');
+    Route::get('/admin/laundry',[LaundryController::class, 'index'])->name('laundry-admin');
+    Route::post('/admin/laundry',[LaundryController::class, 'store'])->name('laundry-admin.add');
+    Route::put('/admin/laundry', [LaundryController::class, 'update'])->name('laundry-admin.update');
+    Route::delete('/admin/laundry/{id}', [LaundryController::class, 'destroy'])->name('laundry-admin.delete');
 
     Route::get('/admin/ironing', [IroningController::class, 'index'])->name('ironing-admin');
     Route::post('/admin/ironing', [IroningController::class, 'store'])->name('ironing-admin.add');

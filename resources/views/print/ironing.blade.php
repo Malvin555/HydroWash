@@ -89,7 +89,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($data['ironings'] as $index => $item)
+            @forelse ($data['items'] as $index => $item)
                 <tr>
                     <td>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $item->name_ironing }}</td>

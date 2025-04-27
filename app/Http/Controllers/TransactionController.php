@@ -106,15 +106,16 @@ class TransactionController extends Controller
 
         $ironing = Ironing::with('itemType')
             ->where('name_ironing', $name)
-            ->where('status_transaction', 'uncompleted')
+            ->whereDoesntHave('transaction')
             ->first();
-        $laundry = null;
 
-        if (!$ironing) {
-            $laundry = Laundry::with('itemType')
-                ->where('name_laundry', $name)
-                ->where('status_transaction', 'uncompleted')
-                ->first();
+        $laundry = Laundry::with('itemType')
+            ->where('name_laundry', $name)
+            ->whereDoesntHave('transaction')
+            ->first();
+
+        if (!$ironing && !$laundry) {
+            abort(404, 'Transaction not found. Please ensure the name format matches the database records.');
         }
 
         if (!$ironing && !$laundry) {

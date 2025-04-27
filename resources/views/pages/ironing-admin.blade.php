@@ -121,11 +121,12 @@
                                 ])>{{ Str::ucfirst($iron->status) }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                @if ($iron->status_transaction === 'uncompleted')
+                                {{-- @if ($iron->status_transaction === 'uncompleted') --}}
+                                @if ($iron->transaction->isEmpty())
                                     <button 
                                         data-modal-target="modalTransaction" 
                                         data-slug="{{ $iron->name_ironing }}"
-                                        data-modal-key="showModalTransactionIroning" class="cursor-pointer mr-3">
+                                        data-modal-key="showModalTransaction" class="cursor-pointer mr-3">
                                         <img src="{{ asset('img/cash.svg') }}" alt="cash" class="w-5 h-5">
                                     </button>
                                 @endif

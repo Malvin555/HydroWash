@@ -4,16 +4,16 @@ import buildRoute from "../../utils/buildRoute";
 import { ucFirst } from "../../utils/string";
 import { formatCurrency, formatDate } from "../../utils/formatter";
 
-initializeModal('showModalEditIroning', async ({ id }) => {
+initializeModal('showModalEditLaundry', async ({ id }) => {
     await fetchDetailToModal({
         id: id,
-        url: "/admin/ironing/edit",
-        renderFn: renderModalEditIroning,
+        url: "/admin/laundry/edit",
+        renderFn: renderModalEditLaundry,
     });
 });
 
-function renderModalEditIroning(response) {
-    const modal = document.getElementById("modalEditIroning");
+function renderModalEditLaundry(response) {
+    const modal = document.getElementById("modalEditLaundry");
     const data = response.data;
 
     if (!data) {
@@ -23,9 +23,9 @@ function renderModalEditIroning(response) {
     const modalContent = modal.querySelector(".modal-data");
 
     modalContent.innerHTML = `
-        <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">${data?.name_ironing}</h2>
+        <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">${data?.name_laundry}</h2>
 
-    <form action="${buildRoute('ironing_admin_update')}" method="post" class="space-y-4">
+    <form action="${buildRoute('laundry_admin_update')}" method="post" class="space-y-4">
             <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="id" value="${data?.id}">
@@ -46,9 +46,9 @@ function renderModalEditIroning(response) {
                             placeholder="Enter amount item" value="${data?.amount_item}"
                             oninput="updatePriceTotal(this.value)">
 
-                        <input type="text" name="price-total" id="price-total-ironing-edit" readonly
+                        <input type="text" name="price-total" id="price-total-laundry-edit" readonly
                             class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0"
-                            placeholder="Rp 0.00" value="${formatCurrency(data?.price_ironing)}">
+                            placeholder="Rp 0.00" value="${formatCurrency(data?.price_laundry)}">
 
                         <input type="text" name="status-transaction" id="status-transaction" disabled readonly
                             class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0"
@@ -106,13 +106,13 @@ function renderModalEditIroning(response) {
             <div class="flex flex-col">
                 <label for="notes" class="text-sm font-bold text-primary mb-1">Notes</label>
                 <textarea name="notes" id="note" placeholder="Enter notes"
-                    class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">${data?.notes_ironing ?? ''}</textarea>
+                    class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">${data?.notes_laundry ?? ''}</textarea>
             </div>
 
             <div class="relative inline-block w-full">
                 <select name="status" id="status"
                     class="appearance-none bg-secondary font-bold rounded-sm text-primary py-2 pl-3 w-full outline-0">
-                    <option value="" selected disabled>Ironing status</option>
+                    <option value="" selected disabled>Laundry status</option>
                     <option value="pending" class="text-primary"  ${data?.status === 'pending' ? 'selected' : ''}>Pending</option>
                     <option value="process" class="text-primary"  ${data?.status === 'process' ? 'selected' : ''}>Process</option>
                     <option value="completed" class="text-primary"  ${data?.status === 'completed' ? 'selected' : ''}>Completed</option>
@@ -161,6 +161,6 @@ window.toggleAddressFields = function (method) {
 
 window.updatePriceTotal = function (value) {
     const priceItem = document.getElementById('price-item').dataset.price ?? 0;
-    const priceTotalInput = document.getElementById('price-total-ironing-edit');
+    const priceTotalInput = document.getElementById('price-total-laundry-edit');
     priceTotalInput.value = formatCurrency(value * priceItem);
 }

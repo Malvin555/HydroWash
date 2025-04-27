@@ -58,7 +58,6 @@ trait HandleServiceValidation
             'address' => 'required_if:retrieval-method,delivery',
             'destination' => 'required_if:retrieval-method,delivery',
             'note' => 'nullable',
-            'status-transaction' => $id ? 'required|in:completed,uncompleted' : 'sometimes|nullable',
             'status' => $id ? 'required|in:pending,process,completed' : 'sometimes|nullable',
             'estimation' => $id ? 'nullable|date' : 'sometimes|nullable',
         ]);

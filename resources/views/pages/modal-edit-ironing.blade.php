@@ -51,27 +51,8 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
 
-                            <div class="relative inline-block w-full">
-                                <select name="status-transaction" id="status-transaction"
-                                    class="appearance-none bg-secondary font-bold rounded-sm text-primary py-2 pl-3 w-full outline-0">
-                                    <option value="" selected disabled>Transaction status</option>
-                                    <option value="uncompleted" class="text-primary" @selected(old('status-transaction') === 'uncompleted')>
-                                        Uncompleted</option>
-                                    <option value="completed" class="text-primary" @selected(old('status-transaction') === 'completed')>
-                                        Completed</option>
-                                </select>
-
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20">
-                                        <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            @error('status-transaction')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            <input type="text" name="status-transaction" id="status-transaction" disabled readonly
+                                class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0">
                         </div>
                     </div>
                 </div>

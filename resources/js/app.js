@@ -45,10 +45,16 @@ const modules = {
     ],
     ironing: [
         () => import("./api/search/ironing"),
-        () => import("./api/show/showModalTransactionIroning"),
+        () => import("./api/show/showModalTransaction"),
         () => import("./api/show/showModalInfoIroning"),
         () => import("./api/show/showModalEditIroning"),
-    ]
+    ],
+    laundry: [
+        () => import("./api/search/laundry"),
+        () => import("./api/show/showModalTransaction"),
+        () => import("./api/show/showModalInfoLaundry"),
+        () => import("./api/show/showModalEditLaundry"),
+    ],
 };
 
 document.addEventListener("DOMContentLoaded", async () => {

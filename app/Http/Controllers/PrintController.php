@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Mpdf\Mpdf;
+use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\IroningController;
+use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\TransactionController;
-use Carbon\Carbon;
 
 class PrintController extends Controller
 {
@@ -21,11 +22,12 @@ class PrintController extends Controller
         
         switch ($type) {
             case 'laundry':
-                $view = 'print.laundry'; 
+                $view = 'print.laundry';
+                $data = $this->getDataToPrint(LaundryController::class, 'getDataLaundry', $search, $status, $order);
                 break;
             case 'ironing':
                 $view = 'print.ironing';
-                $data = $this->getDataIroningToPrint($search, $status, $order);
+                $data = $this->getDataToPrint(IroningController::class, 'getDataIroning', $search, $status, $order);
                 break;
             case 'transaction':
                 $view = 'print.transaction'; 
@@ -42,10 +44,10 @@ class PrintController extends Controller
         return $mpdf->Output('laporan-' . $type . '.pdf', 'I');
     }
 
-    public function getDataIroningToPrint($search, $status, $order)
+    public function getDataToPrint($controller, $method, $search, $status = null, $order = null)
     {
-        $ironing = (new IroningController)->getDataIroning($search, $status, $order);
-        $dates = $ironing->pluck('created_at');
+        $dataCollection = (new $controller)->$method($search, $status, $order);
+        $dates = $dataCollection->pluck('created_at');
         $minDate = $dates->min();
         $maxDate = $dates->max();
         $time = '-';
@@ -58,7 +60,7 @@ class PrintController extends Controller
         }
 
         $data = [
-            'ironings' => $ironing->get(),
+            'items' => $dataCollection->get(),
             'time' => $time,
         ];
 
