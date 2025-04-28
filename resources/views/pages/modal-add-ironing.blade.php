@@ -92,9 +92,7 @@
                                 <option value="take_away" class="text-primary" @selected(old('retrieval-method') === 'take_away')>Take Away
                                 </option>
                             </select>
-                            @error('retrieval-method')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            
 
                             <div
                                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -104,6 +102,12 @@
                                 </svg>
                             </div>
                         </div>
+
+                        @error('retrieval-method')
+                            <div class="w-full col-span-2">
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            </div>
+                        @enderror
                     </div>
                 </div>
 
