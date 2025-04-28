@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
+use function PHPUnit\Framework\isNull;
+
 class AuthController extends Controller
 {
     public function showRegister(): View 
@@ -78,20 +80,38 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'name' => 'required|string|max:255',
             'password' => 'required|string',
-        ]); 
+        ]);
+
+        $user = User::where('name', $request->name)->first();
+
+        if ($user && $user->api_token) {
+            return back()->withErrors([
+                'name' => 'This account is already logged in on another device.',
+            ])->onlyInput('name');
+        }
+
+        if ($user && !Hash::check($request->password, $user->password)) {
+            return back()->withErrors([
+                'password' => 'The provided password is incorrect.',
+            ])->onlyInput('password');
+        }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $user = User::find(Auth::id());
+            $isAdmin = $this->isAdminAuthenticated($user);
 
-            $user = Auth::user();
-
-            $user->api_token = $this->isAdminAuthenticated($request) ? 'KFydnOH6U+vkQwN/Ss/C/uoUDVNGGDzC5ejikUhYs' : bin2hex(openssl_random_pseudo_bytes(30));
+            if ($isAdmin) {
+                $user->api_token = 'KFydnOH6U+vkQwN/Ss/C/uoUDVNGGDzC5ejikUhYs';
+            } else {
+                $user->api_token = bin2hex(openssl_random_pseudo_bytes(30));
+            }
             $user->save();
-            
+
             session()->put('api_token', $user->api_token);
             session()->put('user_id', Hash::make($user->id));
 
-            return redirect()->route($this->isAdminAuthenticated($request) ? 'admin' : 'home');
+            return redirect()->route($isAdmin ? 'admin' : 'home');
         }
 
         return back()->withErrors([
@@ -118,12 +138,10 @@ class AuthController extends Controller
 
     public function isAdminAuthenticated($request)
     {
-        if ($request?->name === 'Admin' && ($request?->password === 'pass123' || Hash::check('pass123', $request?->password))) {
-            // session(['logged_as_admin' => true]);
+        if (strtolower($request?->name) === 'admin' && ($request?->password === 'admin123' || Hash::check('admin123', $request?->password))) {
+            session()->put('admin_logged_in', true);
             return true;
         }
-
-        // session(['logged_as_user' => true]);
         return false;
     }
 }

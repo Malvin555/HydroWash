@@ -16,10 +16,25 @@ class EnsureIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->role !== 'admin') {
+                return redirect('/user');
+            }
+
+            $sessionApiToken = session('api_token');
+            if (!$sessionApiToken || $sessionApiToken !== $user->api_token) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return redirect()->route('login')->with('error', 'You are not authorized to access this page.');
+            }
+
             return $next($request);
         }
 
-        return redirect('/user');
+        return redirect('/login');
     }
 }

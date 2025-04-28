@@ -67,7 +67,15 @@ trait HandleServiceValidation
             return $this->handleFailedValidation($validator->errors());
         }
 
-        return $validator->validated();
+        $validatedData = $validator->validated();
+
+        // Merge price_total with a new price if retrieval_method is delivery
+        if ($validatedData['retrieval-method'] === 'delivery') {
+            $newPrice = 20000;
+            $validatedData['price-total'] += $newPrice;
+        }
+
+        return $validatedData;
     }
 
     protected function handleFailedValidation($validator): RedirectResponse
