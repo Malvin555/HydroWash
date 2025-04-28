@@ -16,7 +16,7 @@ class TransactionController extends Controller
     {
         $time = $request->input('time') ?? '';
         $search = $request->input('search') ?? '';
-        $perPage = 5;
+        $perPage = 10;
 
         // Force page to 1 if it's an AJAX request
         if ($request->ajax()) {

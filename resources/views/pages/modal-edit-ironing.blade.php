@@ -148,7 +148,29 @@
                     @enderror
                 </div>
 
-                <div class=" flex gap-2 bg-white">
+                <div class="relative inline-block w-full mb-0">
+                    <div>
+                        <label for="status-report" class="text-sm font-bold text-primary mb-1">Status Report</label>
+                        <select name="status-report" id="status-report"
+                            class="appearance-none bg-secondary font-bold rounded-sm text-primary py-2 pl-3 w-full outline-0">
+                            <option value="" selected disabled class="text-primary">Choose status</option>
+                            <option value="normal" class="text-primary" @selected(old('status-report') == 'normal')>Normal</option>
+                            <option value="deleted" class="text-primary" @selected(old('status-report') == 'deleted')>Deleted</option>
+                        </select>
+                    </div>
+
+                    <div class="pointer-events-none absolute bottom-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20">
+                            <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
+                        </svg>
+                    </div>
+                </div>
+                @error('status-report')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+
+                <div class=" flex gap-2 bg-white mt-3">
                     <x-close-modal-btn></x-close-modal-btn>
                     <x-submit-modal-btn text="Save"></x-submit-modal-btn>
                 </div>

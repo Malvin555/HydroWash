@@ -25,7 +25,7 @@ function renderModalEditIroning(response) {
     modalContent.innerHTML = `
         <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">${data?.name_ironing}</h2>
 
-    <form action="${buildRoute('ironing_admin_update')}" method="post" class="space-y-4">
+        <form action="${buildRoute('ironing_admin_update')}" method="post" class="space-y-4">
             <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="id" value="${data?.id}">
@@ -133,7 +133,26 @@ function renderModalEditIroning(response) {
                     placeholder="Enter estimation" value="${data?.estimation ?? ''}">
             </div>
 
-            <div class=" flex gap-2 bg-white">
+            <div class="relative inline-block w-full mb-0">
+                <div>
+                    <label for="status-report" class="text-sm font-bold text-primary mb-1">Status Report</label>
+                    <select name="status-report" id="status-report"
+                    class="appearance-none bg-secondary font-bold rounded-sm text-primary py-2 pl-3 w-full outline-0">
+                    <option value="" selected disabled class="text-primary">Choose status</option>
+                    <option value="normal" class="text-primary" ${data?.status_report === 'normal' ? 'selected' : ''}>Normal</option>
+                    <option value="deleted" class="text-primary" ${data?.status_report === 'deleted' ? 'selected' : ''}>Deleted</option>
+                    </select>
+                </div>
+
+                <div class="pointer-events-none absolute bottom-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class=" flex gap-2 bg-white mt-3">
                 <div
                     data-close-button
                     class="flex justify-center items-center w-full px-4 py-2 rounded-md bg-primary text-white font-medium cursor-pointer">

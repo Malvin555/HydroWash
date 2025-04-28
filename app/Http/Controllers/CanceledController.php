@@ -14,7 +14,7 @@ class CanceledController extends Controller
     {
         $search = $request->input('search') ?? '';
         $order = $request->input('sort') ?? 'desc';
-        $perPage = 5;
+        $perPage = 10;
 
         if (!in_array($order, ['asc', 'desc'])) {
             $order = 'desc';

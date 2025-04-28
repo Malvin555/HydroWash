@@ -22,7 +22,7 @@
                 </a>
             @endif
             <div class="border-t border-gray-100"></div>
-            <form action="{{ route('logout') }}" method="post">
+            <form action="{{ route('logout') }}" method="post" onsubmit="return confirm('Are you sure to want logout?')">
                 @csrf
 
                 <button type="submit" class="w-full cursor-pointer flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-200">

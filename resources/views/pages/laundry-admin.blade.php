@@ -103,13 +103,16 @@
 
         <x-slot name="tbody">
             <tbody class="bg-white divide-y divide-primary" id="laundryList">
-
                 @if (!$laundry->isEmpty())
                     @foreach ($laundry as $index => $lndry)
-                        <tr>
+                        <tr @class([
+                            'line-through' => $lndry->status_report === 'deleted',
+                            'no-underline' => $lndry->status_report != 'deleted',
+                        ])>
                             <td class="px-6 py-4 text-sm text-primary">
                                 {{ str_pad($laundry->firstItem() + $index, 2, '0', STR_PAD_LEFT) }}</td>
                             <td class="px-6 py-4 text-sm text-primary">{{ $lndry->name_laundry }}</td>
+
                             <td class="px-6 py-4 text-sm text-primary">
                                 {{ \Carbon\Carbon::parse($lndry->created_at)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 text-sm text-primary">
@@ -121,11 +124,12 @@
                                     'bg-gray-300 text-gray-800' => $lndry->status == 'pending',
                                     'bg-yellow-100 text-yellow-800' => $lndry->status == 'process',
                                     'bg-green-100 text-green-800' => $lndry->status == 'completed',
+                                    'line-through' => $lndry->status_report === 'deleted',
+                                    'no-underline' => $lndry->status_report != 'deleted',
                                 ])>{{ Str::ucfirst($lndry->status) }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{-- @if ($lndry->status_transaction === 'uncompleted') --}}
-                                @if ($lndry->transaction->isEmpty())
+                                @if ($lndry->transaction->isEmpty() && $lndry->status_report === 'normal')
                                     <button data-modal-target="modalTransaction" data-slug="{{ $lndry->name_laundry }}"
                                         data-modal-key="showModalTransaction" class="cursor-pointer mr-3">
                                         <img src="{{ asset('img/cash.svg') }}" alt="cash" class="w-5 h-5">
