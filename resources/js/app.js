@@ -4,6 +4,7 @@ import "./navbar";
 import "./slider";
 import "./sidebar";
 import "./star-rating";
+import "./auth";
 import "./modal";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
