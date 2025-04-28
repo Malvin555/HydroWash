@@ -57,6 +57,7 @@
 
     </div>
 
+    @include('pages.alert')
 
     <script>
         if (localStorage.getItem('api_token')) {

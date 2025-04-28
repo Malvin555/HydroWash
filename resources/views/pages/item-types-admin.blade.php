@@ -24,14 +24,8 @@
                     class="appearance-none bg-primary text-white text-center font-bold rounded-sm py-2 w-full outline-0"
                     name="type" onchange="document.getElementById('filterForm').submit()">
                     <option value="all" selected>All Types</option>
-
-                    @if ($itemName)
-                        @foreach ($itemName as $item)
-                            <option value="{{ strtolower($item->name_item) }}" @selected(request('type') == strtolower($item->name_item))>
-                                {{ $item->name_item }}</option>
-                        @endforeach
-                    @endif
-
+                    <option value="ironing" @selected(request('type') === 'ironing')>Ironing</option>
+                    <option value="laundry" @selected(request('type') === 'laundry')>Laundry</option>
                 </select>
 
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-gray-700">

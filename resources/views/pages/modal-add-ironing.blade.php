@@ -137,7 +137,7 @@
 
                 <div class="flex flex-col">
                     <label for="notes" class="text-sm font-bold text-primary mb-1">Notes</label>
-                    <textarea name="note" id="notes" placeholder="Notes"
+                    <textarea name="notes" id="notes" placeholder="Notes"
                         class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">{{ old('note') }}</textarea>
                 </div>
 

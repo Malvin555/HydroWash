@@ -125,7 +125,7 @@
 
                 <div class="w-full mb-5">
                     <label for="note" class="font-bold">Note : </label>
-                    <textarea name="note" id="note" name="note" rows="10" class="w-full bg-secondary rounded-sm p-2"
+                    <textarea name="notes" id="notes" rows="10" class="w-full bg-secondary rounded-sm p-2"
                         placeholder="Leave your notes here...">{{ old('note') ?? '' }}</textarea>
                 </div>
 

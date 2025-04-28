@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '081234567890',
             'address' => 'Jl. Admin No. 1',
             'desc' => 'Admin utama',
-            'password' => bcrypt('adm123'),
+            'password' => bcrypt('admin123'),
         ]);
 
         // 2. Users
