@@ -55,7 +55,9 @@
             @foreach ($users as $index => $user)
                 <div
                     class="bg-primary shadow-sm text-white w-full rounded-sm flex flex-col justify-center py-3 px-2 items-center">
-                    <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-25 h-25">
+                    <div class="h-25 w-25 rounded-full bg-btn flex items-center justify-center text-3xl text-black font-medium uppercase">
+                        {{ Str::substr(optional($user)->name, 0, 2) }}
+                    </div>
                     <h1 class="text-2xl mb-4">{{ $user->name }}</h1>
                     <p class="text-sm text-white/50">Joined At</p>
                     <p class="mb-2">{{ \Carbon\Carbon::parse($user->created_at)->format('d F Y') }}</p>

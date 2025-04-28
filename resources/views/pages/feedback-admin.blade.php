@@ -69,7 +69,9 @@
             @foreach ($feedbacks as $feedback)
                 <div class="bg-primary w-full flex justify-between items-center rounded-sm py-2 px-4">
                     <div class="flex items-center gap-3">
-                        <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-7 h-7 md:w-15 md:h-15">
+                        <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                            {{ Str::substr(optional($feedback)->user->name, 0, 2) }}
+                        </div>
                         <div class="flex flex-col justify-center">
                             <p class="text-white text-[.9rem] md:ext-lg font-bold">{{ $feedback->user->name }}</p>
                             <p class="text-white text-[.8rem] md:ext-lg">{{ $feedback->comment }}</p>
