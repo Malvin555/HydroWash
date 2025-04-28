@@ -62,7 +62,7 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @if ($recentServices)
                                     @foreach ($recentServices as $service)
-                                        <tr onclick="window.location.href='{{ route('laundry-admin') }}'" class="cursor-pointer hover:bg-gray-50">
+                                        <tr>
                                             <td class="px-6 py-4 text-sm text-primary">{{ $loop->index + 1 }}</td>
                                             <td class="px-6 py-4 text-sm font-medium text-primary">
                                                 {{ $service->name_ironing ?? $service->name_laundry }}

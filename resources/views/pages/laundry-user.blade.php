@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-start gap-2 mb-7 delivery-address-box">
+                <div class="flex items-start gap-2 mb-3 delivery-address-box">
                     <div class="pt-2">
                         <svg class="w-8 h-8 text-[#194655]" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 576 512">
@@ -122,6 +122,11 @@
 
                         </div>
                     </div>
+                </div>
+
+                <div class="flex gap-1 mb-3 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24l0 112c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-112c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+                    <p class="text-[.8rem]">Choosing Delivery will cost you RP. 20.000.00</p>
                 </div>
 
                 <div class="w-full mb-5">

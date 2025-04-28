@@ -9,5 +9,6 @@
             </div>
         </table>
     </div>
+
     {{ $pagination }}
 </div>

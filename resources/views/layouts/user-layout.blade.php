@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body data-page="user">
@@ -48,7 +48,6 @@
     
     @include('pages.alert')
 
-    @vite('resources/js/app.js')
 
     {{-- 
         This script is used to handle the scenario where a form input fails validation, 
