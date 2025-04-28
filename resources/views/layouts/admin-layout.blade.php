@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-secondary" data-page="admin">
@@ -185,7 +185,6 @@
 
 
 
-    @vite('resources/js/app.js')
     @include('pages.alert')
 
         {{-- 

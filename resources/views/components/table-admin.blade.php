@@ -9,6 +9,6 @@
             </div>
         </table>
     </div>
-{{-- 
-    {{ $pagination }} --}}
+
+    {{ $pagination }}
 </div>
