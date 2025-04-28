@@ -8,7 +8,7 @@
         <x-modal-header title="Laundry Information"></x-modal-header>
 
 
-        <div class="overflow-y-auto p-6 flex-1">
+        <div class="modal-data overflow-y-auto p-6 flex-1">
             <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Laundry #23989</h2>
 
             <form action="" method="" class="space-y-4">

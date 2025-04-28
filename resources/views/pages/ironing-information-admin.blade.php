@@ -8,10 +8,10 @@
         <x-modal-header title="Ironing Information"></x-modal-header>
 
 
-        <div class="overflow-y-auto p-6 flex-1">
+        <div class="modal-data overflow-y-auto p-6 flex-1">
             <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Ironing #23989</h2>
 
-            <form action="" method="" class="space-y-4">
+            <div class="space-y-4">
 
                 <x-modal-profile></x-modal-profile>
 
@@ -19,7 +19,7 @@
                     <label class="text-sm font-bold text-primary">Order Information</label>
                     <div class="grid grid-cols-2 gap-2">
                         <img src="{{ asset('img/bedding.png') }}" alt="bedding">
-                        <div class="flex flex-col justify-between">
+                        <div class="flex flex-col gap-2 justify-between">
                             <input type="text" disabled name="amount-item" id="amount-item" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="90 Pcs">
                             <input type="text" disabled name="price_laundry" id="price_laundry" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="Rp 90.000.00">
                             <input type="text" disabled name="status_transaction" id="status_transaction" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="Uncompleted">
@@ -68,11 +68,11 @@
                     <div class="text-primary font-bold">Null</div>
                 </div>
 
-                <div class=" flex gap-2 bg-white">
+                <div class="grid grid-cols-2 gap-2 bg-white">
                     <x-close-modal-btn></x-close-modal-btn>
                     <x-delete-modal-btn></x-delete-modal-btn>
                 </div>
-            </form>
+            </div>
         </div>
 
         

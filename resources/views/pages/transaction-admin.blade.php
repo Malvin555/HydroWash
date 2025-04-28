@@ -11,7 +11,7 @@
         <button class="bg-primary text-white p-2 rounded-sm cursor-pointer">
             <a href="{{ route('admin.print', [
                 'type' => 'transaction',
-                'search' => request()->query('search'),
+                'search' => request('search'),
                 'time' => request('time'),
             ]) }}"
                 target="_blank" id="printLink">
@@ -72,7 +72,7 @@
                             <td class="px-6 py-4 text-sm text-primary">
                                 {{ str_pad($transactions->firstItem() + $index, 2, '0', STR_PAD_LEFT) }}</td>
                             <td class="px-6 py-4 text-sm text-primary">
-                                {{ $transaction->ironing->name_ironing ?? $transaction->laundry->name_laundry }}</td>
+                                {{ $transaction?->ironing?->name_ironing ?? $transaction?->laundry?->name_laundry }}</td>
                             <td class="px-6 py-4 text-sm text-primary">
                                 {{ \Carbon\Carbon::parse($transaction->created_at)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 text-sm text-primary">
@@ -109,7 +109,11 @@
         document.getElementById('search').addEventListener('input', function() {
             const search = this.value;
             document.getElementById('printLink').href = 
-            '{!! route("admin.print", ["type" => "transaction", "search" => "SEARCH", "time" => request("time")]) !!}'
+            `{!! route("admin.print", [
+                    "type" => "transaction", 
+                    "search" => "SEARCH", 
+                    "time" => request("time")
+            ]) !!}`
             .replace('SEARCH', encodeURIComponent(search));
         });
     </script>

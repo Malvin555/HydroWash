@@ -2,22 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\HandleServiceValidation;
 use App\Http\Requests\ServiceRequest;
 use App\Models\Ironing;
 use App\Models\ItemType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Rules\ValidTotalPrice;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class IroningController extends Controller
 {
+    use HandleServiceValidation;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search') ?? '';
+        $order = $request->input('sort') ?? 'desc';
+        $status = $request->input('status') ?? '';
+        $perPage = 10;
+
+        if (!in_array($order, ['asc', 'desc'])) {
+            $order = 'desc';
+        }
+
+        // Force page to 1 if it's an AJAX request
+        if ($request->ajax()) {
+            $request->merge(['page' => 1]);
+        }
+
+        $ironing = $this->getDataIroning($search, $status, $order)
+            ->paginate($perPage)
+            ->withQueryString()
+            ->setPath(url(route('ironing-admin')));
+
+        $paginationHtml = null;
+        if ($request->ajax() && $ironing->count() > 0) {
+            $paginationHtml = $ironing->links('pagination.table-pagination')->toHtml();
+        }
+
+        // For AJAX requests, at search feature. 
+        if ($request->ajax()) {
+            return response()->json([
+                "status" => "success",
+                "message" => "Ironing services retrieved successfully",
+                "data" => $ironing->items(),
+                'pagination' => $paginationHtml,
+            ], 200);
+        }
+
+        return view('pages.ironing-admin', compact('ironing'));
+    }
+
+    public function getDataIroning($search, $status, $order)
+    {
+        return Ironing::with('itemType')
+            ->ironingSearch($search)
+            ->status($status)
+            ->orderBy('created_at', $order);
     }
 
     /**
@@ -31,30 +77,30 @@ class IroningController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ServiceRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $isAdminRequest = $request->routeIs('ironing-admin.add');
 
-        $ironing = Ironing::create([
-            'user_id' => Auth::id(),
-            'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'ironing')->first()?->id,
-            'name_ironing' => Str::generateRandomString('Ironing'),
-            'price_ironing' => Str::rupiahToFloat($data['price-total']),
-            'amount_item' => $data['amount'],
-            'estimation' => null,
-            'retrieval_method' => $data['retrieval-method'],
-            'status_transaction' => 'uncompleted',
-            'status_report' => 'normal',
-            'address_taking' => $data['address'],
-            'address_delivery' => $data['destination'],
-            'status' => 'pending',
-            'notes_ironing' => $data['note'],
-            'created_who' => Auth::user()?->name,
-        ]);
+        $serviceValidation = $this->setServiceType('ironing');
+
+        if ($isAdminRequest) {
+            $serviceValidation->setValidationBehavior(isAdmin: true, modalId: 'modalAddIroning');
+        }
+
+        $validatedData = $serviceValidation->validateServiceData($request->all());
+        if ($validatedData instanceof RedirectResponse) {
+            return $validatedData;
+        }
+
+        $createdIroning = $this->saveIroningData($validatedData, null);
+
+        if ($isAdminRequest) {
+            return redirect()->back()->with('success', 'Ironing order successfully created.');
+        }
 
         return redirect()->route('complete-added')
-                ->with('ironing', $ironing)
-                ->with('success', 'Ironing order successfully created.');
+            ->with('ironing', $createdIroning)
+            ->with('success', 'Ironing order successfully created.');
     }
 
     /**
@@ -62,7 +108,13 @@ class IroningController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $ironing = Ironing::with(['user', 'itemType'])->find($id);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Ironing data retrieved successfully",
+            "data" => $ironing,
+        ], 200);
     }
 
     /**
@@ -70,15 +122,33 @@ class IroningController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $ironing = Ironing::with('itemType')->find($id);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Ironing data retrieved successfully",
+            "data" => $ironing,
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->input('id');
+
+        $serviceValidation = $this->setServiceType('ironing')
+            ->setValidationBehavior(isAdmin: true, modalId: 'modalEditIroning');
+
+        $validatedData = $serviceValidation->validateServiceData($request->all(), $id);
+
+        if ($validatedData instanceof RedirectResponse) {
+            return $validatedData;
+        }
+
+        $this->saveIroningData($validatedData, $id);
+        return redirect()->back()->with('success', 'Ironing order successfully updated.');
     }
 
     /**
@@ -86,7 +156,13 @@ class IroningController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ironing = Ironing::findOrFail($id);
+
+        $ironing->transaction()->delete();
+        $ironing->canceled()->delete();
+        $ironing->delete();
+
+        return redirect()->back()->with('success', 'Ironing successfully deleted.');
     }
 
     public function showCreateFormWithItemTypes()

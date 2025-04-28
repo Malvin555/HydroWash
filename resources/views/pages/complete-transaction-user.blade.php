@@ -6,7 +6,7 @@
       <img src="{{ asset('img/complete-transaction.png') }}" alt="tes" class="w-100 h-70 mb-2">
       <h1 class="text-primary font-bold text-sm md:text-lg mb-7 drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)]">Transaction successful! Your payment has been received</h1>
       <div class="flex justify-center">
-        <a href="#" class="w-[50%] text-white text-center bg-primary py-2 rounded-sm">Homepage</a>
+        <a href="{{ route('home') }}" class="w-[50%] text-white text-center bg-primary py-2 rounded-sm">Homepage</a>
       </div>
     </div>
 

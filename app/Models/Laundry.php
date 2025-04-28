@@ -69,4 +69,17 @@ class Laundry extends Model
 
         return $query;
     }
+
+    public function scopeLaundrySearch(Builder $query, string $search): Builder
+    {
+        return $query->when($search ?? false, function ($query, $search) {
+            $query->whereRaw("LOWER(name_laundry) LIKE ?", [strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(retrieval_method) LIKE ?", [str_replace(' ', '_', strtolower($search)) . '%'])
+                ->orWhereHas('itemType', function ($q) use ($search) {
+                    $q->whereRaw("LOWER(name_item) LIKE ?", [strtolower($search) . '%']);
+                });
+        });
+
+        return $query;
+    }
 }

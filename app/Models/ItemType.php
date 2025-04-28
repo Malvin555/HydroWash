@@ -38,7 +38,11 @@ class ItemType extends Model
             return $query;
         }
 
-        return $query->where('name_item', $type);
+        if (in_array($type, ['ironing', 'laundry'])) {
+            return $query->where('role', $type);
+        }
+
+        return $query;
     }
 
     public function scopeSearch(Builder $query, string $search): Builder

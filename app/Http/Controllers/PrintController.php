@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Mpdf\Mpdf;
+use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Mpdf\Mpdf;
+use App\Http\Controllers\IroningController;
+use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\TransactionController;
 
 class PrintController extends Controller
 {
@@ -13,19 +17,21 @@ class PrintController extends Controller
         $type = $request->input('type');
         $time = $request->input('time') ?? '';
         $search = $request->input('search') ?? '';
-
+        $status = $request->input('status') ?? '';
+        $order = $request->input('order') ?? 'desc';
+        
         switch ($type) {
             case 'laundry':
-                $view = 'print.laundry'; 
+                $view = 'print.laundry';
+                $data = $this->getDataToPrint(LaundryController::class, 'getDataLaundry', $search, $status, $order);
                 break;
             case 'ironing':
-                $view = 'print.ironing'; 
+                $view = 'print.ironing';
+                $data = $this->getDataToPrint(IroningController::class, 'getDataIroning', $search, $status, $order);
                 break;
             case 'transaction':
                 $view = 'print.transaction'; 
-                $data['transactions'] = (new \App\Http\Controllers\TransactionController)->getDataTransaction($time, $search)->get();
-                $data['income'] = (new \App\Http\Controllers\TransactionController)->getDataTransaction($time, $search)->sum('price_transaction');
-                $data['date'] = $time;
+                $data = $this->getDataTransactionToPrint($time, $search);
                 break;
         }
 
@@ -36,5 +42,39 @@ class PrintController extends Controller
         $mpdf->WriteHTML($html);
 
         return $mpdf->Output('laporan-' . $type . '.pdf', 'I');
+    }
+
+    public function getDataToPrint($controller, $method, $search, $status = null, $order = null)
+    {
+        $dataCollection = (new $controller)->$method($search, $status, $order);
+        $dates = $dataCollection->pluck('created_at');
+        $minDate = $dates->min();
+        $maxDate = $dates->max();
+        $time = '-';
+
+        if ($minDate && $maxDate) {
+            $minFormatted = Carbon::parse($minDate)->format('d-m-Y');
+            $maxFormatted = Carbon::parse($maxDate)->format('d-m-Y');
+
+            $time = $minFormatted === $maxFormatted ? $minFormatted : $minFormatted . ' - ' . $maxFormatted;
+        }
+
+        $data = [
+            'items' => $dataCollection->get(),
+            'time' => $time,
+        ];
+
+        return $data;
+    }
+
+    public function getDataTransactionToPrint($time, $search)
+    {
+        $data = [
+            'transactions' => (new TransactionController)->getDataTransaction($time, $search)->get(),
+            'income' => (new TransactionController)->getDataTransaction($time, $search)->sum('price_transaction'),
+            'date' => $time
+        ];
+
+        return $data;
     }
 }

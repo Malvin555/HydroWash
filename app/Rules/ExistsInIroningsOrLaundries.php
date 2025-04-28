@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use App\Models\Ironing;
+use App\Models\Laundry;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -16,10 +17,10 @@ class ExistsInIroningsOrLaundries implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $existsInIronings = Ironing::where('name_ironing', $value)->exists();
-        $existsInLaundries = Ironing::where('name_laundry', $value)->exists();
+        $existsInLaundries = Laundry::where('name_laundry', $value)->exists();
 
         if (!$existsInIronings && !$existsInLaundries) {
-            $fail('The service type does not exist in ironings or laundries.');
+            $fail('The transaction type is invalid.');
         }
     }
 }

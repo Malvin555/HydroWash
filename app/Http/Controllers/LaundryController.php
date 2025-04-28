@@ -7,18 +7,64 @@ use App\Models\ItemType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Rules\ValidTotalPrice;
+use App\HandleServiceValidation;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ServiceRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ServiceRequest;
+use Illuminate\Http\RedirectResponse;
 
 class LaundryController extends Controller
 {
+    use HandleServiceValidation;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search') ?? '';
+        $order = $request->input('sort') ?? 'desc';
+        $status = $request->input('status') ?? '';
+        $perPage = 10;
+
+        if (!in_array($order, ['asc', 'desc'])) {
+            $order = 'desc';
+        }
+
+        // Force page to 1 if it's an AJAX request
+        if ($request->ajax()) {
+            $request->merge(['page' => 1]);
+        }
+
+        $laundry = $this->getDataLaundry($search, $status, $order)
+            ->paginate($perPage)
+            ->withQueryString()
+            ->setPath(url(route('laundry-admin')));
+
+        $paginationHtml = null;
+        if ($request->ajax() && $laundry->count() > 0) {
+            $paginationHtml = $laundry->links('pagination.table-pagination')->toHtml();
+        }
+
+        // For AJAX requests, at search feature. 
+        if ($request->ajax()) {
+            return response()->json([
+                "status" => "success",
+                "message" => "Laundry services retrieved successfully",
+                "data" => $laundry->items(),
+                'pagination' => $paginationHtml,
+            ], 200);
+        }
+
+        return view('pages.laundry-admin', compact('laundry'));
+    }
+    
+    public function getDataLaundry($search, $status, $order)
+    {
+        return Laundry::with('itemType')
+            ->laundrySearch($search)
+            ->status($status)
+            ->orderBy('created_at', $order);
     }
 
     /**
@@ -32,30 +78,30 @@ class LaundryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ServiceRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $isAdminRequest = $request->routeIs('laundry-admin.add');
 
-        $laundry = Laundry::create([
-            'user_id' => Auth::id(),
-            'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'laundry')->first()?->id,
-            'name_laundry' => Str::generateRandomString('Laundry'),
-            'price_laundry' => Str::rupiahToFloat($data['price-total']),
-            'amount_item' => $data['amount'],
-            'estimation' => null,
-            'retrieval_method' => $data['retrieval-method'],
-            'status_transaction' => 'uncompleted',
-            'status_report' => 'normal',
-            'address_taking' => $data['address'],
-            'address_delivery' => $data['destination'],
-            'status' => 'pending',
-            'notes_laundry' => $data['note'],
-            'created_who' => Auth::user()?->name,
-        ]);
+        $serviceValidation = $this->setServiceType('laundry');
+
+        if ($isAdminRequest) {
+            $serviceValidation->setValidationBehavior(isAdmin: true, modalId: 'modalAddLaundry');
+        }
+
+        $validatedData = $serviceValidation->validateServiceData($request->all());
+        if ($validatedData instanceof RedirectResponse) {
+            return $validatedData;
+        }
+
+        $createdLaundry = $this->saveLaundryData($validatedData, null);
+
+        if ($isAdminRequest) {
+            return redirect()->back()->with('success', 'Laundry order successfully created.');
+        }
 
         return redirect()->route('complete-added')
-                ->with('laundry', $laundry)
-                ->with('success', 'Laundry order successfully created.');
+            ->with('laundry', $createdLaundry)
+            ->with('success', 'Laundry order successfully created.');
     }
 
     /**
@@ -63,7 +109,13 @@ class LaundryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $laundry = Laundry::with(['user', 'itemType'])->find($id);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Laundry data retrieved successfully",
+            "data" => $laundry,
+        ], 200);
     }
 
     /**
@@ -71,23 +123,44 @@ class LaundryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $laundry = Laundry::with('itemType')->find($id);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Laundry data retrieved successfully",
+            "data" => $laundry,
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->input('id');
+
+        $serviceValidation = $this->setServiceType('Laundry')
+            ->setValidationBehavior(isAdmin: true, modalId: 'modalEditLaundry');
+
+        $validatedData = $serviceValidation->validateServiceData($request->all(), $id);
+
+        if ($validatedData instanceof RedirectResponse) {
+            return $validatedData;
+        }
+
+        $this->saveLaundryData($validatedData, $id);
+        return redirect()->back()->with('success', 'Laundry order successfully updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $laundry = Laundry::findOrFail($id);
+
+        $laundry->transaction()->delete();
+        $laundry->canceled()->delete();
+        $laundry->delete();
+
+        return redirect()->back()->with('success', 'Laundry successfully deleted.');
     }
 
     public function showCreateFormWithItemTypes()

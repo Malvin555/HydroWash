@@ -23,6 +23,10 @@ class TransactionFactory extends Factory
         $useLaundry = $this->faker->boolean(60);
         $useIroning = !$useLaundry ? $this->faker->boolean(60) : false;
 
+        if (!$useLaundry && !$useIroning) {
+            $useLaundry = true;
+        }
+
         $laundry = $useLaundry
             ? Laundry::inRandomOrder()->first() ?? Laundry::factory()->create()
             : null;

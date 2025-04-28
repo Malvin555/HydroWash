@@ -54,6 +54,7 @@ Route::middleware('ensure.is.user')->group(function () {
     
     Route::get('/user/complete-added', [TransactionController::class, 'showCompletePage'])->name('complete-added');
     Route::get('/user/transaction/{slug?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');
+    Route::post('/user/transaction', [TransactionController::class, 'store'])->name('transaction.add');
 
     Route::get('/user/complete-transaction', [TransactionController::class, 'showCompleteTransaction'])->name('complete-transaction');
 
@@ -78,16 +79,19 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::get('/admin/feedback', [FeedbackController::class, 'getFeedbacksAdmin'])->name('feedback-admin');
     Route::delete('/admin/feedback/{id}', [FeedbackController::class, 'destroy'])->name('feedback-admin.delete');
     
-    Route::get('/admin/laundry', function () {
-        return view('pages.laundry-admin');
-    })->name('laundry-admin');
+    Route::get('/admin/laundry',[LaundryController::class, 'index'])->name('laundry-admin');
+    Route::post('/admin/laundry',[LaundryController::class, 'store'])->name('laundry-admin.add');
+    Route::put('/admin/laundry', [LaundryController::class, 'update'])->name('laundry-admin.update');
+    Route::delete('/admin/laundry/{id}', [LaundryController::class, 'destroy'])->name('laundry-admin.delete');
 
-    Route::get('/admin/ironing', function () {
-        return view('pages.ironing-admin');
-    })->name('ironing-admin');
+    Route::get('/admin/ironing', [IroningController::class, 'index'])->name('ironing-admin');
+    Route::post('/admin/ironing', [IroningController::class, 'store'])->name('ironing-admin.add');
+    Route::put('/admin/ironing', [IroningController::class, 'update'])->name('ironing-admin.update');
+    Route::delete('/admin/ironing/{id}', [IroningController::class, 'destroy'])->name('ironing-admin.delete');
     
     Route::get('/admin/transaction', [TransactionController::class, 'index'])->name('transaction-admin');
     Route::delete('/admin/transaction/{id}', [TransactionController::class, 'destroy'])->name('transaction-admin.delete');
+    Route::post('/admin/transaction', [TransactionController::class, 'store'])->name('transaction-admin.add');
 
     Route::get('/admin/print', [PrintController::class, 'print'])->name('admin.print');
 
@@ -98,14 +102,3 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::put('/admin/profile/password-update', [UserController::class, 'passwordUpdate'])->name('profile-admin.password.update');
 
 });
-
-// Route::post('/clear-flash-message', function(Request $request) {
-//     $request->session()->forget('success');
-//     $request->session()->save();
-    
-//     return response()->json([
-//         'status' => 'success',
-//         'message' => 'Flash message cleared',
-//         'session_verified' => !$request->session()->has('success')
-//     ]);
-// })->middleware('web');

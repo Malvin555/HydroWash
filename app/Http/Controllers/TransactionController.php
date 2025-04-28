@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Ironing;
 use App\Models\Laundry;
 use App\Models\Transaction;
-use App\Rules\ExistsInIroningsOrLaundries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\ExistsInIroningsOrLaundries;
 
 class TransactionController extends Controller
 {
@@ -15,7 +16,7 @@ class TransactionController extends Controller
     {
         $time = $request->input('time') ?? '';
         $search = $request->input('search') ?? '';
-        $perPage = 5;
+        $perPage = 10;
 
         // Force page to 1 if it's an AJAX request
         if ($request->ajax()) {
@@ -96,7 +97,7 @@ class TransactionController extends Controller
         return view('pages.complete-transaction-user');
     }
 
-    public function showTransactionForm($slug = null)
+    public function showTransactionForm(Request $request, $slug = null)
     {
         $parts = explode('-', $slug);
         $prefix = ucfirst($parts[0]);
@@ -105,15 +106,16 @@ class TransactionController extends Controller
 
         $ironing = Ironing::with('itemType')
             ->where('name_ironing', $name)
-            ->where('status_transaction', 'uncompleted')
+            ->whereDoesntHave('transaction')
             ->first();
-        $laundry = null;
 
-        if (!$ironing) {
-            $laundry = Laundry::with('itemType')
-                ->where('name_laundry', $name)
-                ->where('status_transaction', 'uncompleted')
-                ->first();
+        $laundry = Laundry::with('itemType')
+            ->where('name_laundry', $name)
+            ->whereDoesntHave('transaction')
+            ->first();
+
+        if (!$ironing && !$laundry) {
+            abort(404, 'Transaction not found. Please ensure the name format matches the database records.');
         }
 
         if (!$ironing && !$laundry) {
@@ -122,38 +124,64 @@ class TransactionController extends Controller
 
         $transaction = $ironing ?? $laundry;
 
+        if ($request->ajax()) {
+            return response()->json([
+                "status" => "success",
+                "message" => "Transaction retrieved successfully",
+                "data" => $transaction,
+            ], 200);
+        }
+
         return view('pages.transaction-user', compact('transaction'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'service_type' => ['required', new ExistsInIroningsOrLaundries()],
-            'method' => 'required|in:cash,debit',
-            'bank_name' => 'required_if:method,debit|string',
-            'card_number' => 'required_if:method,debit|string',
-            'postal_code' => 'required_if:method,debit|string',
+        $isRequestAdmin = $request->routeIs('transaction-admin.add');
+
+        $validator = Validator::make($request->all(), [
+            'service-type' => ['required', new ExistsInIroningsOrLaundries()],
+            'payment-method' => 'required|in:cash,debit',
+            'bank-name' => 'required_if:payment-method,debit',
+            'card-number' => 'required_if:payment-method,debit',
+            'postal-code' => 'required_if:payment-method,debit',
+        ], [
+            'bank-name.required_if' => 'Payment name is required.',
+            'card-number.required_if' => 'Card number is required',
+            'postal-code.required_if' => 'Postal code is required',
         ]);
 
-        if (str_starts_with(strtolower($request->service_type), 'ironing')) {
-            $model = Ironing::where('name_ironing', $request->service_type)->first();
+        if ($validator->fails()) {
+            $redirect = redirect()->back()->withErrors($validator->errors())->withInput();
+
+            if ($isRequestAdmin) {
+            $redirect = $redirect->with('show_modal', 'modalTransaction');
+            }
+
+            return $redirect;
+        }
+
+        $serviceName = str_starts_with(strtolower($request->input('service-type')), 'ironing') ? 'ironing' : 'laundry';
+        
+        if ($serviceName === 'ironing') {
+            $model = Ironing::where('name_ironing', $request->input('service-type'))->first();
         } else {
-            $model = Laundry::where('name_laundry', $request->service_type)->first();
+            $model = Laundry::where('name_laundry', $request->input('service-type'))->first();
         }
 
         $price_transaction =  $model?->price_ironing ?? $model?->price_laundry;
-        $decimalPrice = number_format($price_transaction, 0, ',', '.');
+        $decimalPrice = number_format($price_transaction, 2, ',', '.');
 
         $transaction = Transaction::create([
             'user_id' => Auth::user()->id,
-            'ironing_id' => $model?->id ?? null,
-            'laundry_id' => $model?->id ?? null,
-            'method' => $request->method,
-            'price_transaction' => $decimalPrice,
+            'ironing_id' => $serviceName === 'ironing' ? $model?->id ?? null : null,
+            'laundry_id' => $serviceName === 'laundry' ? $model?->id ?? null : null,
+            'method' => $request->input('payment-method'),
+            'price_transaction' => $price_transaction,
             'user_transaction' => 'Rp ' . $decimalPrice,
-            'card_number' => $request->card_number,
-            'postal_code' => $request->postal_code,
-            'bank_name' => $request->bank_name,
+            'card_number' => $request->input('card-number'),
+            'postal_code' => $request->input('postal-code'),
+            'bank_name' => $request->input('bank-name'),
             'created_who' => Auth::user()->name,
         ]);
 
@@ -163,6 +191,10 @@ class TransactionController extends Controller
                 'status_transaction' => 'completed',
                 'status' => 'process'
             ]);
+        }
+
+        if ($isRequestAdmin) {
+            return redirect()->back()->with('success', 'Transaction added successfully');
         }
 
         return redirect()->route('complete-transaction')

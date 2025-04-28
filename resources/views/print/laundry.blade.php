@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Print Laundry - HydroWash</title>
 
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-    
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -40,7 +41,8 @@
             font-size: 14px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ccc;
             padding: 10px;
         }
@@ -66,36 +68,63 @@
         }
     </style>
 </head>
+
 <body>
-  <h2>Print Laundry</h2>
+    <h2>Print Laundry</h2>
 
     <div class="header">
         <h1>HydroWash</h1>
-        <p>Date: 30-07-2025</p>
+        <p>Date: {{ $data['time'] }}</p>
     </div>
 
     <table>
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Method</th>
-              <th>Type</th>
-              <th>Status</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td>01</td>
-              <td>Laundry #234</td>
-              <td>02-07-2025</td>
-              <td>Delivery</td>
-              <td>Clothes</td>
-              <td>Completed</td>
-          </tr>
-      </tbody>
-  </table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Method</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($data['items'] as $index => $item)
+                <tr>
+                    <td>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                    <td>{{ $item->name_laundry }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
+                    <td>{{ ucfirst(str_replace('_', ' ', $item->retrieval_method)) }}</td>
+                    <td>{{ $item->itemType->name_item }}</td>
+                    <td>
+                        <span style="
+                            padding: 2px 6px; 
+                            font-size: 12px; 
+                            font-weight: 600; 
+                            border-radius: 4px; 
+                            background-color: {{ 
+                                $item->status == 'pending' ? '#E5E7EB' : 
+                                ($item->status == 'process' ? '#FEF3C7' : 
+                                ($item->status == 'completed' ? '#D1FAE5' : '#DBEAFE')) 
+                            }}; 
+                            color: {{ 
+                                $item->status == 'pending' ? '#374151' : 
+                                ($item->status == 'process' ? '#92400E' : 
+                                ($item->status == 'completed' ? '#065F46' : '#1E40AF')) 
+                            }};">
+                            {{ Str::ucfirst($item->status) }}
+                        </span>
+                    </td>
+                    
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">No laundry data</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 
 </body>
+
 </html>
