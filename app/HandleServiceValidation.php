@@ -60,6 +60,7 @@ trait HandleServiceValidation
             'note' => 'nullable',
             'status' => $id ? 'required|in:pending,process,completed' : 'sometimes|nullable',
             'estimation' => $id ? 'nullable|date' : 'sometimes|nullable',
+            'status-report' => $id ? 'required|in:normal,deledted' : 'sometimes|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -98,8 +99,13 @@ trait HandleServiceValidation
             'status' => $data['status'] ?? 'pending',
             'notes_ironing' => $data['note'] ?? null,
             'estimation' => $data['estimation'] ?? null,
+            'status_report' => $data['status-report'] ?? 'normal',
             'created_who' => $ironing->created_who ?? Auth::user()?->name,
         ]);
+
+        if (array_key_exists('status-report', $data) && $data['status-report'] === 'normal') {
+            $ironing->canceled()->exists() ? $ironing->canceled()->delete() : null;
+        }
 
         $ironing->save();
 
@@ -124,8 +130,13 @@ trait HandleServiceValidation
             'status' => $data['status'] ?? 'pending',
             'notes_laundry' => $data['note'] ?? null,
             'estimation' => $data['estimation'] ?? null,
+            'status_report' => $data['status-report'] ?? 'normal',
             'created_who' => $laundry->created_who ?? Auth::user()?->name,
         ]);
+
+        if (array_key_exists('status-report', $data) && $data['status-report'] === 'normal') {
+            $laundry->canceled()->exists() ? $laundry->canceled()->delete() : null;
+        }
 
         $laundry->save();
 

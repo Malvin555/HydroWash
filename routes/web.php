@@ -102,14 +102,3 @@ Route::middleware('ensure.is.admin')->group(function () {
     Route::put('/admin/profile/password-update', [UserController::class, 'passwordUpdate'])->name('profile-admin.password.update');
 
 });
-
-// Route::post('/clear-flash-message', function(Request $request) {
-//     $request->session()->forget('success');
-//     $request->session()->save();
-    
-//     return response()->json([
-//         'status' => 'success',
-//         'message' => 'Flash message cleared',
-//         'session_verified' => !$request->session()->has('success')
-//     ]);
-// })->middleware('web');

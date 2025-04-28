@@ -25,7 +25,7 @@ class LaundryController extends Controller
         $search = $request->input('search') ?? '';
         $order = $request->input('sort') ?? 'desc';
         $status = $request->input('status') ?? '';
-        $perPage = 6;
+        $perPage = 10;
 
         if (!in_array($order, ['asc', 'desc'])) {
             $order = 'desc';
@@ -152,9 +152,6 @@ class LaundryController extends Controller
         return redirect()->back()->with('success', 'Laundry order successfully updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $laundry = Laundry::findOrFail($id);
