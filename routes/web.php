@@ -33,7 +33,6 @@ Route::middleware('allow.guest')->group(function () {
 
 Route::middleware('ensure.is.user')->group(function () {
     Route::get('/user', function () {
-        // Auth::logout();
         return view('pages.home-user');
     })->name('home');
 

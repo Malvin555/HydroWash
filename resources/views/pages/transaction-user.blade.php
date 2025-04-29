@@ -14,7 +14,7 @@
                     value="{{ $transaction?->name_ironing ?? ($transaction?->name_laundry ?? old('service-type')) }}">
                 <div class="grid grid-cols-1 gap-2 mb-5 ">
                     <div class=" bg-secondary rounded-sm flex justify-center w-full h-50 max-h-50">
-                        <img src="{{ Storage::url($transaction->item_type?->image_item) ?? asset('img/bedding.png') }}"
+                        <img src="{{ Storage::url($transaction?->itemType?->image_item) }}"
                             alt="transaction" class="w-full h-full">
                     </div>
                     @error('service-type')
