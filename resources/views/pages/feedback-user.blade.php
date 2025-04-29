@@ -17,7 +17,7 @@
                 </div>
 
                 <form action="{{ route('feedback') }}" method="post">
-                  @csrf
+                    @csrf
 
                     <div class="w-full flex flex-col justify-center items-center">
                         <div class="flex gap-2 md:gap-4 lg:gap-7 mb-3 items-center" id="stars">
@@ -62,7 +62,7 @@
                         <textarea name="comment" id="feedback" rows="10"
                             class="bg-white w-full rounded-sm outline-0 placeholder:text-[.7rem] md:placeholder:text-sm placeholder:text-black pl-2 mb-3 
                             @error('comment')
-                              border-2 border-red-600
+                                border-2 border-red-600
                             @enderror "
                             placeholder="What can we do to improve your experience?">{{ old('comment') }}</textarea>
 
@@ -75,7 +75,7 @@
 
             <div class="max-h-[450px] overflow-y-auto">
 
-                @if ($feedbacks)
+                @if ($feedbacks->isNotEmpty())
                     @foreach ($feedbacks as $feedback)
                         <div class="bg-white rounded-sm p-2 flex justify-between mb-3">
                             <div class="flex gap-2">
@@ -100,6 +100,12 @@
                             </div>
                         </div>
                     @endforeach
+                @else
+                    <div class="bg-white rounded-sm p-5 flex justify-between mb-3">
+                        <div class="flex items-center justify-center gap-4">
+                            <p class="text-primary text-center">No Feedbacks</p>
+                        </div>
+                    </div>
                 @endif
 
             </div>

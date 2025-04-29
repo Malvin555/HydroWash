@@ -11,7 +11,7 @@
                 <h1 class="font-bold">Select Type : </h1>
                 <div class="flex gap-4 w-full overflow-x-auto scrollbar-hide">
 
-                    @if ($itemTypes)
+                    @if ($itemTypes->isnotEmpty())
                         @foreach ($itemTypes as $item)
                             <label class="cursor-pointer flex-shrink-0  transition-all duration-150 border-4 rounded-lg
                                         {{ old('type') === Str::lower($item->name_item) ? 'border-primary' : 'border-transparent' }}">
@@ -34,6 +34,10 @@
                                 </div>
                             </label>
                         @endforeach
+                    @else
+                        <div class="w-60 h-40 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500 border-4 border-dashed">
+                            <span class="text-sm font-medium">No items available</span>
+                        </div>
                     @endif
 
                 </div>

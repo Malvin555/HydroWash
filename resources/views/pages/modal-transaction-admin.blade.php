@@ -73,7 +73,7 @@
                             <select
                                 class="appearance-none bg-secondary text-primary placeholder:text-primary placeholder:font-bold font-bold rounded-sm py-2 pl-3 w-full"
                                 name="bank-name">
-                                <option value="" @selected(old('bank-name') == 'card')>Card</option>
+                                <option value="card" @selected(old('bank-name') == 'card')>Card</option>
                                 <option value="visa" @selected(old('bank-name') == 'visa')>Visa</option>
                                 <option value="dll" @selected(old('bank-name') == 'dll')>DLL</option>
                             </select>

@@ -60,7 +60,7 @@
                                 
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @if ($recentServices)
+                                @if ($recentServices->isNotEmpty())
                                     @foreach ($recentServices as $service)
                                         <tr>
                                             <td class="px-6 py-4 text-sm text-primary">{{ $loop->index + 1 }}</td>
@@ -107,7 +107,7 @@
             </div>
 
             <div class="flex-1 overflow-y-auto p-4">
-                @if ($recentUsers)
+                @if ($recentUsers->isNotEmpty())
                     @foreach ($recentUsers as $user)
                     <div class="flex items-center gap-4 mb-4">
                         <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
@@ -124,9 +124,8 @@
                     
                     @endforeach
                 @else
-                    <div class="flex items-center gap-4">
-                        <img src="{{ asset('img/profile-img.png') }}" alt="profile" class="w-14 h-14 rounded-full">
-                        <p class="text-primary">No Recent Users</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <p class="text-primary text-center">No Recent Users</p>
                     </div>
                 @endif
             </div>

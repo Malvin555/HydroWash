@@ -19,7 +19,7 @@ class HistoryController extends Controller
         $status = $request->input('status') ?? '';
         $type = $request->input('type') ?? '';
         $search = $request->input('search') ?? '';
-        $perPage = 3;
+        $perPage = 5;
 
         // Force page to 1 if it's an AJAX request
         if ($request->ajax()) {
@@ -35,9 +35,7 @@ class HistoryController extends Controller
             'status',
             'created_at',
             DB::raw("'ironing' as type"))
-            ->whereDoesntHave('canceled', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
+            ->whereDoesntHave('canceled')
             ->where('user_id', $userId)
             ->status($status)
             ->search($search);
@@ -51,9 +49,7 @@ class HistoryController extends Controller
             'status',
             'created_at',
             DB::raw("'laundry' as type"))
-            ->whereDoesntHave('canceled', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
+            ->whereDoesntHave('canceled')
             ->where('user_id', $userId)
             ->status($status)
             ->search($search);

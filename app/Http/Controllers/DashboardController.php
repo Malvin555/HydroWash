@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         $service = Laundry::count() + Ironing::count();
-        $users = User::count();
+        $users = User::where('role', 'user')->count();
         $pending = Laundry::where('status', 'pending')->count() + Ironing::where('status', 'pending')->count();
         $completed = Laundry::where('status', 'completed')->count() + Ironing::where('status', 'completed')->count();
 
