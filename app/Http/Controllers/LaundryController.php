@@ -6,11 +6,9 @@ use App\Models\Laundry;
 use App\Models\ItemType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Rules\ValidTotalPrice;
 use App\HandleServiceValidation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ServiceRequest;
 use Illuminate\Http\RedirectResponse;
 
 class LaundryController extends Controller

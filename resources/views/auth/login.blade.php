@@ -31,7 +31,7 @@
                 <input type="text" name="name" id="name" placeholder="Username"
                     class="w-full py-2 pl-4 bg-input rounded-xl outline-0" value="{{ old('name') }}">
                 @error('name')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
 
                 <div class="relative w-full mt-4">
@@ -47,6 +47,9 @@
                         </svg>
                     </button>
                 </div>
+                @error('password')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
                 <button type="submit"
                     class="mt-8 font-bold bg-primary text-white md:text-xl w-full rounded-sm p-2 mb-5">Log

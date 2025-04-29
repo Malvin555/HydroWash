@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\HandleServiceValidation;
-use App\Http\Requests\ServiceRequest;
 use App\Models\Ironing;
 use App\Models\ItemType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Rules\ValidTotalPrice;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\SendVerificationCode;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
 use function PHPUnit\Framework\isNull;
 
 class AuthController extends Controller
@@ -82,41 +85,38 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = User::where('name', $request->name)->first();
+        $user = User::where('name', $credentials['name'])->first();
 
-        if ($user && $user->api_token) {
-            return back()->withErrors([
-                'name' => 'This account is already logged in on another device.',
-            ])->onlyInput('name');
+        if (!$user) {
+            return back()->withErrors(['name' => 'The provided credentials do not match our records.'])->onlyInput('name');
         }
 
-        if ($user && !Hash::check($request->password, $user->password)) {
-            return back()->withErrors([
-                'password' => 'The provided password is incorrect.',
-            ])->onlyInput('password');
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return back()->withErrors(['password' => 'The provided password is incorrect.'])->onlyInput('password');
         }
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            $user = User::find(Auth::id());
-            $isAdmin = $this->isAdminAuthenticated($user);
+        if ($user->api_token) {
+            $activeSession = DB::table('sessions')
+                ->where('user_id', $user->id)
+                ->exists();
 
-            if ($isAdmin) {
-                $user->api_token = 'KFydnOH6U+vkQwN/Ss/C/uoUDVNGGDzC5ejikUhYs';
-            } else {
-                $user->api_token = bin2hex(openssl_random_pseudo_bytes(30));
+            $sessionToken = session('api_token');
+            if ($activeSession && $sessionToken !== $user->api_token) {
+                return back()->withErrors(['name' => 'The username logged in is already in use.'])->onlyInput('name');
             }
-            $user->save();
-
-            session()->put('api_token', $user->api_token);
-            session()->put('user_id', Hash::make($user->id));
-
-            return redirect()->route($isAdmin ? 'admin' : 'home');
         }
 
-        return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
-        ])->onlyInput('name');
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        $user->api_token = Str::random(60);
+        $user->save();
+        $isAdmin = $this->isAdminAuthenticated($user);
+
+        session()->put('api_token', $user->api_token);
+        session()->put('user_id', Hash::make($user->id));
+
+        return redirect()->route($isAdmin ? 'admin' : 'home');
     }
 
     public function logout(Request $request)

@@ -49,18 +49,13 @@ trait HandleServiceValidation
         $validator = Validator::make($data, [
             'type' => 'required|exists:item_types,name_item',
             'amount' => 'required|integer|min:1',
-            'price-total' => ['required', new ValidTotalPrice(
-                itemName: $data['type'],
-                itemAmount: $data['amount'],
-                serviceType: $this->serviceType,
-            )],
             'retrieval-method' => 'required|in:delivery,take_away',
             'address' => 'required_if:retrieval-method,delivery',
             'destination' => 'required_if:retrieval-method,delivery',
             'notes' => 'nullable',
             'status' => $id ? 'required|in:pending,process,completed' : 'sometimes|nullable',
             'estimation' => $id ? 'nullable|date' : 'sometimes|nullable',
-            'status-report' => $id ? 'required|in:normal,deledted' : 'sometimes|nullable',
+            'status-report' => $id ? 'required|in:normal,deleted' : 'sometimes|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -68,16 +63,10 @@ trait HandleServiceValidation
         }
 
         $validatedData = $validator->validated();
-
-        // Merge price_total with a new price if retrieval_method is delivery
-        if ($validatedData['retrieval-method'] === 'delivery') {
-            $newPrice = 20000;
-            $validatedData['price-total'] += $newPrice;
-        }
+        $validatedData['price-total'] = $this->calculatedTotalPrice($data, $id);
 
         return $validatedData;
     }
-
     protected function handleFailedValidation($validator): RedirectResponse
     {
         $redirect = redirect()->back()->withErrors($validator)->withInput();
@@ -87,6 +76,35 @@ trait HandleServiceValidation
         }
 
         return $redirect;
+    }
+
+    public function calculatedTotalPrice(array $data, ?int $id = null): string
+    {
+        $additionalPrice = 20000;
+        $itemPrice = ItemType::where('name_item', $data['type'])
+            ->where('role', $this->serviceType)
+            ->value('price_item');
+
+        $calculatedPrice = $itemPrice * $data['amount'];
+
+        if ($id) {
+            $existingData = $this->serviceType === 'ironing' ? Ironing::find($id) : Laundry::find($id);
+            $price =  $this->serviceType === 'ironing' ? $existingData->price_ironing : $existingData->price_laundry;
+
+            if ($existingData->retrieval_method === $data['retrieval-method']) {
+                $calculatedPrice = $price;
+            } else {
+                $calculatedPrice = match ($data['retrieval-method']) {
+                    'delivery' => $price + $additionalPrice,
+                    'take_away' => $price - $additionalPrice,
+                    default => $calculatedPrice,
+                };
+            }
+        } else {
+            $calculatedPrice += $data['retrieval-method'] === 'delivery' ? $additionalPrice : 0;
+        }
+
+        return 'Rp ' . number_format($calculatedPrice, 2, ',', '.');
     }
 
     public function saveIroningData(array $data, ?int $id = null): Ironing
