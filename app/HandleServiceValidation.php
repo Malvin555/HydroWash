@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Canceled;
 use App\Models\Ironing;
 use App\Models\Laundry;
 use App\Models\ItemType;
@@ -119,7 +120,6 @@ trait HandleServiceValidation
             'amount_item' => $data['amount'],
             'retrieval_method' => $data['retrieval-method'],
             'status_transaction' => $data['status-transaction'] ?? 'uncompleted',
-            'status_report' => 'normal',
             'address_taking' => $data['retrieval-method'] === 'delivery' ? $data['address'] : null,
             'address_delivery' => $data['retrieval-method'] === 'delivery' ? $data['destination'] : null,
             'status' => $data['status'] ?? 'pending',
@@ -131,6 +131,15 @@ trait HandleServiceValidation
 
         if (array_key_exists('status-report', $data) && $data['status-report'] === 'normal') {
             $ironing->canceled()->exists() ? $ironing->canceled()->delete() : null;
+        }
+
+        if (array_key_exists('status-report', $data) && $data['status-report'] === 'deleted') {
+            Canceled::create([
+                'user_id' => Auth::id(),
+                'ironing_id' => $ironing->id,
+                'issues' => 'Canceled by Admin',
+                'created_who' => Auth::user()?->name,
+            ]);
         }
 
         $ironing->save();
@@ -150,7 +159,6 @@ trait HandleServiceValidation
             'amount_item' => $data['amount'],
             'retrieval_method' => $data['retrieval-method'],
             'status_transaction' => $data['status-transaction'] ?? 'uncompleted',
-            'status_report' => 'normal',
             'address_taking' => $data['retrieval-method'] === 'delivery' ? $data['address'] : null,
             'address_delivery' => $data['retrieval-method'] === 'delivery' ? $data['destination'] : null,
             'status' => $data['status'] ?? 'pending',
@@ -162,6 +170,15 @@ trait HandleServiceValidation
 
         if (array_key_exists('status-report', $data) && $data['status-report'] === 'normal') {
             $laundry->canceled()->exists() ? $laundry->canceled()->delete() : null;
+        }
+
+        if (array_key_exists('status-report', $data) && $data['status-report'] === 'deleted') {
+            Canceled::create([
+                'user_id' => Auth::id(),
+                'laundry_id' => $laundry->id,
+                'issues' => 'Canceled by Admin',
+                'created_who' => Auth::user()?->name,
+            ]);
         }
 
         $laundry->save();
