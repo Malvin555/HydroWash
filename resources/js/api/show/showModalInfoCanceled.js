@@ -1,6 +1,7 @@
 import initializeModal from "../../modal";
 import fetchDetailToModal from "./fetchDetailToModal";
 import buildRoute from "../../utils/buildRoute";
+import { formatDate } from "../../utils/formatter";
 
 initializeModal('showModalInfoCanceled', async ({ id }) => {
     await fetchDetailToModal({
@@ -41,12 +42,12 @@ function renderModalInfoCanceled(response) {
             </div>
 
             <div>
-                <label class="text-sm font-bold text-primary">Fill Field</label>
+                <label class="text-sm font-bold text-primary">Name</label>
                 <input type="text" disabled class="bg-secondary w-full placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" placeholder="${data?.ironing?.name_ironing ?? data?.laundry?.name_laundry}" value="${data?.ironing?.name_ironing ?? data?.laundry?.name_laundry}">
             </div>
 
             <div class="flex flex-col">
-                <label for="notes" class="text-sm font-bold text-primary mb-1">Fill Field</label>
+                <label for="notes" class="text-sm font-bold text-primary mb-1">Issue</label>
                 <textarea name="notes" id="notes" disabled placeholder="${data?.issues}"
                     class="bg-secondary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">${data?.issues}</textarea>
             </div>

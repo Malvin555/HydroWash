@@ -63,7 +63,7 @@
             <!-- Fixed Footer -->
             <div class="p-4 space-y-2 bg-white">
                 <a href="{{ route('landing') }}"
-                    class="block w-full text-center px-4 py-2 rounded-md bg-primary text-white font-medium">
+                    class="block cursor-pointer w-full text-center px-4 py-2 rounded-md bg-primary text-white font-medium">
                     Transaction
                 </a>
                 <button data-modal-target="modalCancelService" data-fetch="false" class="block w-full px-4 py-2 rounded-md bg-primary text-white font-medium">

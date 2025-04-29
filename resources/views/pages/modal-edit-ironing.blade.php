@@ -77,7 +77,9 @@
                         </div>
                     </div>
                     @error('retrieval-method')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <div class="w-full mt-3 col-span-2">
+                        <p class="text-sm text-red-600">{{ $message }}</p>
+                    </div>
                     @enderror
                 </div>
 

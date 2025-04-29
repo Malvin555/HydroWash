@@ -69,10 +69,8 @@
             @foreach ($feedbacks as $feedback)
                 <div class="bg-primary w-full flex justify-between items-center rounded-sm py-2 px-4">
                     <div class="flex items-center gap-3">
-                        <div class="rounded-full bg-white">
-                            <div class="w-7 h-7 md:w-13 md:h-13 rounded-full bg-white flex items-center border border-primary justify-center text-primary font-medium text-sm md:text-2xl uppercase p-0">
-                                {{ Str::substr($feedback->user->name, 0, 2) }}
-                            </div>
+                        <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                            {{ Str::substr(optional($feedback)->user->name, 0, 2) }}
                         </div>
                         <div class="flex flex-col justify-center">
                             <p class="text-white text-[.9rem] md:ext-lg font-bold">{{ $feedback->user->name }}</p>
