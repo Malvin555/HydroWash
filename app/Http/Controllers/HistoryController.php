@@ -19,7 +19,7 @@ class HistoryController extends Controller
         $status = $request->input('status') ?? '';
         $type = $request->input('type') ?? '';
         $search = $request->input('search') ?? '';
-        $perPage = 5;
+        $perPage = 2;
 
         // Force page to 1 if it's an AJAX request
         if ($request->ajax()) {
@@ -34,6 +34,7 @@ class HistoryController extends Controller
             'address_delivery', 
             'status',
             'created_at',
+            'estimation',
             DB::raw("'ironing' as type"))
             ->whereDoesntHave('canceled')
             ->where('user_id', $userId)
@@ -48,6 +49,7 @@ class HistoryController extends Controller
             'address_delivery', 
             'status',
             'created_at',
+            'estimation',
             DB::raw("'laundry' as type"))
             ->whereDoesntHave('canceled')
             ->where('user_id', $userId)
