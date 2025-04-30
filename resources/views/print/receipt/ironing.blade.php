@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laundry Receipt - HydroWash</title>
+    <title>Ironing Receipt - HydroWash</title>
 
     <style>
         body {
@@ -199,7 +199,7 @@
                 <h1 class="brand-name">
                     Hydro<span class="brand-highlight">Wash</span>
                 </h1>
-                <p class="text-sm text-gray">Laundry Service</p>
+                <p class="text-sm text-gray">Ironing Service</p>
                 <p class="text-sm text-gray">23-04-2025 14:30</p>
             </div>
 

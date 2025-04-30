@@ -11,8 +11,9 @@ import 'aos/dist/aos.css';
 
 document.addEventListener('DOMContentLoaded', function() {
     AOS.init({
-        duration: 400,
-        easing: 'ease-in-out',
+        duration: 800,
+        once: true,
+        offset: 100
     });
 })
 

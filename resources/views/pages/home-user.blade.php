@@ -32,7 +32,7 @@
                                 <h3 class="text-white text-lg md:text-xl font-bold">Laundry</h3>
                             </div>
                             <div class="p-4 text-center">
-                                <p class="text-black text-sm">Professional washing and drying services</p>
+                                <p class="text-black text-sm">Expert washing and drying services</p>
                                 <div class="mt-4 inline-flex items-center text-primary text-sm font-medium">
                                     Get Started
                                     <svg xmlns="http://www.w3.org/2000/svg"

@@ -1,155 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction Receipt - HydroWash</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#009BAD',
-                        secondary: '#6E91A2'
-                    }
-                }
-            }
-        }
-    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receipt - HydroWash</title>
     <style>
+        body {
+            background: #f3f4f6;
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .print-button {
+            background: #009BAD;
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 1rem;
+        }
+
+        .print-button:hover {
+            background: #6E91A2;
+        }
+
+        .receipt {
+            background: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .receipt h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .receipt h1 span {
+            color: #009BAD;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .section {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #4b5563;
+        }
+
+        .value {
+            font-weight: 500;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .status {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+
+        .box {
+            background: #f9fafb;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 1rem;
+        }
+
         @media print {
             body {
                 width: 80mm;
-                margin: 0;
+                background: white;
                 padding: 0;
+                margin: 0;
             }
-            .no-print {
+
+            .print-button {
                 display: none;
             }
+
             .receipt {
-                border: none !important;
-                box-shadow: none !important;
+                box-shadow: none;
+                border-radius: 0;
             }
         }
+
     </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto py-8 px-4">
-        <!-- Print Button -->
-        <div class="text-right mb-4 no-print">
-            <button onclick="window.print()" class="bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded">
-                Print Receipt
-            </button>
+
+<body>
+
+    <div class="receipt">
+        <h1>Hydro<span>Wash</span></h1>
+        <p class="text-center text-sm">Transaction Receipt</p>
+        <p class="text-center text-sm">23-04-2025 14:30</p>
+
+        <div class="section text-center">
+            <strong>Transaction #N05BC2AC</strong>
         </div>
 
-        <!-- Receipt -->
-        <div class="receipt bg-white rounded-lg shadow-lg max-w-md mx-auto p-6">
-            <!-- Header -->
-            <div class="text-center border-b border-gray-200 pb-4">
-                <div class="flex justify-center mb-2">
-                    <div class="bg-primary rounded-full h-12 w-12 flex items-center justify-center text-white font-bold">
-                        HW
-                    </div>
-                </div>
-                <h1 class="font-bold text-xl">
-                    Hydro<span class="text-primary">Wash</span>
-                </h1>
-                <p class="text-gray-500 text-sm">Transaction Receipt</p>
-                <p class="text-gray-500 text-sm">23-04-2025 14:30</p>
+        <div class="section">
+            <div class="row"><span class="label">Date:</span><span class="value">23-04-2025</span></div>
+            <div class="row"><span class="label">Customer:</span><span class="value">Malvin</span></div>
+        </div>
+
+        <div class="section">
+            <div class="label">Address Taking:</div>
+            <div class="box">Jln dauh kangin</div>
+            <div class="label" style="margin-top: 0.5rem;">Address Delivery:</div>
+            <div class="box">Jln dauh kangin</div>
+        </div>
+
+        <div class="section grid">
+            <div>
+                <div class="label">Amount Item:</div>
+                <div class="value">5 items</div>
             </div>
-
-            <!-- Transaction Details -->
-            <div class="py-4 border-b border-gray-200">
-                <h2 class="font-semibold text-center text-lg mb-3">Transaction #N05BC2AC</h2>
-
-                <div class="flex justify-between mb-2">
-                    <span class="text-gray-600">Transaction Date:</span>
-                    <span class="font-medium">23-04-2025</span>
-                </div>
-                <div class="flex justify-between mb-2">
-                    <span class="text-gray-600">Customer:</span>
-                    <span class="font-medium">Malvin</span>
-                </div>
+            <div>
+                <div class="label">Take Away:</div>
+                <div class="value">Yes</div>
             </div>
+        </div>
 
-            <!-- Address Information -->
-            <div class="py-4 border-b border-gray-200">
-                <div class="mb-3">
-                    <h3 class="text-gray-600 mb-1">Address Taking:</h3>
-                    <p class="bg-gray-50 p-2 rounded">Jln dauh kangin</p>
-                </div>
-
-                <div>
-                    <h3 class="text-gray-600 mb-1">Address Delivery:</h3>
-                    <p class="bg-gray-50 p-2 rounded">Jln dauh kangin</p>
-                </div>
+        <div class="section grid">
+            <div class="text-center">
+                <div class="label">Payment Method:</div>
+                <div class="value">Cash</div>
             </div>
-
-            <!-- Service Details -->
-            <div class="py-4 border-b border-gray-200">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <h3 class="text-gray-600 mb-1">Amount Item:</h3>
-                        <p class="font-medium">5 items</p>
-                    </div>
-                    <div>
-                        <h3 class="text-gray-600 mb-1">Take Away:</h3>
-                        <p class="font-medium">Yes</p>
-                    </div>
-                </div>
+            <div class="text-center">
+                <div class="label">Total Amount:</div>
+                <div class="value">Rp 55,000.00</div>
             </div>
+        </div>
 
-            <!-- Payment Method -->
-            <div class="py-4 border-b border-gray-200">
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="text-center">
-                        <h3 class="text-gray-600 mb-2">Payment Method:</h3>
-                        <div class="flex flex-col items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                            </svg>
-                            <span class="mt-1">Cash</span>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h3 class="text-gray-600 mb-2">Total Amount:</h3>
-                        <p class="font-bold text-lg">Rp 55,000.00</p>
-                    </div>
-                </div>
-            </div>
+        <div class="section row">
+            <span class="label">Status:</span>
+            <span class="status">Completed</span>
+        </div>
 
-            <!-- Status -->
-            <div class="py-4 border-b border-gray-200">
-                <div class="flex justify-between">
-                    <span class="text-gray-600">Status:</span>
-                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Completed</span>
-                </div>
-            </div>
+        <div class="section">
+            <div class="label">Notes:</div>
+            <div class="box text-sm">Please handle with care. Contains delicate fabrics.</div>
+        </div>
 
-            <!-- Notes -->
-            <div class="py-4 border-b border-gray-200">
-                <h3 class="text-gray-600 mb-1">Notes:</h3>
-                <p class="bg-gray-50 p-2 rounded text-sm">Please handle with care. Contains delicate fabrics.</p>
-            </div>
-
-            <!-- Footer -->
-            <div class="text-center pt-4 text-gray-500 text-sm">
-                <p>Thank you for choosing HydroWash!</p>
-                <p>For inquiries, please contact: 0812-3456-7890</p>
-                <p class="mt-2">www.hydrowash.com</p>
-
-                <!-- QR Code Placeholder -->
-                <div class="flex justify-center mt-3">
-                    <div class="border border-gray-200 p-2 rounded">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                        </svg>
-                    </div>
-                </div>
-                <p class="mt-2 text-xs">Scan to track your order</p>
-            </div>
+        <div class="footer">
+            <p>Thank you for choosing HydroWash!</p>
+            <p>Contact: 0812-3456-7890</p>
+            <p>www.hydrowash.com</p>
         </div>
     </div>
+
 </body>
+
 </html>

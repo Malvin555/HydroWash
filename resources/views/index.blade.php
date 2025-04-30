@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HydroWash - Premium Laundry Services</title>
+    <title>HydroWash</title>
     
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Navbar -->
@@ -19,15 +19,18 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <span class="ml-2 text-white font-bold text-xl">HydroWash</span>
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">HW</span>
+                        </div>
+                        <span class="ml-2 text-white font-bold text-xl">Hydro<span class="text-teal-200">Wash</span></span>
                     </div>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">Home</a>
-                    <a href="#services" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">Services</a>
-                    <a href="#how-it-works" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">How It Works</a>
-                    <a href="#testimonials" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">Testimonials</a>
+                    <a href="#home" class="nav__link border-b-2 border-white text-white  px-3 py-2 text-sm font-medium transition duration-150">Home</a>
+                    <a href="#services" class="nav__link text-white  px-3 py-2 text-sm font-medium transition duration-150">Services</a>
+                    <a href="#how-it-works" class="nav__link text-white  px-3 py-2 text-sm font-medium transition duration-150">How It Works</a>
+                    <a href="#testimonials" class="nav__link text-white  px-3 py-2 text-sm font-medium transition duration-150">Testimonials</a>
                     <a href="{{ route('login') }}" class="bg-white text-primary hover:bg-teal-50 ml-3 px-4 py-2 rounded-lg text-sm font-medium transition duration-150">Log in</a>
                 </div>
                 
@@ -44,10 +47,10 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-teal-400">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#services" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">Services</a>
-                <a href="#how-it-works" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
-                <a href="#testimonials" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+                <a href="#home" class="nav__link border-b-2 border-white text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#services" class="nav__link text-white block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <a href="#how-it-works" class="nav__link text-white block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#testimonials" class="nav__link text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
                 <a href="{{ route('login') }}" class="bg-white text-primary hover:bg-teal-50 block px-3 py-2 rounded-md text-base font-medium mt-4">Log in</a>
             </div>
         </div>
@@ -64,7 +67,7 @@
                 <div class="lg:w-1/2 mb-12 lg:mb-0" data-aos="fade-right">
                     <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
                         Laundry Service <br>
-                        <span class="text-primary">Reimagined</span>
+                        <span class="text-white">Reimagined</span>
                     </h1>
                     <p class="text-white text-lg md:text-xl mb-8 max-w-lg">
                         Experience premium laundry service with free pickup and delivery. 
@@ -204,16 +207,16 @@
                             </p>
                         </div>
                         <div class="md:w-12 md:flex md:justify-center md:items-center relative">
-                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl text-center font-bold flex items-center justify-center">
                                 1
                             </div>
                         </div>
                         <div class="md:w-1/2 md:pl-12">
-                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                            <div class="bg-white rounded-xl shadow-lg">
                                 <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
                                     1
                                 </div>
-                                <img src="{{ asset('img/schedule.png') }}" alt="Schedule Pickup" class="w-full h-48 object-cover rounded-lg">
+                                <img src="{{ asset('img/schedule.jpg') }}" alt="Schedule Pickup" class="w-full h-48 object-cover rounded-lg">
                             </div>
                         </div>
                     </div>
@@ -227,16 +230,16 @@
                             </p>
                         </div>
                         <div class="md:w-12 md:flex md:justify-center md:items-center relative md:order-1">
-                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl text-center font-bold flex items-center justify-center">
                                 2
                             </div>
                         </div>
                         <div class="md:w-1/2 md:pr-12 md:order-0">
-                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                            <div class="bg-white rounded-xl shadow-lg">
                                 <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
                                     2
                                 </div>
-                                <img src="{{ asset('img/pickup.png') }}" alt="We Collect" class="w-full h-48 object-cover rounded-lg">
+                                <img src="{{ asset('img/pickup.jpg') }}" alt="We Collect" class="w-full h-48 object-cover rounded-lg">
                             </div>
                         </div>
                     </div>
@@ -250,50 +253,23 @@
                             </p>
                         </div>
                         <div class="md:w-12 md:flex md:justify-center md:items-center relative">
-                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl text-center font-bold flex items-center justify-center">
                                 3
                             </div>
                         </div>
                         <div class="md:w-1/2 md:pl-12">
-                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                            <div class="bg-white rounded-xl shadow-lg">
                                 <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
                                     3
                                 </div>
-                                <img src="{{ asset('img/cleaning.png') }}" alt="We Clean" class="w-full h-48 object-cover rounded-lg">
+                                <img src="{{ asset('img/cleaning.jpg') }}" alt="We Clean" class="w-full h-48 object-cover rounded-lg">
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-left">
-                        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12 md:order-2 text-center md:text-left">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">We Deliver</h3>
-                            <p class="text-gray-600">
-                                Your fresh, clean laundry is delivered back to your doorstep at your preferred time, 
-                                neatly folded and ready to be put away.
-                            </p>
-                        </div>
-                        <div class="md:w-12 md:flex md:justify-center md:items-center relative md:order-1">
-                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
-                                4
-                            </div>
-                        </div>
-                        <div class="md:w-1/2 md:pr-12 md:order-0">
-                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
-                                <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
-                                    4
-                                </div>
-                                <img src="{{ asset('img/delivery.png') }}" alt="We Deliver" class="w-full h-48 object-cover rounded-lg">
-                            </div>
-                        </div>
-                    </div>
+                
                 </div>
             </div>
-            
-            <div class="mt-16 text-center" data-aos="fade-up">
-                <a href="{{ route('register') }}" class="inline-block bg-primary text-white hover:bg-teal-600 px-8 py-3 rounded-lg font-medium transition duration-150 shadow-lg">
-                    Schedule Your First Pickup
-                </a>
-            </div>
+        
         </div>
     </section>
 
@@ -570,11 +546,6 @@
     <script>
         // Initialize AOS
         document.addEventListener('DOMContentLoaded', function() {
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 100
-            });
             
             // Mobile menu toggle
             const menuToggle = document.getElementById('menuToggle');

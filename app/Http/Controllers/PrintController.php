@@ -33,6 +33,18 @@ class PrintController extends Controller
                 $view = 'print.transaction'; 
                 $data = $this->getDataTransactionToPrint($time, $search);
                 break;
+            case 'laundryReceipt':
+                $view = 'print.receipt.laundry'; 
+                $data = [];
+                break;
+            case 'ironingReceipt':
+                $view = 'print.receipt.ironing'; 
+                $data = [];
+                break;
+            case 'transactionReceipt':
+                $view = 'print.receipt.transaction'; 
+                $data = [];
+                break;
         }
 
         $mpdf = new Mpdf();

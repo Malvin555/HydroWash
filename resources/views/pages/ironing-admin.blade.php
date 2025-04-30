@@ -125,7 +125,7 @@
                                     'no-underline' => $iron->status_report != 'deleted',
                                 ])>{{ Str::ucfirst($iron->status) }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-4 flex items-center gap-2 text-sm text-gray-500">
                                 @if ($iron->transaction->isEmpty() && $iron->status_report === 'normal')
                                     <button 
                                         data-modal-target="modalTransaction" 
@@ -156,6 +156,15 @@
                                             d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
                                     </svg>
                                 </button>
+                                <a href="{{ route('admin.print', [
+                                    'type' => 'ironingReceipt',
+                                    ]) }}" target="_blank" id="printLink">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M128 0C92.7 0 64 28.7 64 64l0 96 64 0 0-96 226.7 0L384 93.3l0 66.7 64 0 0-66.7c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0L128 0zM384 352l0 32 0 64-256 0 0-64 0-16 0-16 256 0zm64 32l32 0c17.7 0 32-14.3 32-32l0-96c0-35.3-28.7-64-64-64L64 192c-35.3 0-64 28.7-64 64l0 96c0 17.7 14.3 32 32 32l32 0 0 64c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-64zM432 248a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+                                    </svg>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

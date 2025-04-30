@@ -16,6 +16,10 @@ use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TransactionController;
 
+Route::get('/l', function () {
+    return view('laundry');
+})->name('home');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware('allow.guest')->group(function () {
@@ -50,6 +54,8 @@ Route::middleware('ensure.is.user')->group(function () {
     Route::put('/user/profile/password-update', [UserController::class, 'passwordUpdate'])->name('profile.password.update');
     
     Route::get('/user/history', [HistoryController::class, 'index'])->name('history');
+
+    Route::get('/user/print', [PrintController::class, 'print'])->name('user.print');
     
     Route::get('/user/complete-added', [TransactionController::class, 'showCompletePage'])->name('complete-added');
     Route::get('/user/transaction/{slug?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');

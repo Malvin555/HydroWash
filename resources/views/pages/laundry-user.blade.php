@@ -2,8 +2,9 @@
     {{-- Redesigned laundry service --}}
     <section class="min-h-screen py-16 md:py-24 relative bg-gradient-to-b from-white to-[#e6f7f9]">
         <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <x-back-to-home></x-back-to-home>
             <!-- Header -->
-            <div class="mb-10 text-center">
+            <div class="mb-10 mt-5 text-center">
                 <h1 class="text-3xl md:text-5xl font-bold text-primary mb-3 drop-shadow-sm">
                     Laundry Service
                 </h1>
@@ -16,21 +17,26 @@
                 @csrf
                 
                 <!-- Service Steps -->
-                <div class="flex justify-between mb-10 relative">
-                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
-                    <div class="flex flex-col md:flex-row justify-between w-full relative z-10">
-                        <div class="flex flex-col items-center mb-4 md:mb-0">
-                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold mb-2">1</div>
-                            <span class="text-sm font-medium text-primary">Select Items</span>
+                <div class="flex justify-between items-center mb-8 px-4">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center">
+                            <span>1</span>
                         </div>
-                        <div class="flex flex-col items-center mb-4 md:mb-0">
-                            <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold mb-2">2</div>
-                            <span class="text-sm font-medium text-gray-600">Delivery Options</span>
+                        <span class="text-xs mt-1 text-gray-600">Order</span>
+                    </div>
+                    <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-gray-300 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center">
+                            <span>2</span>
                         </div>
-                        <div class="flex flex-col items-center">
-                            <div class="w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold mb-2">3</div>
-                            <span class="text-sm font-medium text-gray-600">Review & Submit</span>
+                        <span class="text-xs mt-1 text-gray-600">Payment</span>
+                    </div>
+                    <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-gray-300 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center">
+                            <span>3</span>
                         </div>
+                        <span class="text-xs mt-1 text-gray-600">Complete</span>
                     </div>
                 </div>
 

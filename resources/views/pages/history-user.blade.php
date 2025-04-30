@@ -2,11 +2,11 @@
     {{-- history --}}
     <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24" data-module="historyUser">
         <div class="container mx-auto px-4 md:px-6 relative z-10">
-            <x-back-to-home></x-back-to-home>
             
             <div class="max-w-6xl mx-auto">
+                <x-back-to-home></x-back-to-home>
                 <!-- Header Section -->
-                <div class="mb-8">
+                <div class="mb-8 mt-5">
                     <div class="flex items-center gap-3 mb-2">
                         <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">
                             Your Service History
@@ -163,14 +163,10 @@
                                         
                                         <!-- Action Buttons -->
                                         <div class="flex gap-2">
-                                            <button class="view-details-btn bg-primary hover:bg-[#0c7489] text-white p-2 rounded-lg transition-colors duration-200" title="View Details">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                </svg>
-                                            </button>
-                                            
-                                            <a href="" class="bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-lg transition-colors duration-200" target="_blank" title="Print Receipt">
+                                        
+                                            <a href="{{ route('user.print', [
+                                                'type' => 'laundryReceipt',
+                                            ]) }}" class="bg-primary text-white p-2 rounded-lg transition-colors duration-200" target="_blank" title="Print Receipt">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                                                 </svg>
