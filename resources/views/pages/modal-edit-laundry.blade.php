@@ -78,7 +78,7 @@
                             </svg>
                         </div>
                     </div>
-                    
+
                     @error('retrieval-method')
                         <div class="w-full mt-3">
                             <p class="text-sm text-red-600">{{ $message }}</p>
