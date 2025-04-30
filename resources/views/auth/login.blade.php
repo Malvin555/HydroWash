@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - HydroWash</title>
-
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -27,12 +24,12 @@
                     </div>
                     <span class="ml-3 text-white font-bold text-2xl">Hydro<span class="text-teal-200">Wash</span></span>
                 </div>
-                
+
                 <h2 class="text-3xl font-bold mb-6 text-center">Welcome Back!</h2>
                 <p class="text-center text-teal-100 mb-8 max-w-md">
                     Log in to your account to manage your laundry services, track orders, and more.
                 </p>
-                
+
                 <div class="w-full max-w-md bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8">
                     <div class="flex items-center mb-4">
                         <div class="w-10 h-10 bg-teal-200 rounded-full flex items-center justify-center text-primary font-bold mr-4">
@@ -50,11 +47,11 @@
                         </div>
                     </div>
                     <p class="text-teal-100 text-sm">
-                        "As a business professional, I need my suits and dress shirts to look impeccable. 
+                        "As a business professional, I need my suits and dress shirts to look impeccable.
                         HydroWash's service exceeds my expectations every time!"
                     </p>
                 </div>
-                
+
                 <div class="absolute bottom-0 left-0 right-0">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
                         <path fill="#ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
@@ -62,7 +59,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Right side - Form -->
         <div class="w-full md:w-1/2 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-md w-full space-y-8">
@@ -75,14 +72,14 @@
                             <span class="ml-2 text-primary font-bold text-xl">Hydro<span class="text-teal-500">Wash</span></span>
                         </a>
                     </div>
-                    
+
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Welcome</h2>
                     <p class="text-gray-600">Hey, enter your details to sign in to your account</p>
                 </div>
-                
+
                 <form class="mt-8 space-y-6" action="{{ route('login.store') }}" method="post">
                     @csrf
-                    
+
                     <div class="space-y-4 rounded-md">
                         <div>
                             <label for="name" class="sr-only">Username</label>
@@ -92,15 +89,15 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     </svg>
                                 </div>
-                                <input type="text" name="name" id="name" 
-                                    class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                <input type="text" name="name" id="name"
+                                    class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                     placeholder="Username" value="{{ old('name') }}">
                             </div>
                             @error('name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        
+
                         <div>
                             <label for="password" class="sr-only">Password</label>
                             <div class="relative">
@@ -109,8 +106,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
                                 </div>
-                                <input type="password" name="password" id="password" 
-                                    class="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+                                <input type="password" name="password" id="password"
+                                    class="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                     placeholder="Password">
                                 <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                     <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -127,9 +124,9 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div>
-                        <button type="submit" 
+                        <button type="submit"
                             class="group relative w-full flex justify-center py-3 px-4 border border-transparent rounded-lg text-white bg-primary hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 font-medium shadow-lg">
                             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-200 group-hover:text-teal-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -140,16 +137,16 @@
                         </button>
                     </div>
                 </form>
-                
+
                 <div class="text-center mt-6">
                     <p class="text-gray-600">
-                        Don't have an account? 
+                        Don't have an account?
                         <a href="{{ route('register') }}" class="font-medium text-primary hover:text-teal-600 transition duration-150">
                             Register
                         </a>
                     </p>
                 </div>
-                
+
                 <div class="mt-8 pt-6 border-t border-gray-200">
                     <div class="flex justify-center">
                         <a href="{{ route('landing') }}" class="flex items-center gap-2 text-gray-500 hover:text-primary transition duration-150">

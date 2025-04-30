@@ -128,19 +128,13 @@
                 <a href="#" class="border border-primary text-primary hover:bg-gray-50 font-medium py-2 px-6 rounded transition duration-300 text-center">
                     View Receipt
                 </a>
+                <a href="{{ route('history') }}">
                 <button id="finishedBtn" class="bg-primary hover:bg-secondary text-white font-medium py-3 px-8 rounded transition duration-300 sm:ml-auto">
                     Finished
                 </button>
+                </a>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    // Simple JavaScript to handle the Finished button
-    document.getElementById('finishedBtn').addEventListener('click', function() {
-        // Redirect to home page or dashboard
-        window.location.href = "index.html";
-    });
-</script>
 </x-user-layout>
