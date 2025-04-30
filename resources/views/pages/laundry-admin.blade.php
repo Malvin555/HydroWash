@@ -128,13 +128,13 @@
                     <td class="px-6 py-4 flex items-center gap-2 text-sm text-gray-500">
                         @if ($lndry->transaction->isEmpty() && $lndry->status_report === 'normal')
                         <button data-modal-target="modalTransaction" data-slug="{{ $lndry->name_laundry }}"
-                            data-modal-key="showModalTransaction" class="cursor-pointer mr-3">
+                            data-modal-key="showModalTransaction" class="cursor-pointer">
                             <img src="{{ asset('img/cash.svg') }}" alt="cash" class="w-5 h-5">
                         </button>
                         @endif
                         <button data-modal-target="modalInformationLaundry" data-id="{{ $lndry->id }}"
                             data-modal-key="showModalInfoLaundry"
-                            class="text-blue-500 hover:text-blue-700 cursor-pointer mr-3">
+                            class="text-blue-500 hover:text-blue-700 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
                                 viewBox="0 0 576 512">
                                 <path

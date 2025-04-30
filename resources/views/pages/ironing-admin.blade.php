@@ -130,7 +130,7 @@
                                     <button 
                                         data-modal-target="modalTransaction" 
                                         data-slug="{{ $iron->name_ironing }}"
-                                        data-modal-key="showModalTransaction" class="cursor-pointer mr-3">
+                                        data-modal-key="showModalTransaction" class="cursor-pointer">
                                         <img src="{{ asset('img/cash.svg') }}" alt="cash" class="w-5 h-5">
                                     </button>
                                 @endif
@@ -138,7 +138,7 @@
                                     data-modal-target="modalInformationIroning" 
                                     data-id="{{ $iron->id }}"
                                     data-modal-key="showModalInfoIroning"
-                                    class="text-blue-500 hover:text-blue-700 cursor-pointer mr-3">
+                                    class="text-blue-500 hover:text-blue-700 cursor-pointer">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
                                         viewBox="0 0 576 512">
                                         <path
