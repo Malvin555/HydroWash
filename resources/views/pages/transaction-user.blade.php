@@ -3,6 +3,30 @@
     <section class="h-full relative py-24">
 
         <div class="px-[5%]">
+            <x-back-to-home></x-back-to-home>
+
+            <div class="flex justify-between items-center mb-8 mt-5 px-4">
+                <div class="flex flex-col items-center">
+                    <div class="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center">
+                        <span>1</span>
+                    </div>
+                    <span class="text-xs mt-1 text-gray-600">Order</span>
+                </div>
+                <div class="h-1 flex-1 bg-primary mx-2"></div>
+                <div class="flex flex-col items-center">
+                    <div class="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center">
+                        <span>2</span>
+                    </div>
+                    <span class="text-xs mt-1 text-gray-600">Payment</span>
+                </div>
+                <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+                <div class="flex flex-col items-center">
+                    <div class="bg-gray-300 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center">
+                        <span>3</span>
+                    </div>
+                    <span class="text-xs mt-1 text-gray-600">Complete</span>
+                </div>
+            </div>
             <h1
                 class="text-center text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)] mb-15">
                 Transaction {{ $transaction?->name_ironing ?? $transaction?->name_laundry }}</h1>

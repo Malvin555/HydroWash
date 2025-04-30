@@ -2,13 +2,21 @@
     {{-- complete transaction --}}
   <section class="h-screen relative py-24 flex justify-center items-center">
 
-    <div>
-      <img src="{{ asset('img/complete-transaction.png') }}" alt="tes" class="w-100 h-70 mb-2">
-      <h1 class="text-primary font-bold text-sm md:text-lg mb-7 drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)]">Transaction successful! Your payment has been received</h1>
+    <div class="w-full max-w-md mx-auto p-4 text-center">
+      <img src="{{ asset('img/complete-transaction.png') }}" alt="tes" class="w-3/4 h-auto mx-auto mb-4">
+      
+      <h1 class="text-primary font-bold text-base md:text-lg mb-6 drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)]">
+        Transaction successful! Your payment has been received
+      </h1>
+      
       <div class="flex justify-center">
-        <a href="{{ route('home') }}" class="w-[50%] text-white text-center bg-primary py-2 rounded-sm">Homepage</a>
+        <a href="{{ route('home') }}"
+          class="w-full sm:w-1/2 bg-primary text-white text-center py-2 rounded-sm">
+          Homepage
+        </a>
       </div>
     </div>
+    
 
     <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
   </section>

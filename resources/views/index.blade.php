@@ -1,365 +1,632 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HydroWash</title>
-
+    <title>HydroWash - Premium Laundry Services</title>
+    
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-
-    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
+    
     @vite('resources/css/app.css')
 </head>
-
-<body data-page="landing">
-
-    {{-- navbar --}}
-    <nav class="bg-primary fixed top-0 left-0 right-0 z-[100]">
-        <div class="max-w-screen-xl mx-auto px-[10%] lg:px-[5%] flex justify-between items-center py-3">
-            <div class="flex items-center gap-2">
-                <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-[40px] h-[40px]">
-
-                <ul id="menu"
-                    class="absolute top-[100%] left-0 h-screen w-[70%] bg-primary text-white font-bold transform -translate-x-full transition-transform duration-300 md:static md:translate-x-0 md:flex md:gap-6 md:bg-transparent md:h-auto md:w-auto md:items-center">
-                    <li class="p-4 border-b md:p-0 md:border-none"><a class="nav__link border-b-2 border-white" href="#">HOME</a></li>
-                    <li class="p-4 border-b md:p-0 md:border-none"><a class="nav__link" href="#services">SERVICE</a></li>
-                    <li class="p-4 md:p-0 md:border-none"><a class="nav__link" href="#review">REVIEW</a></li>
-                    <a href="{{ route('login') }}"
-                        class="bg-btn w-20 text-center ml-4 p-2 rounded-lg text-primary font-bold block md:hidden">Log
-                        in</a>
-                </ul>
+<body>
+    <!-- Navbar -->
+    <nav class="bg-primary fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="ml-2 text-white font-bold text-xl">HydroWash</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">Home</a>
+                    <a href="#services" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">Services</a>
+                    <a href="#how-it-works" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">How It Works</a>
+                    <a href="#testimonials" class="text-white hover:text-primary px-3 py-2 text-sm font-medium transition duration-150">Testimonials</a>
+                    <a href="{{ route('login') }}" class="bg-white text-primary hover:bg-teal-50 ml-3 px-4 py-2 rounded-lg text-sm font-medium transition duration-150">Log in</a>
+                </div>
+                
+                <div class="flex md:hidden items-center">
+                    <button id="menuToggle" class="text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-
-
-
-            <button id="menuToggle" class="md:hidden ml-4 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-6 h-6" viewBox="0 0 448 512">
-                    <path fill="currentColor"
-                        d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
-                </svg>
-            </button>
-
-            <a href="login" class="bg-btn p-2 rounded-lg text-primary font-bold hidden md:inline-block">Log in</a>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-teal-400">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#services" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <a href="#how-it-works" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#testimonials" class="text-white hover:bg-teal-600 block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+                <a href="{{ route('login') }}" class="bg-white text-primary hover:bg-teal-50 block px-3 py-2 rounded-md text-base font-medium mt-4">Log in</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-pattern"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0" data-aos="fade-right">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+                        Laundry Service <br>
+                        <span class="text-primary">Reimagined</span>
+                    </h1>
+                    <p class="text-white text-lg md:text-xl mb-8 max-w-lg">
+                        Experience premium laundry service with free pickup and delivery. 
+                        We use eco-friendly products to keep your clothes fresh and the planet clean.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="{{ route('register') }}" class="bg-white text-primary hover:bg-teal-50 px-8 py-3 rounded-lg font-medium text-center transition duration-150 shadow-lg">
+                            Get Started
+                        </a>
+                        <a href="#services" class="border border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-lg font-medium text-center transition duration-150">
+                            Our Services
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 flex justify-center" data-aos="fade-left">
+                    <div class="relative">
+                        <div class="absolute -inset-1 bg-teal-200 rounded-full blur-lg opacity-70"></div>
+                        <img src="{{ asset('img/main-img.png') }}" alt="Laundry Service" class="relative rounded-2xl shadow-2xl max-w-md lg:max-w-lg">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-primary shadow-2xl outline outline-white/50 rounded-lg p-6">
+                    <h3 class="text-3xl font-bold text-white mb-1">90%</h3>
+                    <p class="text-teal-100 text-sm">Time saved on laundry chores</p>
+                </div>
+                <div class="bg-primary shadow-2xl outline outline-white/50 rounded-lg p-6">
+                    <h3 class="text-3xl font-bold text-white mb-1">100%</h3>
+                    <p class="text-teal-100 text-sm">Eco-friendly products</p>
+                </div>
+                <div class="bg-primary shadow-2xl outline outline-white/50 backdrop-blur-sm rounded-lg p-6">
+                    <h3 class="text-3xl font-bold text-white mb-1">24/7</h3>
+                    <p class="text-teal-100 text-sm">Customer support</p>
+                </div>
+                <div class="bg-primary shadow-2xl outline outline-white/50 rounded-lg p-6">
+                    <h3 class="text-3xl font-bold text-white mb-1">5000+</h3>
+                    <p class="text-teal-100 text-sm">Happy customers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
 
-
-    {{-- home section --}}
-    <section class="h-screen relative bg-cover bg-center pt-24" style="background-image: url('{{ asset('img/main-img.png') }}');" id="home">
-        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
-
-        <div  class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%] flex items-center z-50 relative">
-            <div data-aos="zoom-in" data-aos-duration="600" class="text-center md:text-left space-y-6 md:max-w-[55%] lg:max-w-[65%]">
-                <h1  class="text-white text-3xl md:text-6xl lg:text-8xl font-bold leading-tight"
-                    >
-                    The best web for your laundry
-                </h1>
-                <p class="text-white text-lg md:text-2xl lg:text-4xl">
-                    Welcome to HydroWash Service, where we
-                    transform your laundry day into a breeze!
+    <!-- Services Section -->
+    <section id="services" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Premium Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    We offer a range of professional laundry and dry cleaning services tailored to meet your needs.
+                    All services include free pickup and delivery.
                 </p>
-                <a  href="{{ route('register') }}"
-                    class="inline-block bg-btn text-center text-primary font-bold py-2 px-6 rounded-full shadow-md transition duration-300 hover:bg-gray-200"
-                    >
-                    Start Cleaning
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-48 bg-primary flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15l-5-5L5 21M5 10l5 5 9-9" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Wash & Fold</h3>
+                        <p class="text-gray-600 mb-4">
+                            Our most popular service. We'll wash, dry, and fold your clothes with care, 
+                            using premium detergents and fabric softeners.
+                        </p>
+                        
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-48 bg-primary flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Dry Cleaning</h3>
+                        <p class="text-gray-600 mb-4">
+                            Professional dry cleaning for your delicate items, suits, dresses, and other 
+                            garments that require special care.
+                        </p>
+                       
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-48 bg-primary flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Express Service</h3>
+                        <p class="text-gray-600 mb-4">
+                            Need it fast? Our express service guarantees same-day or next-day delivery 
+                            for those urgent situations.
+                        </p>
+                       
+                    </div>
+                </div>
+            </div>
+            
+    
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our simple 4-step process makes laundry day a breeze. From scheduling to delivery, 
+                    we handle everything so you don't have to.
+                </p>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary hidden md:block"></div>
+                
+                <div class="space-y-12 relative">
+                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-right">
+                        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12 text-center md:text-right">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Schedule Pickup</h3>
+                            <p class="text-gray-600">
+                                Book a pickup time that works for you through our website or mobile app. 
+                                We offer flexible scheduling to fit your busy lifestyle.
+                            </p>
+                        </div>
+                        <div class="md:w-12 md:flex md:justify-center md:items-center relative">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                                1
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12">
+                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
+                                    1
+                                </div>
+                                <img src="{{ asset('img/schedule.png') }}" alt="Schedule Pickup" class="w-full h-48 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-left">
+                        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12 md:order-2 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">We Collect Your Laundry</h3>
+                            <p class="text-gray-600">
+                                Our friendly driver will arrive at your doorstep during your selected time slot 
+                                to collect your laundry in our special HydroWash bags.
+                            </p>
+                        </div>
+                        <div class="md:w-12 md:flex md:justify-center md:items-center relative md:order-1">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                                2
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pr-12 md:order-0">
+                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
+                                    2
+                                </div>
+                                <img src="{{ asset('img/pickup.png') }}" alt="We Collect" class="w-full h-48 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-right">
+                        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12 text-center md:text-right">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">We Clean & Care</h3>
+                            <p class="text-gray-600">
+                                Your clothes are sorted, cleaned, and folded with care by our professional team 
+                                using eco-friendly products and state-of-the-art equipment.
+                            </p>
+                        </div>
+                        <div class="md:w-12 md:flex md:justify-center md:items-center relative">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                                3
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12">
+                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
+                                    3
+                                </div>
+                                <img src="{{ asset('img/cleaning.png') }}" alt="We Clean" class="w-full h-48 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center" data-aos="fade-left">
+                        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12 md:order-2 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">We Deliver</h3>
+                            <p class="text-gray-600">
+                                Your fresh, clean laundry is delivered back to your doorstep at your preferred time, 
+                                neatly folded and ready to be put away.
+                            </p>
+                        </div>
+                        <div class="md:w-12 md:flex md:justify-center md:items-center relative md:order-1">
+                            <div class="hidden md:block absolute w-8 h-8 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center">
+                                4
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pr-12 md:order-0">
+                            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white text-xl font-bold flex items-center justify-center mb-4 mx-auto md:hidden">
+                                    4
+                                </div>
+                                <img src="{{ asset('img/delivery.png') }}" alt="We Deliver" class="w-full h-48 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <a href="{{ route('register') }}" class="inline-block bg-primary text-white hover:bg-teal-600 px-8 py-3 rounded-lg font-medium transition duration-150 shadow-lg">
+                    Schedule Your First Pickup
                 </a>
             </div>
         </div>
     </section>
 
-
-
-
-
-    {{-- services section --}}
-    <section class="h-full relative pb-13" id="services">
-        <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary to-transparent z-10"></div>
-
-        <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%]">
-            <div class="w-full mb-15 md:mb-35 flex flex-col gap-5 md:flex-row md:justify-between md:items-center pt-24">
-                <h1 data-aos="fade-right"
-                    class="font-bold text-xl md:text-2xl lg:text-4xl md:w-[50%] drop-shadow-[0_5px_1px_rgba(0,0,0,0.2)]">
-                    your trusted partner in achieving pristine.</h1>
-                <p data-aos="fade-left" class="text-sm lg:text-base md:w-[50%]">Established with the mission to simplify your life and
-                    elevate your laundry experience, we bring a blend of modern technology and eco-friendly practices.
+    <!-- Features Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose HydroWash?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    We're not just another laundry service. Here's what sets us apart and why thousands of customers trust us.
                 </p>
             </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Time-Saving</h3>
+                    <p class="text-gray-600">
+                        Save up to 5 hours every week by letting us handle your laundry needs. 
+                        Use that time for things that matter more to you.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Quality Guaranteed</h3>
+                    <p class="text-gray-600">
+                        We treat your clothes with the utmost care. If you're not 100% satisfied, 
+                        we'll re-clean your items at no additional cost.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Free Pickup & Delivery</h3>
+                    <p class="text-gray-600">
+                        We come to you! Our convenient pickup and delivery service is always free 
+                        within our service areas.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Eco-Friendly</h3>
+                    <p class="text-gray-600">
+                        We use biodegradable, hypoallergenic detergents and energy-efficient machines 
+                        to minimize our environmental impact.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Affordable Pricing</h3>
+                    <p class="text-gray-600">
+                        Competitive rates with no hidden fees. We offer subscription plans for regular customers 
+                        with additional savings.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Secure Handling</h3>
+                    <p class="text-gray-600">
+                        Your clothes are individually tagged and tracked throughout the cleaning process 
+                        to ensure nothing gets lost or mixed up.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-25 lg:mb-35 md:justify-center">
-                <div class="w-full px-4">
-                    <div data-aos="fade-left" class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
-                        <div class="bg-btn w-12 h-12 rounded-sm flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-6 h-6 fill-primary">
-                                <path
-                                    d="M112 0C85.5 0 64 21.5 64 48l0 48L16 96c-8.8 0-16 7.2-16 16s7.2 16 16 16l48 0 208 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 160l-16 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l16 0 176 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 224l-48 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l48 0 144 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L64 288l0 128c0 53 43 96 96 96s96-43 96-96l128 0c0 53 43 96 96 96s96-43 96-96l32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-64 0-32 0-18.7c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7L416 96l0-48c0-26.5-21.5-48-48-48L112 0zM544 237.3l0 18.7-128 0 0-96 50.7 0L544 237.3zM160 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm272 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z" />
-                                </svg>
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-primary relative">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-pattern"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">What Our Customers Say</h2>
+                <p class="text-teal-100 max-w-2xl mx-auto">
+                    Don't just take our word for it. Here's what our satisfied customers have to say about HydroWash.
+                </p>
+            </div>
+            
+            <div class="relative" data-aos="fade-up">
+                <div class="absolute inset-0 flex items-center justify-between z-10 pointer-events-none">
+                    <button id="prevTestimonial" class="bg-white text-primary p-3 rounded-full shadow-lg pointer-events-auto focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button id="nextTestimonial" class="bg-white text-primary p-3 rounded-full shadow-lg pointer-events-auto focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="overflow-hidden">
+                    <div id="testimonialSlider" class="flex transition-transform duration-500 ease-in-out">
+                        <!-- Testimonial 1 -->
+                        @forelse ($feedbacks as $feedback )
+                        <div class="w-full flex-shrink-0 px-4 md:px-12">
+                            <div class="bg-white rounded-xl shadow-lg p-8">
+                                <div class="flex items-center mb-6">
+                                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                                        S
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">{{ ucwords($feedback->user->name) }}</h4>
+                                        <p class="text-gray-500 text-sm">{{ $feedback->user->email }}</p>
+                                    </div>
+                                    <div class="ml-auto flex">
+                                        @for ($i = 0; $i < $feedback->star_rating; $i++)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        @endfor
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">
+                                    {{ $feedback->comment }}
+                                </p>
+                            </div>
                         </div>
-                        <h1 class="font-bold text-white mb-6">Convenient Pickup & Delivery</h1>
-                        <p class="text-white">Enjoy the convenience of our pickup and delivery service, designed to fit
-                            seamlessly into your schedule. Say goodbye to the hassle of laundry day and let us come to
-                            you.</p>
+                            
+                        @empty
+                        <div class="w-full flex-shrink-0 px-4 md:px-12">
+                            <div class="bg-primary  p-8 flex flex-col items-center justify-center text-center">
+                                <h3 class="text-lg font-semibold text-white mb-2">No Feedback Found</h3>
+                                <p class="text-white text-sm">There are currently no testimonials available. Once users provide feedback, it will appear here.</p>
+                            </div>
+                        </div>                        
+                        @endforelse
+                        
                     </div>
                 </div>
-
-                <div class="w-full px-4">
-                    <div data-aos="fade-left" data-aos-delay="100" class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
-                        <div class="bg-btn w-12 h-12 rounded-sm flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-primary">
-                                <path
-                                    d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5l88 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0-72 0s0 0 0 0c-16.6 0-32.7 1.9-48.3 5.4c-25.9 5.9-49.9 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440l0 16c0 13.3 10.7 24 24 24s24-10.7 24-24l0-16c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z" />
-                                </svg>
-                        </div>
-                        <h1 class="font-bold text-white mb-6">Eco-Friendly Products</h1>
-                        <p class="text-white">We prioritize your health and the environment by using only eco-friendly
-                            detergents and cleaning agents, ensuring your clothes are safe and fresh without harmful
-                            chemicals.</p>
-                    </div>
-                </div>
-
-                <div class="w-full px-4">
-                    <div data-aos="fade-left" data-aos-delay="200" class="bg-primary p-5 rounded-lg drop-shadow-[0_20px_4px_rgba(0,0,0,0.2)] mb-10">
-                        <div class="bg-btn w-12 h-12 rounded-sm flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-6 h-6 fill-primary">
-                                <path
-                                    d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0l12.6 0c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7 480 448c0 35.3-28.7 64-64 64l-192 0c-35.3 0-64-28.7-64-64l0-250.3-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0l12.6 0z" />
-                                </svg>
-                        </div>
-
-                        <h1 class="font-bold text-white mb-6">Profesional Dry Cleaning</h1>
-                        <p class="text-white">Trust our expertise in dry cleaning to maintain the integrity and beauty
-                            of your delicate and professional attire. We handle each item with precision to ensure a
-                            flawless finish</p>
+                
+                <div class="flex justify-center mt-8">
+                    <div class="flex space-x-2">
+                        <button class="w-3 h-3 rounded-full bg-white opacity-50 testimonial-dot active" data-index="0"></button>
+                        <button class="w-3 h-3 rounded-full bg-white opacity-50 testimonial-dot" data-index="1"></button>
+                        <button class="w-3 h-3 rounded-full bg-white opacity-50 testimonial-dot" data-index="2"></button>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-15">
-                <div data-aos="fade-right" data-aos-delay="300" class="w-full px-4">
-                    <div class="border-b-2 pb-4 lg:border-b-0 mb-10">
-                        <h1 class="text-6xl mb-3 font-bold">90%</h1>
-                        <p class="text-base">Of our customers enjoy the time-saving convenience of our reliable pickup
-                            and
-                            delivery service.
-                        </p>
+    <!-- Footer -->
+    <footer class="bg-white text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary px-2 rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">HW</span>
+                        </div>
+                        <span class="ml-2 text-primary font-bold text-xl">Hydro<span class="text-teal-400">Wash</span></span>
                     </div>
-                </div>
-
-                <div data-aos="fade-right" data-aos-delay="200" class="w-full px-4">
-                    <div class="border-b-2 pb-4 lg:border-b-0 lg:border-l-3 lg:pl-4 mb-10">
-                        <h1 class="text-6xl mb-3 font-bold">99%</h1>
-                        <p class="text-base">Customer satisfaction rate with our expert dry cleaning service, perfect
-                            for
-                            delicate and professional garments.
-                        </p>
-                    </div>
-                </div>
-
-                <div data-aos="fade-right" data-aos-delay="100" class="w-full px-4">
-                    <div class="border-b-2 pb-4 md:border-b-0 lg:border-l-3 lg:pl-4 mb-10">
-                        <h1 class="text-6xl mb-3 font-bold">100%</h1>
-                        <p class="text-base">Of our detergents and cleaning agents are eco-friendly, ensuring safe and
-                            gentle care for your clothes and the environment.
-                        </p>
-                    </div>
-                </div>
-
-                <div data-aos="fade-right" class="w-full px-4">
-                    <div class="pb-4 lg:border-l-3 lg:pl-4 mb-10">
-                        <h1 class="text-6xl mb-3 font-bold">20%</h1>
-                        <p class="text-base">Lower prices on average compared to other premium laundry services,
-                            providing
-                            exceptional value without compromising quality.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="flex flex-wrap gap-2 lg:gap-0 justify-center lg:justify-between">
-                <div class="flex flex-col justify-center lg:w-[40%]">
-                    <div data-aos="fade-down" class="mb-6 md:mb-8">
-                        <h1 class="font-bold text-3xl md:text-4xl mb-1">Why Choose Us?</h1>
-                        <p>Experience the ultimate in convenience and quality with Bubbles Laundry Services Wash & Fold.
-                        </p>
-                    </div>
-
-                    <div data-aos="fade-right" data-aos-delay="100" class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-10">
-                        <div
-                            class="w-10 h-10 rounded-full bg-btn absolute top-1.5 left-1 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5 fill-primary">
-                                <path
-                                    d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 48c110.5 0 200 89.5 200 200s-89.5 200-200 200S56 366.5 56 256S145.5 56 256 56zm-8 72v120c0 4.4 1.8 8.6 5 11.7l72 72c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6L288 230.6V128c0-8.8-7.2-16-16-16s-16 7.2-16 16z" />
+                    <p class="text-gray-400 mb-6">
+                        Premium laundry and dry cleaning services with free pickup and delivery. Making laundry day a breeze since 2020.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
                             </svg>
-                        </div>
-                        <h1 class="text-white font-bold">Time-Saving</h1>
-
-                        <p class="text-white">Free up your valuable time for more important things while we handle your
-                            laundry.</p>
-                    </div>
-
-                    <div data-aos="fade-right" data-aos-delay="200" class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-10">
-                        <div
-                            class="w-10 h-10 rounded-full bg-btn absolute top-1.5 left-1 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-5 h-5 fill-primary">
-                                <path
-                                    d="M416 64a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96 128a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM160 464a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM32 160l.1 72.6c.1 52.2 24 101 64 133.1c-.1-1.9-.1-3.8-.1-5.7l0-8c0-71.8 37-138.6 97.9-176.7l60.2-37.6c8.6-5.4 17.9-8.4 27.3-9.4l45.9-79.5c6.6-11.5 2.7-26.2-8.8-32.8s-26.2-2.7-32.8 8.8l-78 135.1c-3.3 5.7-10.7 7.7-16.4 4.4s-7.7-10.7-4.4-16.4l62-107.4c6.6-11.5 2.7-26.2-8.8-32.8S214 5 207.4 16.5l-68 117.8s0 0 0 0s0 0 0 0l-43.3 75L96 160c0-17.7-14.4-32-32-32s-32 14.4-32 32zM332.1 88.5L307.5 131c13.9 4.5 26.4 13.7 34.7 27c.9 1.5 1.8 2.9 2.5 4.4l28.9-50c6.6-11.5 2.7-26.2-8.8-32.8s-26.2-2.7-32.8 8.8zm46.4 63.7l-26.8 46.4c-.6 6-2.1 11.8-4.3 17.4l4.7 0 13.3 0s0 0 0 0l31.8 0 23-39.8c6.6-11.5 2.7-26.2-8.8-32.8s-26.2-2.7-32.8 8.8zM315.1 175c-9.4-15-29.1-19.5-44.1-10.2l-60.2 37.6C159.3 234.7 128 291.2 128 352l0 8c0 8.9 .8 17.6 2.2 26.1c35.4 8.2 61.8 40 61.8 77.9c0 6.3-.7 12.5-2.1 18.4C215.1 501 246.3 512 280 512l176 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-92 0c-6.6 0-12-5.4-12-12s5.4-12 12-12l124 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-124 0c-6.6 0-12-5.4-12-12s5.4-12 12-12l156 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-156 0c-6.6 0-12-5.4-12-12s5.4-12 12-12l124 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-136 0s0 0 0 0s0 0 0 0l-93.2 0L305 219.1c15-9.4 19.5-29.1 10.2-44.1z" />
-                                </svg>
-                        </div>
-
-                        <h1 class="text-white font-bold">High-Quality Care</h1>
-
-                        <p class="text-white">Our professional team treats your clothes with the utmost care, ensuring
-                            they look and feel their best.</p>
-                    </div>
-
-                    <div data-aos="fade-right" data-aos-delay="300" class="w-full bg-primary rounded-xl py-2.5 px-13 relative mb-12">
-                        <div
-                            class="w-10 h-10 rounded-full bg-btn absolute top-1.5 left-1 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5 fill-primary">
-                                <path
-                                    d="M174.7 45.1C192.2 17 223 0 256 0s63.8 17 81.3 45.1l38.6 61.7 27-15.6c8.4-4.9 18.9-4.2 26.6 1.7s11.1 15.9 8.6 25.3l-23.4 87.4c-3.4 12.8-16.6 20.4-29.4 17l-87.4-23.4c-9.4-2.5-16.3-10.4-17.6-20s3.4-19.1 11.8-23.9l28.4-16.4L283 79c-5.8-9.3-16-15-27-15s-21.2 5.7-27 15l-17.5 28c-9.2 14.8-28.6 19.5-43.6 10.5c-15.3-9.2-20.2-29.2-10.7-44.4l17.5-28zM429.5 251.9c15-9 34.4-4.3 43.6 10.5l24.4 39.1c9.4 15.1 14.4 32.4 14.6 50.2c.3 53.1-42.7 96.4-95.8 96.4L320 448l0 32c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-64-64c-9.4-9.4-9.4-24.6 0-33.9l64-64c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2l0 32 96.2 0c17.6 0 31.9-14.4 31.8-32c0-5.9-1.7-11.7-4.8-16.7l-24.4-39.1c-9.5-15.2-4.7-35.2 10.7-44.4zm-364.6-31L36 204.2c-8.4-4.9-13.1-14.3-11.8-23.9s8.2-17.5 17.6-20l87.4-23.4c12.8-3.4 26 4.2 29.4 17L182 241.2c2.5 9.4-.9 19.3-8.6 25.3s-18.2 6.6-26.6 1.7l-26.5-15.3L68.8 335.3c-3.1 5-4.8 10.8-4.8 16.7c-.1 17.6 14.2 32 31.8 32l32.2 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32.2 0C42.7 448-.3 404.8 0 351.6c.1-17.8 5.1-35.1 14.6-50.2l50.3-80.5z" />
-                                </svg>
-                        </div>
-
-                        <h1 class="text-white font-bold">Eco-Friendly Product</h1>
-
-                        <p class="text-white">We use safe, environmentally friendly detergents that are tough on stains
-                            but gentle on your clothes and skin.</p>
-                    </div>
-
-                    <div class="w-full flex justify-center mb-12">
-                        <a data-aos="fade-up" data-aos-delay="300" href="{{ route('register') }}"
-                            class="inline-block w-3xs bg-btn text-center border-1 text-primary font-bold py-2 px-6  rounded-full shadow-md transition duration-300 hover:bg-gray-200">
-                            Start Cleaning
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
                         </a>
                     </div>
                 </div>
-
-                <div data-aos="zoom-in" data-aos-delay="400" class="lg:w-[60%] flex justify-center">
-                    <img src="{{ asset('img/service-img.png') }}" alt="service" class="">
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition">How It Works</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-white transition">Testimonials</a></li>
+                        <li><a href="{{ route('login') }}" class="text-gray-400 hover:text-white transition">Login</a></li>
+                        <li><a href="{{ route('register') }}" class="text-gray-400 hover:text-white transition">Register</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Wash & Fold</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Dry Cleaning</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Express Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Subscription Plans</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Business Services</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Special Items</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-400 mr-3 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-gray-400">123 Laundry Street<br>Clean City, 12345</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span class="text-gray-400">(555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-gray-400">info@hydrowash.com</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-
-
-        <div
-            class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10 pointer-events-none">
-        </div>
-    </section>
-
-
-
-    {{-- review section --}}
-    <section class="h-screen pt-25 bg-primary relative" id="review">
-        <div class="max-w-screen-xl h-full mx-auto px-[10%] lg:px-[5%">
-            <div class="w-full flex justify-end mb-5 md:mb-20">
-                <div data-aos="fade-left" class="w-35 md:w-75 bg-white py-3 rounded">
-                    <h1 class="text-center text-primary text-sm md:text-2xl">What our clients say</h1>
-                </div>
-            </div>
-
-            <div data-aos="zoom-in" class="w-full relative">
-                <div class="absolute left-[-3rem] top-1/2 z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 text-white cursor-pointer"
-                        viewBox="0 0 320 512" onclick="prevReview()">
-                        <path fill="currentColor"
-                            d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
-                    </svg>
-                </div>
-
-                <div class="overflow-hidden w-full">
-                    <div id="reviewWrapper" class="flex mx-5 transition-transform duration-500 ease-in-out w-full">
-                        @if ($feedbacks)
-                        @foreach ($feedbacks as $feedback)
-                        <div class="w-full flex-shrink-0 text-white px-4">
-                            <div class="flex items-center gap-2 mb-4">
-                                <img src="{{ asset('img/profile-img.png') }}" alt="profile"
-                                    class="w-10 h-10 md:w-15 md:h-15">
-                                <div>
-                                    <h1 class="text-lg md:text-xl">{{ $feedback->user->name }}</h1>
-                                    <p class="text-[.7rem] md:text-sm">
-                                        {{ \Carbon\Carbon::parse($feedback->created_at)->format('d/m/Y') }}</p>
-                                </div>
-                            </div>
-                            <p class="text-[.9rem] md:text-lg lg:text-2xl">
-                                {{ $feedback->comment }}
-                            </p>
-                        </div>
-                        @endforeach
-                        @endif
+            
+            <div class="border-t border-gray-800 pt-8 mt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                        &copy; {{ date('Y') }} HydroWash. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Cookie Policy</a>
                     </div>
                 </div>
-
-                <div class="absolute right-[-3rem] top-1/2 z-10">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="w-10 h-10 md:w-15 md:h-15 lg:w-20 lg:h-20 text-white cursor-pointer"
-                        viewBox="0 0 320 512" onclick="nextReview()">
-                        <path fill="currentColor"
-                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
-                    </svg>
-                </div>
             </div>
         </div>
-    </section>
+    </footer>
 
-
-
-
-    {{-- services2 section --}}
-    <section class="h-screen bg-cover bg-center bg-fixed relative flex items-center justify-center text-center px-4"
-        style="background-image: url('{{ asset('img/second-img.png') }}');">
-
-        <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary to-transparent z-0"></div>
-
-
-        <div class="relative z-10 max-w-3xl space-y-6">
-            <h1 data-aos="fade-up" class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Ready to Experience <br class="hidden sm:block" /> the Fresh & Clean Difference?
-            </h1>
-            <p data-aos="fade-up" class="text-white text-base sm:text-lg md:text-xl lg:text-2xl px-2">
-                Take the hassle out of laundry day and enjoy pristine, professionally cleaned clothes with Bubbles
-                Laundry Services.
-            </p>
-            <a data-aos="zoom-in" data-aos-delay="100" href="{{ route('register') }}"
-                class="inline-block bg-btn text-primary font-bold py-3 px-8 rounded-full shadow-md transition duration-300 hover:bg-gray-200">
-                Start Cleaning
-            </a>
-        </div>
-
-
-        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-0"></div>
-    </section>
-
-
-
-    {{-- footer --}}
-    <x-landing-footer></x-landing-footer>
-
-    {{-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> --}}
-
-    @vite('resources/js/app.js')
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Testimonial slider
+            const testimonialSlider = document.getElementById('testimonialSlider');
+            const prevTestimonial = document.getElementById('prevTestimonial');
+            const nextTestimonial = document.getElementById('nextTestimonial');
+            const testimonialDots = document.querySelectorAll('.testimonial-dot');
+            
+            if (testimonialSlider && prevTestimonial && nextTestimonial) {
+                let currentIndex = 0;
+                const totalSlides = testimonialSlider.children.length;
+                
+                function showSlide(index) {
+                    if (index < 0) index = totalSlides - 1;
+                    if (index >= totalSlides) index = 0;
+                    
+                    currentIndex = index;
+                    testimonialSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    
+                    // Update dots
+                    testimonialDots.forEach((dot, i) => {
+                        if (i === currentIndex) {
+                            dot.classList.add('opacity-100');
+                            dot.classList.remove('opacity-50');
+                        } else {
+                            dot.classList.add('opacity-50');
+                            dot.classList.remove('opacity-100');
+                        }
+                    });
+                }
+                
+                prevTestimonial.addEventListener('click', () => showSlide(currentIndex - 1));
+                nextTestimonial.addEventListener('click', () => showSlide(currentIndex + 1));
+                
+                // Dot navigation
+                testimonialDots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => showSlide(i));
+                });
+                
+                // Auto slide every 5 seconds
+                setInterval(() => showSlide(currentIndex + 1), 5000);
+            }
+        });
+    </script>
 </body>
-
-
-<script>
-    if (localStorage.getItem('api_token')) {
-        localStorage.removeItem('api_token');
-    }
-
-    if (localStorage.getItem('ref_id')) {
-        localStorage.removeItem('ref_id');
-    }
-</script>
-
-
-
 </html>

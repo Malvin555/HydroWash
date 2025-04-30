@@ -102,7 +102,7 @@ function renderModalInformationUser(response) {
                     Transaction
                 </a>
                 
-            <button data-modal-target="modalCancelService" data-fetch="false" class="block w-full px-4 py-2 rounded-md bg-primary text-white font-medium">
+            <button data-modal-target="modalCancelService" data-fetch="false" class="block cursor-pointer w-full px-4 py-2 rounded-md bg-red-600 text-white font-medium">
                 Cancel Order
             </button>
             ` : ""}

@@ -23,7 +23,7 @@
             margin-bottom: 20px;
         }
 
-        .header h1 {
+        .header h2 {
             font-size: 28px;
             color: #00879E;
             margin: 0;
@@ -70,10 +70,10 @@
 </head>
 
 <body>
-    <h2>Print Laundry</h2>
-
+    <h1>HydroWash</h1>
+    
     <div class="header">
-        <h1>HydroWash</h1>
+        <h2>Print Laundry</h2>
         <p>Date: {{ $data['time'] }}</p>
     </div>
 
@@ -82,9 +82,11 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Username</th>
+                <th>Amount Item</th>
+                <th>Type</th>
                 <th>Date</th>
                 <th>Method</th>
-                <th>Type</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -93,9 +95,11 @@
                 <tr>
                     <td>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $item->name_laundry }}</td>
+                    <td>John doe</td>
+                    <td>12</td>
+                    <td>{{ $item->itemType->name_item }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                     <td>{{ ucfirst(str_replace('_', ' ', $item->retrieval_method)) }}</td>
-                    <td>{{ $item->itemType->name_item }}</td>
                     <td>
                         <span style="
                             padding: 2px 6px; 
@@ -104,12 +108,12 @@
                             border-radius: 4px; 
                             background-color: {{ 
                                 $item->status == 'pending' ? '#E5E7EB' : 
-                                ($item->status == 'process' ? '#FEF3C7' : 
+                                ($item->status == 'process' ? '#DBEAFE' : 
                                 ($item->status == 'completed' ? '#D1FAE5' : '#DBEAFE')) 
                             }}; 
                             color: {{ 
                                 $item->status == 'pending' ? '#374151' : 
-                                ($item->status == 'process' ? '#92400E' : 
+                                ($item->status == 'process' ? '#1E40AF' : 
                                 ($item->status == 'completed' ? '#065F46' : '#1E40AF')) 
                             }};">
                             {{ Str::ucfirst($item->status) }}
@@ -125,6 +129,14 @@
         </tbody>
     </table>
 
+    <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 40px;">
+        <div style="text-align: center;">
+            <p>Denpasar, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
+            <p>Hormat Kami,</p>
+            <br><br><br>
+            <p style="text-decoration: underline; font-weight: bold;">I Putu Sudipa Yasa</p>
+        </div>
+    </div>
 </body>
 
 </html>

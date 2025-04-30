@@ -27,10 +27,7 @@
                     @enderror
                 </div>
 
-                <div class=" flex gap-2 bg-white">
-                    <x-close-modal-btn></x-close-modal-btn>
-                    <x-submit-modal-btn text="Cancel"></x-submit-modal-btn>
-                </div>
+                <x-submit-modal-btn text="Submit"></x-submit-modal-btn>
             </form>
         </div>
 

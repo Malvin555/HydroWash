@@ -2,7 +2,9 @@
     {{-- profile  --}}
     <section class="h-full relative py-24">
         <div class="px-[5%]">
-            <div class="mb-5">
+            <x-back-to-home></x-back-to-home>
+
+            <div class="mb-5 mt-3">
                 <h1
                     class="text-xl md:text-2xl lg:text-4xl text-primary font-bold drop-shadow-[0_4px_1px_rgba(0,0,0,0.2)]">
                     Your Profile</h1>
@@ -119,7 +121,7 @@
             </div>
 
         </div>
-  
+
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10"></div>
-      </section>
+    </section>
 </x-user-layout>

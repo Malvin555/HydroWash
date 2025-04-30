@@ -23,7 +23,7 @@
             margin-bottom: 20px;
         }
 
-        .header h1 {
+        .header h2 {
             font-size: 28px;
             color: #00879E;
             margin: 0;
@@ -70,10 +70,10 @@
 </head>
 
 <body>
-    <h2>Print Transaction</h2>
-
+    <h1>HydroWash</h1>
+    
     <div class="header">
-        <h1>HydroWash</h1>
+        <h2>Print Transaction</h2>
         @if ($data['date'])
             <p>Date: {{ \Carbon\Carbon::parse($data['date'])->format('m-Y') }}</p>
         @endif
@@ -106,7 +106,34 @@
         </tbody>
     </table>
 
-    <p>Overall income: {{ 'Rp ' . number_format($data['income'], 2, ',', '.') }}</p>
+    <div class="max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow p-6 space-y-4 mt-6">
+        <h2 class="text-xl font-semibold text-primary mb-2">Income Summary</h2>
+        
+        <div class="flex justify-between text-gray-700">
+            <span>Total Income</span>
+            <span class="font-bold">Rp {{ number_format($data['income'], 2, ',', '.') }}</span>
+        </div>
+    
+        <div class="flex justify-between text-gray-600">
+            <span>From Bedding</span>
+            {{-- <span>Rp {{ number_format($data['income_bedding'], 2, ',', '.') }}</span> --}}
+        </div>
+    
+        <div class="flex justify-between text-gray-600">
+            <span>From Clothes</span>
+            {{-- <span>Rp {{ number_format($data['income_clothes'], 2, ',', '.') }}</span> --}}
+        </div>
+    </div>
+    
+
+    <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 40px;">
+        <div style="text-align: center;">
+            <p>Denpasar, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
+            <p>Hormat Kami,</p>
+            <br><br><br>
+            <p style="text-decoration: underline; font-weight: bold;">I Putu Sudipa Yasa</p>
+        </div>
+    </div>
 </body>
 
 </html>
