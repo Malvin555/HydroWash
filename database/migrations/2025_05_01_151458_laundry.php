@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ironing', function (Blueprint $table) {
+        Schema::create('laundry', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key for users
-            $table->foreignId('item_id')->constrained('item_types')->onDelete('cascade'); // Foreign key for item types
-            $table->string('name_ironing'); // String for item name
-            $table->decimal('price_ironing', 10, 2); // Decimal for price
+            $table->string('order_code');
+            $table->foreign('order_code')->references('order_code')->on('order_items')->onDelete('cascade'); // Foreign key for order items
+            $table->string('name_laundry'); // String for item name
+            $table->decimal('price_laundry', 10, 2); // Decimal for price
             $table->integer('amount_item'); // Integer for amount
             $table->date('estimation')->nullable(); // Nullable date
             $table->enum('retrieval_method', ['take_away', 'delivery'])->default('take_away'); // Fixed default value
@@ -25,17 +26,17 @@ return new class extends Migration
             $table->text('address_taking')->nullable(); // Changed from var to 
             $table->text('address_delivery')->nullable(); // Changed from var to 
             $table->enum('status', ['pending', 'process', 'completed'])->default('pending');
-            $table->text('notes_ironing')->nullable(); // Changed to text and made nullable
+            $table->text('notes_laundry')->nullable(); // Changed to text and made nullable
             $table->string('created_who')->nullable();
             $table->timestamps(); // Adds created_at & updated_at
         });
     }
 
-    /**
+    /**   
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('laundry');
     }
 };

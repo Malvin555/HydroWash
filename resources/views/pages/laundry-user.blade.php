@@ -48,13 +48,13 @@
                         </svg>
                         Select Your Items
                     </h2>
-                    <div class="h-[30rem] max-h-[30rem] p-5 overflow-auto">
+                    <div class="h-full max-h-[30rem] p-5 overflow-auto">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                             @if ($itemTypes->isnotEmpty())
                                 @foreach ($itemTypes as $item)
                                     <div class="item-container">
                                         <label class="cursor-pointer transition-all duration-200 block h-full">
-                                            <div class="border rounded-lg overflow-hidden h-full hover:shadow-md
+                                            <div class="border rounded-lg overflow-hidden hover:shadow-md
                                                 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-gray-200' }}">
                                                 <div class="bg-cover bg-center h-40 relative"
                                                     style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">

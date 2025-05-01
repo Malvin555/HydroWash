@@ -27,12 +27,13 @@ class TransactionFactory extends Factory
             $useLaundry = true;
         }
 
+        $status = $this->faker->randomElement(['process', 'completed']);
         $laundry = $useLaundry
-            ? Laundry::inRandomOrder()->first() ?? Laundry::factory()->create()
+            ? Laundry::where('status', '!=', 'pending')->inRandomOrder()->first() ?? Laundry::factory()->create(['status' => $status])
             : null;
 
         $ironing = $useIroning
-            ? Ironing::inRandomOrder()->first() ?? Ironing::factory()->create()
+            ? Ironing::where('status', '!=', 'pending')->inRandomOrder()->first() ?? Ironing::factory()->create(['status' => $status])
             : null;
 
         // Get user from laundry.user_id or ironing.user_id

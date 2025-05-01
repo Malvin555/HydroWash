@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use App\Models\Ironing;
+use App\Models\Laundry;
 use App\Models\Canceled;
 use App\Models\Feedback;
-use App\Models\Ironing;
 use App\Models\ItemType;
-use App\Models\Laundry;
 use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

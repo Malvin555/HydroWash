@@ -78,6 +78,7 @@ class LaundryController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $isAdminRequest = $request->routeIs('laundry-admin.add');
 
         $serviceValidation = $this->setServiceType('laundry');
