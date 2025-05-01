@@ -1,9 +1,19 @@
 <x-user-layout>
     {{-- transaction --}}
     <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
             <x-back-to-home></x-back-to-home>
+
+            <!-- Header -->
+            <div class="mb-10 mt-5 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold text-primary mb-3 drop-shadow-sm">
+                    Transaction Laundry/Ironing #8787
+                </h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ab et blanditiis au
+                </p>
+            </div>
 
             <!-- Progress Tracker -->
             <div class="flex justify-between items-center mb-10 mt-6">
