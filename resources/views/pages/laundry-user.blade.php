@@ -1,7 +1,8 @@
 <x-user-layout>
     {{-- Redesigned laundry service --}}
-    <section class="min-h-screen py-16 md:py-24 relative bg-gradient-to-b from-white to-[#e6f7f9]">
-        <div class="container mx-auto px-4 md:px-6 relative z-10">
+    <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+
             <x-back-to-home></x-back-to-home>
             <!-- Header -->
             <div class="mb-10 mt-5 text-center">
@@ -13,30 +14,33 @@
                 </p>
             </div>
 
-            <form action="{{ route('laundry') }}" method="post" class="max-w-5xl mx-auto">
+            <form action="{{ route('laundry') }}" method="post" class=" mx-auto">
                 @csrf
-                
-                <!-- Service Steps -->
-                <div class="flex justify-between items-center mb-8 px-4">
+
+                <!-- Progress Tracker -->
+                <div class="flex justify-between items-center mb-10 mt-6">
                     <div class="flex flex-col items-center">
-                        <div class="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center">
-                            <span>1</span>
+                        <div class="bg-primary text-white rounded-full h-10 w-10 flex items-center justify-center shadow-md relative">
+                            <span class="font-medium">1</span>
+                            <span class="absolute -top-1 -right-1 bg-white border-2 border-primary rounded-full w-4 h-4 flex items-center justify-center">
+                                <span class="block w-2 h-2 bg-primary rounded-full"></span>
+                            </span>
                         </div>
-                        <span class="text-xs mt-1 text-gray-600">Order</span>
+                        <span class="text-xs mt-2 font-medium text-gray-700">Order</span>
                     </div>
                     <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
                     <div class="flex flex-col items-center">
-                        <div class="bg-gray-300 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center">
-                            <span>2</span>
+                        <div class="bg-gray-200 text-gray-500 rounded-full h-10 w-10 flex items-center justify-center shadow-sm">
+                            <span class="font-medium">2</span>
                         </div>
-                        <span class="text-xs mt-1 text-gray-600">Payment</span>
+                        <span class="text-xs mt-2 font-medium text-gray-700">Payment</span>
                     </div>
                     <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
                     <div class="flex flex-col items-center">
-                        <div class="bg-gray-300 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center">
-                            <span>3</span>
+                        <div class="bg-gray-200 text-gray-500 rounded-full h-10 w-10 flex items-center justify-center shadow-sm">
+                            <span class="font-medium">3</span>
                         </div>
-                        <span class="text-xs mt-1 text-gray-600">Complete</span>
+                        <span class="text-xs mt-2 font-medium text-gray-500">Complete</span>
                     </div>
                 </div>
 
@@ -51,89 +55,89 @@
                     <div class="h-[30rem] max-h-[30rem] p-5 overflow-auto">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                             @if ($itemTypes->isnotEmpty())
-                                @foreach ($itemTypes as $item)
-                                    <div class="item-container">
-                                        <label class="cursor-pointer transition-all duration-200 block h-full">
-                                            <div class="border rounded-lg overflow-hidden h-full hover:shadow-md
+                            @foreach ($itemTypes as $item)
+                            <div class="item-container">
+                                <label class="cursor-pointer transition-all duration-200 block h-full">
+                                    <div class="border rounded-lg overflow-hidden h-full hover:shadow-md
                                                 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-gray-200' }}">
-                                                <div class="bg-cover bg-center h-40 relative"
-                                                    style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
-                                                    <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                        Rp {{ number_format($item->price_item, 2, ',', '.') }}
-                                                    </div>
-                                                </div>
-                                                <div class="p-4">
-                                                    <div class="flex items-center justify-between mb-2">
-                                                        <span class="font-medium text-gray-800">{{ Str::title($item->name_item) }}</span>
-                                                        <div class="relative">
-                                                            <input type="checkbox" id="item_{{ $item->id }}" name="selected_types[]"
-                                                                value="{{ Str::lower($item->name_item) }}"
-                                                                data-price="{{ $item->price_item }}"
-                                                                data-name="{{ Str::title($item->name_item) }}"
-                                                                class="item-checkbox sr-only"
-                                                                {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'checked' : '' }}>
-                                                            <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center
+                                        <div class="bg-cover bg-center h-40 relative"
+                                            style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
+                                            <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                Rp {{ number_format($item->price_item, 2, ',', '.') }}
+                                            </div>
+                                        </div>
+                                        <div class="p-4">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <span class="font-medium text-gray-800">{{ Str::title($item->name_item) }}</span>
+                                                <div class="relative">
+                                                    <input type="checkbox" id="item_{{ $item->id }}" name="selected_types[]"
+                                                        value="{{ Str::lower($item->name_item) }}"
+                                                        data-price="{{ $item->price_item }}"
+                                                        data-name="{{ Str::title($item->name_item) }}"
+                                                        class="item-checkbox sr-only"
+                                                        {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'checked' : '' }}>
+                                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center
                                                                 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'bg-primary border-primary' : '' }}">
-                                                                <svg class="w-3 h-3 text-white {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}" 
-                                                                    fill="currentColor" viewBox="0 0 20 20">
-                                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <!-- Amount input -->
-                                                    <div class="amount-input mt-3 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}">
-                                                        <label class="text-xs text-gray-500 mb-1 block">Quantity</label>
-                                                        <div class="flex items-center border border-gray-200 rounded-md">
-                                                            <button type="button" class="quantity-btn minus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-                                                                </svg>
-                                                            </button>
-                                                            <input type="number" name="amounts[{{ Str::lower($item->name_item) }}]"
-                                                                class="w-full py-1 px-2 text-center text-gray-700 focus:outline-none"
-                                                                min="1" value="{{ old('amounts.' . Str::lower($item->name_item), 1) }}">
-                                                            <button type="button" class="quantity-btn plus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                        @error('amounts.' . Str::lower($item->name_item))
-                                                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                                                        @enderror
+                                                        <svg class="w-3 h-3 text-white {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}"
+                                                            fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                        </svg>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </label>
+
+                                            <!-- Amount input -->
+                                            <div class="amount-input mt-3 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}">
+                                                <label class="text-xs text-gray-500 mb-1 block">Quantity</label>
+                                                <div class="flex items-center border border-gray-200 rounded-md">
+                                                    <button type="button" class="quantity-btn minus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                                        </svg>
+                                                    </button>
+                                                    <input type="number" name="amounts[{{ Str::lower($item->name_item) }}]"
+                                                        class="w-full py-1 px-2 text-center text-gray-700 focus:outline-none"
+                                                        min="1" value="{{ old('amounts.' . Str::lower($item->name_item), 1) }}">
+                                                    <button type="button" class="quantity-btn plus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                @error('amounts.' . Str::lower($item->name_item))
+                                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
-                                @endforeach
+                                </label>
+                            </div>
+                            @endforeach
                             @else
-                                <div class="col-span-full p-8 rounded-lg bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-                                    </svg>
-                                    <span class="text-sm font-medium">No items available</span>
-                                    <p class="text-xs text-gray-400 mt-1">Please check back later</p>
-                                </div>
+                            <div class="col-span-full p-8 rounded-lg bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                </svg>
+                                <span class="text-sm font-medium">No items available</span>
+                                <p class="text-xs text-gray-400 mt-1">Please check back later</p>
+                            </div>
                             @endif
                         </div>
                     </div>
 
                     @error('selected_types')
-                        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-red-700">{{ $message }}</p>
-                                </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">{{ $message }}</p>
                             </div>
                         </div>
+                    </div>
                     @enderror
                 </div>
 
@@ -145,7 +149,7 @@
                         </svg>
                         Delivery Options
                     </h2>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div class="retrieval-option cursor-pointer border rounded-lg p-4 transition-all duration-200 hover:shadow-md"
                             data-value="delivery">
@@ -167,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="retrieval-option cursor-pointer border rounded-lg p-4 transition-all duration-200 hover:shadow-md"
                             data-value="take_away">
                             <div class="flex items-start">
@@ -189,28 +193,28 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <input type="hidden" name="retrieval-method" id="retrievalMethod" value="{{ old('retrieval-method') }}">
-                    
+
                     @error('retrieval-method')
-                        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-red-700">{{ $message }}</p>
-                                </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">{{ $message }}</p>
                             </div>
                         </div>
+                    </div>
                     @enderror
 
                     <!-- Delivery Address (shown only when delivery is selected) -->
                     <div id="deliveryAddressBox" class="mt-6 border-t pt-6" style="{{ old('retrieval-method') === 'delivery' ? '' : 'display: none;' }}">
                         <h3 class="font-medium text-gray-800 mb-3">Delivery Address</h3>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Pickup Address</label>
@@ -218,22 +222,22 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                     value="{{ old('address') }}">
                                 @error('address')
-                                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div>
                                 <label for="destination" class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
                                 <input type="text" name="destination" id="destination" placeholder="Enter delivery address"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                     value="{{ old('destination') }}">
                                 @error('destination')
-                                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
-                        
-                
+
+
                     </div>
                 </div>
 
@@ -245,7 +249,7 @@
                         </svg>
                         Order Summary
                     </h2>
-                    
+
                     <div id="selectedItemsSummary" class="mb-6">
                         <div id="selectedItemsList" class="divide-y">
                             <!-- Selected items will be displayed here via JavaScript -->
@@ -273,16 +277,16 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <input type="hidden" name="total_price" id="totalPriceInput" value="{{ old('total_price', 0) }}">
-                    
+
                     <div class="mb-6">
                         <label for="note" class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                        <textarea name="notes" id="note" rows="3" 
+                        <textarea name="notes" id="note" rows="3"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                             placeholder="Any notes for handling your laundry...">{{ old('notes') ?? '' }}</textarea>
                     </div>
-                    
+
                     <button type="submit"
                         class="w-full bg-primary text-white py-3 px-4 rounded-md font-medium text-lg hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                         Place Order
@@ -290,7 +294,7 @@
                 </div>
             </form>
         </div>
-        
+
         <!-- Decorative wave at bottom -->
         <div class="absolute bottom-0 left-0 w-full overflow-hidden">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-auto fill-primary opacity-20">
@@ -315,7 +319,7 @@
             const retrievalOptions = document.querySelectorAll('.retrieval-option');
             const deliveryRadioDot = document.querySelector('.delivery-radio-dot');
             const takeAwayRadioDot = document.querySelector('.take-away-radio-dot');
-            
+
             // Initialize retrieval method if it was previously selected
             if (retrievalMethodInput.value === 'delivery') {
                 deliveryRadioDot.classList.remove('hidden');
@@ -371,7 +375,7 @@
                             </div>
                             <span class="font-medium">${formatRupiah(itemTotal)}</span>
                         `;
-                        
+
                         // Insert before noItemsSelected if it exists
                         if (selectedItemsList.contains(noItemsSelected)) {
                             selectedItemsList.insertBefore(itemRow, noItemsSelected);
@@ -383,7 +387,7 @@
 
                 // Calculate total
                 total = subtotal;
-                
+
                 // Add delivery fee if delivery is selected
                 if (retrievalMethodInput.value === 'delivery') {
                     total += deliveryFee;
@@ -411,7 +415,7 @@
                 const label = container.querySelector('label');
                 const amountInput = container.querySelector('.amount-input');
                 const checkmark = container.querySelector('svg');
-                
+
                 checkbox.addEventListener('change', function() {
                     if (this.checked) {
                         amountInput.classList.remove('hidden');
@@ -442,13 +446,13 @@
                 button.addEventListener('click', function() {
                     const input = this.parentNode.querySelector('input');
                     let value = parseInt(input.value) || 0;
-                    
+
                     if (this.classList.contains('minus-btn')) {
                         value = Math.max(1, value - 1);
                     } else if (this.classList.contains('plus-btn')) {
                         value = Math.min(99, value + 1);
                     }
-                    
+
                     input.value = value;
                     input.dispatchEvent(new Event('input'));
                 });
@@ -464,7 +468,7 @@
                 option.addEventListener('click', function() {
                     const value = this.dataset.value;
                     retrievalMethodInput.value = value;
-                    
+
                     // Update UI
                     if (value === 'delivery') {
                         deliveryRadioDot.classList.remove('hidden');
@@ -475,7 +479,7 @@
                         takeAwayRadioDot.classList.remove('hidden');
                         deliveryAddressBox.style.display = 'none';
                     }
-                    
+
                     calculateTotal();
                 });
             });
