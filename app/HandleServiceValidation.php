@@ -6,17 +6,19 @@ use App\Models\Canceled;
 use App\Models\Ironing;
 use App\Models\Laundry;
 use App\Models\ItemType;
+use App\Models\OrderItems;
 use Illuminate\Support\Str;
-use App\Rules\ValidTotalPrice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection;
 
 trait HandleServiceValidation
 {
     protected $isAdmin = false;
     protected $modalId = '';
     protected $serviceType = '';
+    protected $orderCode = '';
 
     public function setValidationBehavior(bool $isAdmin, string $modalId)
     {
@@ -33,23 +35,10 @@ trait HandleServiceValidation
 
     public function validateServiceData(array $data, ?int $id = null): array|RedirectResponse
     {
-        $errors = [];
-
-        if (empty($data['type'])) {
-            $errors['type'] = 'The type field is required.';
-        }
-
-        if (empty($data['amount'])) {
-            $errors['amount'] = 'The amount field is required.';
-        }
-
-        if (!empty($errors)) {
-            return $this->handleFailedValidation($errors);
-        }
-
         $validator = Validator::make($data, [
-            'type' => 'required|exists:item_types,name_item',
-            'amount' => 'required|integer|min:1',
+            'amounts' => 'required|array',
+            'selected_types' => 'required|array',
+            'selected_types.*' => 'required|exists:item_types,name_item',
             'retrieval-method' => 'required|in:delivery,take_away',
             'address' => 'required_if:retrieval-method,delivery',
             'destination' => 'required_if:retrieval-method,delivery',
@@ -57,6 +46,7 @@ trait HandleServiceValidation
             'status' => $id ? 'required|in:pending,process,completed' : 'sometimes|nullable',
             'estimation' => $id ? 'nullable|date' : 'sometimes|nullable',
             'status-report' => $id ? 'required|in:normal,deleted' : 'sometimes|nullable',
+            'order_code' => $id ? 'required|exists:order_items,order_code' : 'sometimes|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -64,10 +54,16 @@ trait HandleServiceValidation
         }
 
         $validatedData = $validator->validated();
+
+        $this->orderCode = $id ? $validatedData['order_code'] : Str::generateOrderCode($this->serviceType);
+        $validatedData['order-code'] = $this->orderCode;
+        $validatedData['item-quantities'] = $this->mapItemQuantities($data);
+        $validatedData['amount-total'] = $this->calculatedTotalAmount($validatedData['item-quantities']);
         $validatedData['price-total'] = $this->calculatedTotalPrice($data, $id);
 
         return $validatedData;
     }
+
     protected function handleFailedValidation($validator): RedirectResponse
     {
         $redirect = redirect()->back()->withErrors($validator)->withInput();
@@ -79,14 +75,22 @@ trait HandleServiceValidation
         return $redirect;
     }
 
-    public function calculatedTotalPrice(array $data, ?int $id = null): string
+    protected function calculatedTotalPrice(array $data, ?int $id = null): string
     {
         $additionalPrice = 20000;
-        $itemPrice = ItemType::where('name_item', $data['type'])
-            ->where('role', $this->serviceType)
-            ->value('price_item');
+        $tax = 0.1;
+        $calculatedPrice = 0;
+        $selectedTypes = array_map('ucfirst', $data['selected_types']);
+        $amounts = $data['amounts'];
 
-        $calculatedPrice = $itemPrice * $data['amount'];
+        $items = ItemType::whereIn('name_item', $selectedTypes)
+            ->where('role', $this->serviceType)
+            ->get(['name_item', 'price_item']);
+
+        foreach ($items as $item) {
+            $qty = $amounts[lcfirst($item['name_item'])];
+            $calculatedPrice += $item->price_item * $qty;
+        }
 
         if ($id) {
             $existingData = $this->serviceType === 'ironing' ? Ironing::find($id) : Laundry::find($id);
@@ -96,16 +100,67 @@ trait HandleServiceValidation
                 $calculatedPrice = $price;
             } else {
                 $calculatedPrice = match ($data['retrieval-method']) {
-                    'delivery' => $price + $additionalPrice,
+                    'delivery' => $price + $additionalPrice + ($price * $tax),
                     'take_away' => $price - $additionalPrice,
                     default => $calculatedPrice,
                 };
             }
         } else {
-            $calculatedPrice += $data['retrieval-method'] === 'delivery' ? $additionalPrice : 0;
+            $calculatedPrice += $data['retrieval-method'] === 'delivery' ? $additionalPrice + ($calculatedPrice * $tax) : 0;
         }
 
         return 'Rp ' . number_format($calculatedPrice, 2, ',', '.');
+    }
+
+
+    protected function mapItemQuantities(array $data): Collection
+    {
+        $selectedTypes = $data['selected_types'];
+        $amounts = $data['amounts'];
+
+        $amountTotal = collect($selectedTypes)
+            ->mapWithKeys(function ($type) use ($amounts) {
+                return [$type => $amounts[$type]];
+            });
+
+        return $amountTotal;
+    }
+
+    protected function calculatedTotalAmount(Collection $selectedAmounts): int
+    {
+        return $selectedAmounts->reduce(function ($carry, $amount) {
+            return $carry += $amount;
+        }, 0);
+    }
+
+
+    public function saveOrderItemsData(array $data)
+    {
+        foreach ($data['item-quantities']->toArray() as $itemName => $quantity) {
+            $item = ItemType::where('name_item', $itemName)
+                ->where('role', $this->serviceType)
+                ->first();
+
+            if (!$item) {
+                continue;
+            }
+
+            $orderItem = OrderItems::where('order_code', $data['order-code'])
+                ->where('item_id', $item->id)
+                ->first() ?? new OrderItems();
+
+            $orderItem->fill([
+                'order_code' => $data['order-code'],
+                'item_id' => $item->id,
+                'quantity' => $quantity,
+                'price_total' => $item->price_item * $quantity,
+                'created_who' => $orderItem->created_who ?? Auth::user()?->name,
+            ]);
+
+            $orderItem->save();
+        }
+
+        return $this;
     }
 
     public function saveIroningData(array $data, ?int $id = null): Ironing
@@ -114,10 +169,10 @@ trait HandleServiceValidation
 
         $ironing->fill([
             'user_id' => $ironing->user_id ?? Auth::id(),
-            'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'ironing')->value('id'),
+            'order_code' => $data['order-code'],
             'name_ironing' => $ironing->name_ironing ?? Str::generateRandomString('Ironing'),
             'price_ironing' => Str::rupiahToFloat($data['price-total']),
-            'amount_item' => $data['amount'],
+            'amount_item' => $data['amount-total'],
             'retrieval_method' => $data['retrieval-method'],
             'status_transaction' => $data['status-transaction'] ?? 'uncompleted',
             'address_taking' => $data['retrieval-method'] === 'delivery' ? $data['address'] : null,
@@ -153,10 +208,10 @@ trait HandleServiceValidation
 
         $laundry->fill([
             'user_id' => $laundry->user_id ?? Auth::id(),
-            'item_id' => ItemType::where('name_item', $data['type'])->where('role', 'laundry')->value('id'),
+            'order_code' => $data['order-code'],
             'name_laundry' => $laundry->name_laundry ?? Str::generateRandomString('Laundry'),
             'price_laundry' => Str::rupiahToFloat($data['price-total']),
-            'amount_item' => $data['amount'],
+            'amount_item' => $data['amount-total'],
             'retrieval_method' => $data['retrieval-method'],
             'status_transaction' => $data['status-transaction'] ?? 'uncompleted',
             'address_taking' => $data['retrieval-method'] === 'delivery' ? $data['address'] : null,

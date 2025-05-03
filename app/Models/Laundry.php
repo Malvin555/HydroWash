@@ -16,7 +16,7 @@ class Laundry extends Model
     protected $table = 'laundry';
     protected $fillable = [
         'user_id',
-        'item_id',
+        'order_code',
         'name_laundry',
         'price_laundry',
         'amount_item',

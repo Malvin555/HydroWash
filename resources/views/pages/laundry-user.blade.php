@@ -1,7 +1,7 @@
 <x-user-layout>
     {{-- Redesigned laundry service --}}
-    <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24">
-        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative pt-16 md:p5-24 pb-96">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-50">
 
             <x-back-to-home></x-back-to-home>
             <!-- Header -->
@@ -14,7 +14,7 @@
                 </p>
             </div>
 
-            <form action="{{ route('laundry') }}" method="post" class=" mx-auto">
+            <form action="{{ route('laundry') }}" method="post" class=" mx-auto z-50" style="z-index: !important 99999999;">
                 @csrf
 
                 <!-- Progress Tracker -->
@@ -52,13 +52,13 @@
                         </svg>
                         Select Your Items
                     </h2>
-                    <div class="h-full max-h-[30rem] p-5 overflow-auto">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div class="h-full max-h-[35rem] p-5 overflow-auto">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
                             @if ($itemTypes->isnotEmpty())
                             @foreach ($itemTypes as $item)
                             <div class="item-container">
                                 <label class="cursor-pointer transition-all duration-200 block h-full">
-                                    <div class="border rounded-lg overflow-hidden h-full hover:shadow-md
+                                    <div class="border rounded-lg overflow-hidden hover:shadow-md
                                                 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-gray-200' }}">
                                         <div class="bg-cover bg-center h-40 relative"
                                             style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
@@ -271,6 +271,10 @@
                                 <span>Delivery Fee</span>
                                 <span id="deliveryFeeDisplay">Rp 20.000,00</span>
                             </div>
+                            <div class="flex justify-between items-center font-medium text-gray-600 mt-2" id="taxRow" style="display: none;">
+                                <span>Tax (10%)</span>
+                                <span id="taxDisplay">Rp 0,00</span>
+                            </div>
                             <div class="flex justify-between items-center font-bold text-lg mt-3 pt-3 border-t border-gray-200">
                                 <span>Total</span>
                                 <span id="totalDisplay" class="text-primary">Rp 0,00</span>
@@ -288,7 +292,7 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-primary text-white py-3 px-4 rounded-md font-medium text-lg hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        class="w-full bg-primary text-white py-3 px-4 rounded-md font-medium text-lg hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer">
                         Place Order
                     </button>
                 </div>
@@ -315,6 +319,8 @@
             const deliveryAddressBox = document.getElementById('deliveryAddressBox');
             const deliveryFeeRow = document.getElementById('deliveryFeeRow');
             const deliveryFeeDisplay = document.getElementById('deliveryFeeDisplay');
+            const taxRow = document.getElementById('taxRow');
+            const taxDisplay = document.getElementById('taxDisplay');
             const deliveryFee = 20000; // Rp 20,000.00
             const retrievalOptions = document.querySelectorAll('.retrieval-option');
             const deliveryRadioDot = document.querySelector('.delivery-radio-dot');
@@ -325,6 +331,7 @@
                 deliveryRadioDot.classList.remove('hidden');
                 deliveryAddressBox.style.display = 'block';
                 deliveryFeeRow.style.display = 'flex';
+                taxRow.style.display = 'flex';
             } else if (retrievalMethodInput.value === 'take_away') {
                 takeAwayRadioDot.classList.remove('hidden');
             }
@@ -342,6 +349,7 @@
             function calculateTotal() {
                 let subtotal = 0;
                 let total = 0;
+                let tax = 0;
                 let hasSelectedItems = false;
 
                 // Clear the selected items list
@@ -385,15 +393,20 @@
                     }
                 });
 
+                // Calculate tax
+                tax = subtotal * 0.1;
                 // Calculate total
                 total = subtotal;
 
                 // Add delivery fee if delivery is selected
                 if (retrievalMethodInput.value === 'delivery') {
                     total += deliveryFee;
+                    total += tax;
                     deliveryFeeRow.style.display = 'flex';
+                    taxRow.style.display = 'flex';
                 } else {
                     deliveryFeeRow.style.display = 'none';
+                    taxRow.style.display = 'none';
                 }
 
                 // Show/hide "No items selected" message
@@ -406,6 +419,7 @@
                 // Update displays and hidden input
                 subtotalDisplay.textContent = formatRupiah(subtotal);
                 totalDisplay.textContent = formatRupiah(total);
+                taxDisplay.textContent = formatRupiah(tax);
                 totalPriceInput.value = total;
             }
 

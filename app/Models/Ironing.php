@@ -16,7 +16,7 @@ class Ironing extends Model
     protected $table = 'ironing';
     protected $fillable = [
         'user_id',
-        'item_id',
+        'order_code',
         'name_ironing',
         'price_ironing',
         'amount_item',

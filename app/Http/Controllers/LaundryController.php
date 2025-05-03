@@ -78,7 +78,6 @@ class LaundryController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $isAdminRequest = $request->routeIs('laundry-admin.add');
 
         $serviceValidation = $this->setServiceType('laundry');
@@ -92,13 +91,13 @@ class LaundryController extends Controller
             return $validatedData;
         }
 
-        $createdLaundry = $this->saveLaundryData($validatedData, null);
+        $createdLaundry = $this->saveOrderItemsData($validatedData)->saveLaundryData($validatedData, null);
 
         if ($isAdminRequest) {
             return redirect()->back()->with('success', 'Laundry order successfully created.');
         }
 
-        return redirect()->route('complete-added')
+        return redirect()->route('complete-added', ['slug' => Str::slug($createdLaundry->name_laundry)])
             ->with('laundry', $createdLaundry)
             ->with('success', 'Laundry order successfully created.');
     }

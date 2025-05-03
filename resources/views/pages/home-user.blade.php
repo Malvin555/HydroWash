@@ -190,16 +190,7 @@
     </section>
 
     <script>
-        localStorage.setItem('api_token', {
-            {
-                Js::from(session("api_token"))
-            }
-        });
-        localStorage.setItem('ref_id', {
-            {
-                Js::from(session("user_id"))
-            }
-        });
-
+        localStorage.setItem('api_token', {{ Js::from(session("api_token")) }});
+        localStorage.setItem('ref_id', {{ Js::from(session("user_id")) }});
     </script>
 </x-user-layout>

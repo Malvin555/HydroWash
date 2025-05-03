@@ -8,7 +8,7 @@
             <!-- Header -->
             <div class="mb-10 mt-5 text-center">
                 <h1 class="text-3xl md:text-5xl font-bold text-primary mb-3 drop-shadow-sm">
-                    Transaction Laundry/Ironing #8787
+                    Transaction {{ $transaction?->name_ironing ?? $transaction?->name_laundry }}
                 </h1>
                 <p class="text-gray-600 max-w-2xl mx-auto">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ab et blanditiis au
@@ -91,7 +91,7 @@
                                 <div class="flex flex-col md:flex-row gap-6">
                                     <div class="md:w-1/3">
                                         <div class="bg-secondary rounded-lg flex justify-center w-full h-48 overflow-hidden">
-                                            <img src="{{ Storage::url($transaction?->itemType?->image_item) }}" alt="transaction" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                                            <img src="{{ Storage::url($transaction?->item_type?->image_item) }}" alt="transaction" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
                                         </div>
                                     </div>
 
@@ -101,7 +101,7 @@
                                         <div class="grid grid-cols-2 gap-4 mb-4">
                                             <div>
                                                 <span class="text-gray-500 text-sm">Item Type:</span>
-                                                <p class="font-medium">{{ $transaction?->itemType?->name_item ?? 'Standard' }}</p>
+                                                <p class="font-medium">{{ $transaction?->item_type?->name_item ?? 'Standard' }}</p>
                                             </div>
                                             <div>
                                                 <span class="text-gray-500 text-sm">Service Type:</span>
@@ -116,13 +116,13 @@
                                             </div>
                                             <div>
                                                 <span class="text-gray-500 text-sm">Unit Price:</span>
-                                                <p class="font-medium">Rp {{ number_format($transaction->itemType?->price_item ?? 0, 2, ',', '.') }}</p>
+                                                <p class="font-medium">Rp {{ number_format($transaction->item_type?->price_item ?? 0, 2, ',', '.') }}</p>
                                             </div>
                                         </div>
 
                                         <div>
                                             <span class="text-gray-500 text-sm">Description:</span>
-                                            <p class="text-gray-700">{{ $transaction?->itemType?->description ?? 'Professional cleaning and care for your items.' }}</p>
+                                            <p class="text-gray-700">{{ $transaction?->item_type?->description ?? 'Professional cleaning and care for your items.' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
                                     </div>
                                     <div>
                                         <span class="text-gray-500 text-sm">Phone Number:</span>
-                                        <p class="font-medium">{{ auth()->user()->phone ?? '(Not provided)' }}</p>
+                                        <p class="font-medium">{{ auth()->user()->telp ?? '(Not provided)' }}</p>
                                     </div>
                                     <div>
                                         <span class="text-gray-500 text-sm">Customer Since:</span>
@@ -264,22 +264,27 @@
                                 </h2>
                             </div>
 
+                            @php
+                                $price = $transaction->price_ironing ?? $transaction->price_laundry;
+                                $deliveryFee = ($transaction->retrieval_method === 'delivery') ? 20000 : 0;
+                                $subTotal = ($transaction->retrieval_method === 'delivery') ? ($price - $deliveryFee) / 1.1 : $price;
+                                $tax = $subTotal * 0.1;
+                            @endphp
                             <div class="p-6">
                                 <div class="space-y-4">
                                     <div class="flex justify-between">
                                         <span class="text-gray-600">Subtotal</span>
-                                        <span class="font-medium">Rp {{ number_format(($transaction->price_ironing ?? $transaction->price_laundry) * 0.9, 2, ',', '.') }}</span>
+                                        <span class="font-medium">Rp {{ number_format($subTotal, 2, ',', '.') }}</span>
                                     </div>
-
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-600">Tax (10%)</span>
-                                        <span class="font-medium">Rp {{ number_format(($transaction->price_ironing ?? $transaction->price_laundry) * 0.1, 2, ',', '.') }}</span>
-                                    </div>
-
+                                    
                                     @if ($transaction->retrieval_method === 'delivery')
                                     <div class="flex justify-between">
                                         <span class="text-gray-600">Delivery Fee</span>
-                                        <span class="font-medium">Rp {{ number_format(10000, 2, ',', '.') }}</span>
+                                        <span class="font-medium">Rp {{ number_format($deliveryFee, 2, ',', '.') }}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Tax (10%)</span>
+                                        <span class="font-medium">Rp {{ number_format($tax, 2, ',', '.') }}</span>
                                     </div>
                                     @endif
 
@@ -287,7 +292,7 @@
                                         <div class="flex justify-between">
                                             <span class="text-lg font-bold text-gray-800">Total</span>
                                             <span class="text-lg font-bold text-primary">
-                                                Rp {{ number_format(($transaction->price_ironing ?? $transaction->price_laundry) + ($transaction->retrieval_method === 'delivery' ? 10000 : 0), 2, ',', '.') }}
+                                                Rp {{ number_format($price, 2, ',', '.') }}
                                             </span>
                                         </div>
                                     </div>

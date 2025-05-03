@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ironing;
 use App\Models\Laundry;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -74,15 +75,9 @@ class TransactionController extends Controller
             ->orderBy('created_at', 'desc');
     }
 
-    public function showCompletePage()
+    public function showCompletePage($slug)
     {
-        if (!session()->has('ironing') && !session()->has('laundry')) {
-            return redirect()->back()->with('error', 'You are not allowed to access this page without ordering a service.');
-        }
-
-        $service = session('ironing') ?? session('laundry');
-        session()->forget('ironing');
-        session()->forget('laundry');
+        dd(Str::formatOrderNameFromSlug($slug));
 
         return view('pages.complete-added-user', compact('service'));
     }
@@ -99,10 +94,7 @@ class TransactionController extends Controller
 
     public function showTransactionForm(Request $request, $slug = null)
     {
-        $parts = explode('-', $slug);
-        $prefix = ucfirst($parts[0]);
-        $suffix = strtoupper(end($parts));
-        $name = $prefix . ' #' . $suffix;
+        $name = Str::formatOrderNameFromSlug($slug);
 
         $ironing = Ironing::with('itemType')
             ->where('name_ironing', $name)
