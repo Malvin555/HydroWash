@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('ironing', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key for users
-            $table->string('order_code');
-            $table->foreign('order_code')->references('order_code')->on('order_items')->onDelete('cascade'); // Foreign key for order items
             $table->string('name_ironing'); // String for item name
             $table->decimal('price_ironing', 10, 2); // Decimal for price
             $table->integer('amount_item'); // Integer for amount

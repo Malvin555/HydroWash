@@ -21,24 +21,16 @@ class CanceledFactory extends Factory
     {
         $isLaundry = $this->faker->boolean;
 
-        if ($isLaundry) {
-            $laundry = Laundry::inRandomOrder()->first() ?? Laundry::factory()->create();
-            $userId = $laundry->user_id;
-            $laundryId = $laundry->id;
-            $ironingId = null;
-        } else {
-            $ironing = Ironing::inRandomOrder()->first() ?? Ironing::factory()->create();
-            $userId = $ironing->user_id;
-            $laundryId = null;
-            $ironingId = $ironing->id;
-        }
-        
+        $model = $isLaundry ? Laundry::class : Ironing::class;
+        $record = $model::where('status_report', 'deleted')->inRandomOrder()->first() 
+                    ?? $model::factory()->create(['status_report' => 'deleted']);
+
         return [
-            'user_id' => $userId,
-            'laundry_id' => $laundryId,
-            'ironing_id' => $ironingId,
+            'user_id' => $record->user_id,
+            'laundry_id' => $isLaundry ? $record->id : null,
+            'ironing_id' => $isLaundry ? null : $record->id,
             'issues' => $this->faker->sentence(),
-            'created_who' => 'user',
+            'created_who' => $record->created_who ?? 'user',
         ];
     }
 }

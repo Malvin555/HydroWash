@@ -16,7 +16,6 @@ class Laundry extends Model
     protected $table = 'laundry';
     protected $fillable = [
         'user_id',
-        'order_code',
         'name_laundry',
         'price_laundry',
         'amount_item',
@@ -31,9 +30,9 @@ class Laundry extends Model
         'created_who',
     ];
 
-    public function itemType(): BelongsTo
+    public function orderItems(): HasMany
     {
-        return $this->belongsTo(ItemType::class, 'item_id');
+        return $this->hasMany(OrderItems::class);
     }
 
     public function user(): BelongsTo

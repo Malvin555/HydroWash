@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ironing;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\ItemType;
@@ -22,29 +23,8 @@ class IroningFactory extends Factory
     public function definition(): array
     {
         // Get user with role is 'user'
-        $user = User::where('role', 'user')->inRandomOrder()->first() 
-                ?? User::factory()->create();
-        
-        // Get item_type with role is 'ironing'
-        $items = ItemType::where('role', 'ironing')->inRandomOrder()->limit(2)->get()
-                ?? ItemType::factory()->create(['role', 'ironing']);
-
-        $orderCode = Str::generateOrderCode('ironing'); 
-
-        foreach ($items as $item) {
-            $qty = $this->faker->numberBetween(1, 5);
-            OrderItems::create([
-                'order_code' => $orderCode,
-                'item_id' => $item->id,
-                'quantity' => $qty,
-                'price_total' => $item->price_item * $qty,
-                'created_who' => $user->name,
-            ]);
-        }
-
-        $orderItems = OrderItems::where('order_code', $orderCode)->get();
-        $totalPrice = $orderItems->sum('price_total');
-        $amount = $orderItems->sum('quantity');
+        $user = User::where('role', 'user')->inRandomOrder()->first()
+            ?? User::factory()->create();
 
         $status = $this->faker->randomElement(['pending', 'process', 'completed']);
         $estimation = null;
@@ -54,10 +34,9 @@ class IroningFactory extends Factory
 
         return [
             'user_id' => $user->id,
-            'order_code' => $orderCode,
             'name_ironing' => Str::generateRandomString('Ironing'),
-            'price_ironing' => $totalPrice,
-            'amount_item' => $amount,
+            'price_ironing' => 0, // Temporary, will be updated later
+            'amount_item' => 0, // Temporary, will be updated later
             'estimation' => $estimation,
             'retrieval_method' => $this->faker->randomElement(['take_away', 'delivery']),
             'status_transaction' => $this->faker->randomElement(['uncompleted', 'completed']),

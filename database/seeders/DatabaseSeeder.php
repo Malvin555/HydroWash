@@ -8,6 +8,7 @@ use App\Models\Laundry;
 use App\Models\Canceled;
 use App\Models\Feedback;
 use App\Models\ItemType;
+use App\Models\OrderItems;
 use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
@@ -45,6 +46,28 @@ class DatabaseSeeder extends Seeder
         $laundries = Laundry::factory(10)
             ->recycle([$users, $itemLaundry])
             ->create();
+
+        $orderItems = OrderItems::factory(20)
+            ->recycle([$ironings, $laundries])
+            ->create();
+
+
+        // Update price_laundry and price_ironing, amount_item
+        $deliveryFee = 20000;
+        $tax = 0.1; // 10% tax
+        foreach ($orderItems as $orderItem) {
+            $model = $orderItem->laundry_id ? Laundry::find($orderItem->laundry_id) : Ironing::find($orderItem->ironing_id);
+
+            if ($model) {
+                $price = $model->orderItems()->sum('price_total');
+                $newPrice = $model->retrieval_method === 'delivery' ? $price + $deliveryFee + ($price * $tax) : $price;
+
+                $model->update([
+                    $orderItem->laundry_id ? "price_laundry" : "price_ironing" => $newPrice,
+                    'amount_item' => $model->orderItems()->sum('quantity'),
+                ]);
+            }
+        }
 
         // 6. Feedbacks 
         Feedback::factory(10)

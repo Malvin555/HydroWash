@@ -91,7 +91,7 @@ class LaundryController extends Controller
             return $validatedData;
         }
 
-        $createdLaundry = $this->saveOrderItemsData($validatedData)->saveLaundryData($validatedData, null);
+        $createdLaundry = $this->saveLaundryData($validatedData, null);
 
         if ($isAdminRequest) {
             return redirect()->back()->with('success', 'Laundry order successfully created.');

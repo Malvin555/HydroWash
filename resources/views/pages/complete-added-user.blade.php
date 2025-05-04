@@ -74,7 +74,7 @@
                                     </svg>
                                     Return to History
                                 </a>
-                                <a  class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-md">
+                                <a href="{{ route('transaction', ['slug' => Str::slug('lorem')]) }}"  class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 hover:shadow-md">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
@@ -123,7 +123,7 @@
                         <div class="md:w-2/3 space-y-4">
                             <div class="flex justify-between items-center pb-3 border-b border-gray-100">
                                 <span class="text-gray-600">Service Type:</span>
-                                <span class="font-medium">}</span>
+                                <span class="font-medium">Laundry</span>
                             </div>
                             <div class="flex justify-between items-center pb-3 border-b border-gray-100">
                                 <span class="text-gray-600">Item Type:</span>

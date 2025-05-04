@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\OrderItems;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,7 +17,6 @@ class Ironing extends Model
     protected $table = 'ironing';
     protected $fillable = [
         'user_id',
-        'order_code',
         'name_ironing',
         'price_ironing',
         'amount_item',
@@ -31,9 +31,9 @@ class Ironing extends Model
         'created_who',
     ];
 
-    public function itemType(): BelongsTo
+    public function orderItems(): HasMany
     {
-        return $this->belongsTo(ItemType::class, 'item_id');
+        return $this->hasMany(OrderItems::class);
     }
 
     public function user(): BelongsTo

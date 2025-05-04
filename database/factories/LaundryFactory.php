@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\ItemType;
+use App\Models\Laundry;
 use App\Models\OrderItems;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -25,27 +26,6 @@ class LaundryFactory extends Factory
         $user = User::where('role', 'user')->inRandomOrder()->first()
             ?? User::factory()->create();
 
-        // Get item_type with role is 'laundry'
-        $items = ItemType::where('role', 'laundry')->inRandomOrder()->limit(2)->get()
-            ?? ItemType::factory()->create(['role', 'laundry']);
-
-        $orderCode = Str::generateOrderCode('laundry');
-
-        foreach ($items as $item) {
-            $qty = $this->faker->numberBetween(1, 5);
-            OrderItems::create([
-                'order_code' => $orderCode,
-                'item_id' => $item->id,
-                'quantity' => $qty,
-                'price_total' => $item->price_item * $qty,
-                'created_who' => $user->name,
-            ]);
-        }
-
-        $orderItems = OrderItems::where('order_code', $orderCode)->get();
-        $totalPrice = $orderItems->sum('price_total');
-        $amount = $orderItems->sum('quantity');
-
         $status = $this->faker->randomElement(['pending', 'process', 'completed']);
         $estimation = null;
         if ($status == 'process' || $status == 'completed') {
@@ -54,10 +34,9 @@ class LaundryFactory extends Factory
 
         return [
             'user_id' => $user->id,
-            'order_code' => $orderCode,
             'name_laundry' => Str::generateRandomString('Laundry'),
-            'price_laundry' => $totalPrice,
-            'amount_item' => $amount,
+            'price_laundry' => 0, // Temporary, will be updated later
+            'amount_item' => 0, // Temporary, will be updated later
             'estimation' => $estimation,
             'retrieval_method' => $this->faker->randomElement(['take_away', 'delivery']),
             'status_transaction' => $this->faker->randomElement(['uncompleted', 'completed']),

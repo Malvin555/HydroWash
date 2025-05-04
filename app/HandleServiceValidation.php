@@ -18,7 +18,6 @@ trait HandleServiceValidation
     protected $isAdmin = false;
     protected $modalId = '';
     protected $serviceType = '';
-    protected $orderCode = '';
 
     public function setValidationBehavior(bool $isAdmin, string $modalId)
     {
@@ -46,7 +45,6 @@ trait HandleServiceValidation
             'status' => $id ? 'required|in:pending,process,completed' : 'sometimes|nullable',
             'estimation' => $id ? 'nullable|date' : 'sometimes|nullable',
             'status-report' => $id ? 'required|in:normal,deleted' : 'sometimes|nullable',
-            'order_code' => $id ? 'required|exists:order_items,order_code' : 'sometimes|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -55,8 +53,6 @@ trait HandleServiceValidation
 
         $validatedData = $validator->validated();
 
-        $this->orderCode = $id ? $validatedData['order_code'] : Str::generateOrderCode($this->serviceType);
-        $validatedData['order-code'] = $this->orderCode;
         $validatedData['item-quantities'] = $this->mapItemQuantities($data);
         $validatedData['amount-total'] = $this->calculatedTotalAmount($validatedData['item-quantities']);
         $validatedData['price-total'] = $this->calculatedTotalPrice($data, $id);
@@ -112,7 +108,6 @@ trait HandleServiceValidation
         return 'Rp ' . number_format($calculatedPrice, 2, ',', '.');
     }
 
-
     protected function mapItemQuantities(array $data): Collection
     {
         $selectedTypes = $data['selected_types'];
@@ -133,9 +128,12 @@ trait HandleServiceValidation
         }, 0);
     }
 
-
-    public function saveOrderItemsData(array $data)
+    public function saveOrderItemsData($model, array $data)
     {
+        if (!$model instanceof Laundry && !$model instanceof Ironing) {
+            abort(400, 'The model must be an instance of Laundry or Ironing.');
+        }
+
         foreach ($data['item-quantities']->toArray() as $itemName => $quantity) {
             $item = ItemType::where('name_item', $itemName)
                 ->where('role', $this->serviceType)
@@ -145,22 +143,19 @@ trait HandleServiceValidation
                 continue;
             }
 
-            $orderItem = OrderItems::where('order_code', $data['order-code'])
+            $orderItem = $model->orderItems()
                 ->where('item_id', $item->id)
                 ->first() ?? new OrderItems();
 
             $orderItem->fill([
-                'order_code' => $data['order-code'],
                 'item_id' => $item->id,
                 'quantity' => $quantity,
                 'price_total' => $item->price_item * $quantity,
                 'created_who' => $orderItem->created_who ?? Auth::user()?->name,
             ]);
 
-            $orderItem->save();
+            $model->orderItems()->save($orderItem);
         }
-
-        return $this;
     }
 
     public function saveIroningData(array $data, ?int $id = null): Ironing
@@ -169,7 +164,6 @@ trait HandleServiceValidation
 
         $ironing->fill([
             'user_id' => $ironing->user_id ?? Auth::id(),
-            'order_code' => $data['order-code'],
             'name_ironing' => $ironing->name_ironing ?? Str::generateRandomString('Ironing'),
             'price_ironing' => Str::rupiahToFloat($data['price-total']),
             'amount_item' => $data['amount-total'],
@@ -184,21 +178,22 @@ trait HandleServiceValidation
             'created_who' => $ironing->created_who ?? Auth::user()?->name,
         ]);
 
-        if (array_key_exists('status-report', $data) && $data['status-report'] === 'normal') {
-            $ironing->canceled()->exists() ? $ironing->canceled()->delete() : null;
-        }
-
-        if (array_key_exists('status-report', $data) && $data['status-report'] === 'deleted') {
-            Canceled::create([
-                'user_id' => Auth::id(),
-                'ironing_id' => $ironing->id,
-                'issues' => 'Canceled by Admin',
-                'created_who' => Auth::user()?->name,
-            ]);
+        if (array_key_exists('status-report', $data)) {
+            if ($data['status-report'] === 'normal' && $ironing->canceled()->exists()) {
+                $ironing->canceled()->delete();
+            } elseif ($data['status-report'] === 'deleted') {
+                Canceled::create([
+                    'user_id' => Auth::id(),
+                    'ironing_id' => $ironing->id,
+                    'issues' => 'Canceled by Admin',
+                    'created_who' => Auth::user()?->name,
+                ]);
+            }
         }
 
         $ironing->save();
-
+        
+        $this->saveOrderItemsData($ironing, $data);
         return $ironing;
     }
 
@@ -208,7 +203,6 @@ trait HandleServiceValidation
 
         $laundry->fill([
             'user_id' => $laundry->user_id ?? Auth::id(),
-            'order_code' => $data['order-code'],
             'name_laundry' => $laundry->name_laundry ?? Str::generateRandomString('Laundry'),
             'price_laundry' => Str::rupiahToFloat($data['price-total']),
             'amount_item' => $data['amount-total'],
@@ -223,21 +217,22 @@ trait HandleServiceValidation
             'created_who' => $laundry->created_who ?? Auth::user()?->name,
         ]);
 
-        if (array_key_exists('status-report', $data) && $data['status-report'] === 'normal') {
-            $laundry->canceled()->exists() ? $laundry->canceled()->delete() : null;
-        }
-
-        if (array_key_exists('status-report', $data) && $data['status-report'] === 'deleted') {
-            Canceled::create([
-                'user_id' => Auth::id(),
-                'laundry_id' => $laundry->id,
-                'issues' => 'Canceled by Admin',
-                'created_who' => Auth::user()?->name,
-            ]);
+        if (array_key_exists('status-report', $data)) {
+            if ($data['status-report'] === 'normal' && $laundry->canceled()->exists()) {
+                $laundry->canceled()->delete();
+            } elseif ($data['status-report'] === 'deleted') {
+                Canceled::create([
+                    'user_id' => Auth::id(),
+                    'laundry_id' => $laundry->id,
+                    'issues' => 'Canceled by Admin',
+                    'created_who' => Auth::user()?->name,
+                ]);
+            }
         }
 
         $laundry->save();
 
+        $this->saveOrderItemsData($laundry, $data);
         return $laundry;
     }
 }

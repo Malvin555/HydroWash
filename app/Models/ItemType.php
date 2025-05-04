@@ -20,14 +20,9 @@ class ItemType extends Model
         'created_who',
     ];
 
-    public function laundry(): HasMany
+    public function orderItems(): HasMany
     {
-        return $this->hasMany(Laundry::class, 'item_id');
-    }
-
-    public function ironing(): HasMany
-    {
-        return $this->hasMany(Ironing::class, 'item_id');
+        return $this->hasMany(OrderItems::class, 'item_id');
     }
 
     public function scopeType(Builder $query, string $type): Builder

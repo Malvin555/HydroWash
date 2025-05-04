@@ -8,7 +8,7 @@
                 <div class="flex items-center mb-8">
                     <div class="mr-5">
                         <div class="h-16 w-16 md:h-20 md:w-20 rounded-full bg-primary text-white flex items-center justify-center text-2xl md:text-3xl font-bold shadow-md">
-                            {{ Str::substr(Auth::user()->name ?? 'User', 0, 2) }}
+                            {{ Str::substr(strtoupper(Auth::user()->name ?? 'User'), 0, 2) }}
                         </div>
                     </div>
                     <div>

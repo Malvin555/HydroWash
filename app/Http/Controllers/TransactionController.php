@@ -77,7 +77,8 @@ class TransactionController extends Controller
 
     public function showCompletePage($slug)
     {
-        dd(Str::formatOrderNameFromSlug($slug));
+        // dd(Str::formatServiceNameFromSlug($slug));
+        $service = Str::formatServiceNameFromSlug($slug);
 
         return view('pages.complete-added-user', compact('service'));
     }
@@ -94,7 +95,7 @@ class TransactionController extends Controller
 
     public function showTransactionForm(Request $request, $slug = null)
     {
-        $name = Str::formatOrderNameFromSlug($slug);
+        $name = Str::formatServiceNameFromSlug($slug);
 
         $ironing = Ironing::with('itemType')
             ->where('name_ironing', $name)
