@@ -1,7 +1,7 @@
 <x-user-layout>
     {{-- Redesigned laundry service --}}
-    <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative pt-16 md:p5-24 pb-96">
-        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-50">
+    <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative pt-16 md:pb-24">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
             <x-back-to-home></x-back-to-home>
             <!-- Header -->
@@ -14,7 +14,7 @@
                 </p>
             </div>
 
-            <form action="{{ route('laundry') }}" method="post" class=" mx-auto z-50" style="z-index: !important 99999999;">
+            <form action="{{ route('laundry') }}" method="post" class="relative z-10">
                 @csrf
 
                 <!-- Progress Tracker -->
@@ -55,64 +55,64 @@
                     <div class="h-full max-h-[35rem] p-5 overflow-auto">
                         <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
                             @if ($itemTypes->isnotEmpty())
-                            @foreach ($itemTypes as $item)
-                            <div class="item-container">
-                                <label class="cursor-pointer transition-all duration-200 block h-full">
-                                    <div class="border rounded-lg overflow-hidden hover:shadow-md
-                                                {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-gray-200' }}">
-                                        <div class="bg-cover bg-center h-40 relative"
-                                            style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
-                                            <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                Rp {{ number_format($item->price_item, 2, ',', '.') }}
-                                            </div>
-                                        </div>
-                                        <div class="p-4">
-                                            <div class="flex items-center justify-between mb-2">
-                                                <span class="font-medium text-gray-800">{{ Str::title($item->name_item) }}</span>
-                                                <div class="relative">
-                                                    <input type="checkbox" id="item_{{ $item->id }}" name="selected_types[]"
-                                                        value="{{ Str::lower($item->name_item) }}"
-                                                        data-price="{{ $item->price_item }}"
-                                                        data-name="{{ Str::title($item->name_item) }}"
-                                                        class="item-checkbox sr-only"
-                                                        {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'checked' : '' }}>
-                                                    <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center
-                                                                {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'bg-primary border-primary' : '' }}">
-                                                        <svg class="w-3 h-3 text-white {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}"
-                                                            fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                                        </svg>
+                                @foreach ($itemTypes as $item)
+                                    <div class="item-container">
+                                        <label class="cursor-pointer transition-all duration-200 block h-full">
+                                            <div class="border rounded-lg overflow-hidden hover:shadow-md
+                                                        {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'border-primary ring-2 ring-primary ring-opacity-50' : 'border-gray-200' }}">
+                                                <div class="bg-cover bg-center h-40 relative"
+                                                    style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
+                                                    <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                        Rp {{ number_format($item->price_item, 2, ',', '.') }}
+                                                    </div>
+                                                </div>
+                                                <div class="p-4">
+                                                    <div class="flex items-center justify-between mb-2">
+                                                        <span class="font-medium text-gray-800">{{ Str::title($item->name_item) }}</span>
+                                                        <div class="relative">
+                                                            <input type="checkbox" id="item_{{ $item->id }}" name="selected_types[]"
+                                                                value="{{ Str::lower($item->name_item) }}"
+                                                                data-price="{{ $item->price_item }}"
+                                                                data-name="{{ Str::title($item->name_item) }}"
+                                                                class="item-checkbox sr-only"
+                                                                {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'checked' : '' }}>
+                                                            <div class="w-5 h-5 border-2 border-gray-300 rounded-md flex items-center justify-center
+                                                                        {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'bg-primary border-primary' : '' }}">
+                                                                <svg class="w-3 h-3 text-white {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}"
+                                                                    fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Amount input -->
+                                                    <div class="amount-input mt-3 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}">
+                                                        <label class="text-xs text-gray-500 mb-1 block">Quantity</label>
+                                                        <div class="flex items-center border border-gray-200 rounded-md">
+                                                            <button type="button" class="quantity-btn minus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                                                </svg>
+                                                            </button>
+                                                            <input type="number" name="amounts[{{ Str::lower($item->name_item) }}]"
+                                                                class="w-full py-1 px-2 text-center text-gray-700 focus:outline-none"
+                                                                min="1" value="{{ old('amounts.' . Str::lower($item->name_item), 1) }}">
+                                                            <button type="button" class="quantity-btn plus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                        @error('amounts.' . Str::lower($item->name_item))
+                                                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- Amount input -->
-                                            <div class="amount-input mt-3 {{ in_array(Str::lower($item->name_item), old('selected_types', [])) ? 'block' : 'hidden' }}">
-                                                <label class="text-xs text-gray-500 mb-1 block">Quantity</label>
-                                                <div class="flex items-center border border-gray-200 rounded-md">
-                                                    <button type="button" class="quantity-btn minus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-                                                        </svg>
-                                                    </button>
-                                                    <input type="number" name="amounts[{{ Str::lower($item->name_item) }}]"
-                                                        class="w-full py-1 px-2 text-center text-gray-700 focus:outline-none"
-                                                        min="1" value="{{ old('amounts.' . Str::lower($item->name_item), 1) }}">
-                                                    <button type="button" class="quantity-btn plus-btn px-3 py-1 text-gray-500 hover:text-primary focus:outline-none">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                                @error('amounts.' . Str::lower($item->name_item))
-                                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                        </label>
                                     </div>
-                                </label>
-                            </div>
-                            @endforeach
+                                @endforeach
                             @else
                             <div class="col-span-full p-8 rounded-lg bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -292,7 +292,7 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-primary text-white py-3 px-4 rounded-md font-medium text-lg hover:bg-opacity-90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer">
+                        class="w-full bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-4 px-6 font-bold text-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                         Place Order
                     </button>
                 </div>

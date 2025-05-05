@@ -194,11 +194,7 @@
         client-side JavaScript.
     --}}
     <script>
-        window.modalToShow = {
-            {
-                Js::from(session('show_modal'))
-            }
-        };
+        window.modalToShow = {{ Js::from(session('show_modal')) }};
     </script>
 </body>
 

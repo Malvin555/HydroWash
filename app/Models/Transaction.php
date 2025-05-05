@@ -29,17 +29,17 @@ class Transaction extends Model
 
     public function user(): BelongsTo 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');    
     }
 
     public function ironing(): BelongsTo
     {
-        return $this->belongsTo(Ironing::class);
+        return $this->belongsTo(Ironing::class, 'ironing_id');
     }
 
     public function laundry(): BelongsTo
     {
-        return $this->belongsTo(Laundry::class);
+        return $this->belongsTo(Laundry::class, 'laundry_id');
     }
 
     public function scopeFilterTime(Builder $query, $monthYear): Builder

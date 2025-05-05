@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Ironing;
 use App\Models\Laundry;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -23,5 +25,25 @@ class DashboardController extends Controller
             ->sortByDesc('created_at');
 
         return view('pages.dashboard-admin', compact('service', 'users', 'pending', 'completed', 'recentUsers', 'recentServices'));
+    }
+
+    public function userDashboard() {
+        $activeOrders = Laundry::where('user_id', Auth::id())
+            ->where('status', '!=', 'completed')
+            ->count() 
+            + Ironing::where('user_id', Auth::id())
+            ->where('status', '!=', 'completed')
+            ->count();
+
+        $completedOrders = Laundry::where('user_id', Auth::id())
+            ->where('status', 'completed')
+            ->count()
+            + Ironing::where('user_id', Auth::id())
+            ->where('status', 'completed')
+            ->count();
+
+        $expenses = Transaction::where('user_id', Auth::id())->sum('price_transaction');
+
+        return view('pages.home-user', compact('activeOrders', 'completedOrders', 'expenses'));
     }
 }

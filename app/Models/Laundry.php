@@ -32,27 +32,29 @@ class Laundry extends Model
 
     public function orderItems(): HasMany
     {
-        return $this->hasMany(OrderItems::class);
+        return $this->hasMany(OrderItems::class, 'laundry_id');
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function transaction(): HasMany
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class, 'laundry_id');
     }
 
     public function canceled(): HasMany
     {
-        return $this->hasMany(Canceled::class);
+        return $this->hasMany(Canceled::class, 'laundry_id');
     }
 
     public function scopeStatus(Builder $query, string $status): Builder
     {
-        if (in_array($status, ['pending', 'process', 'completed'])) {
+        if ($status === 'none-completed') {
+            return $query->where('status', '!=', 'completed');
+        } elseif (in_array($status, ['pending', 'process', 'completed'])) {
             return $query->where('status', $status);
         }
 

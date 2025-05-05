@@ -94,6 +94,10 @@
             border-radius: 9999px;
             font-size: 0.875rem;
         }
+        .status.process {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
 
         .box {
             background: #f9fafb;
@@ -130,58 +134,62 @@
 </head>
 
 <body>
-
+    @php
+        $model = $data?->laundry ?? $data?->ironing;
+    @endphp
     <div class="receipt">
         <h1>Hydro<span>Wash</span></h1>
         <p class="text-center text-sm">Transaction Receipt</p>
-        <p class="text-center text-sm">23-04-2025 14:30</p>
+        <p class="text-center text-sm">{{ \Carbon\Carbon::parse($data->created_at)->format('d-m-Y H:i') }}</p>
 
         <div class="section text-center">
-            <strong>Transaction #N05BC2AC</strong>
+            <strong>Transaction {{ $model?->name_laundry ?? $model?->name_ironing }}</strong>
         </div>
 
         <div class="section">
-            <div class="row"><span class="label">Date:</span><span class="value">23-04-2025</span></div>
-            <div class="row"><span class="label">Customer:</span><span class="value">Malvin</span></div>
+            <div class="row"><span class="label">Date:</span><span class="value">{{ \Carbon\Carbon::parse($data->created_at)->format('d-m-Y') }}</span></div>
+            <div class="row"><span class="label">Customer:</span><span class="value">{{ $data?->user?->name }}</span></div>
         </div>
 
-        <div class="section">
-            <div class="label">Address Taking:</div>
-            <div class="box">Jln dauh kangin</div>
-            <div class="label" style="margin-top: 0.5rem;">Address Delivery:</div>
-            <div class="box">Jln dauh kangin</div>
-        </div>
+        @if ($model?->retrieval_method == 'delivery')
+            <div class="section">
+                <div class="label">Address Taking:</div>
+                <div class="box">{{ $model?->address_taking }}</div>
+                <div class="label" style="margin-top: 0.5rem;">Address Delivery:</div>
+                <div class="box">{{ $model?->address_delivery }}</div>
+            </div>
+        @endif
 
         <div class="section grid">
             <div>
                 <div class="label">Amount Item:</div>
-                <div class="value">5 items</div>
+                <div class="value">{{ $model?->amount_item }} items</div>
             </div>
             <div>
-                <div class="label">Take Away:</div>
-                <div class="value">Yes</div>
+                <div class="label">Method:</div>
+                <div class="value">{{ $model?->retrieval_method == 'delivery' ? 'Delivery' : 'Take Away' }}</div>
             </div>
         </div>
 
         <div class="section grid">
             <div class="text-center">
                 <div class="label">Payment Method:</div>
-                <div class="value">Cash</div>
+                <div class="value">{{ ucfirst($data->method) }}</div>
             </div>
             <div class="text-center">
                 <div class="label">Total Amount:</div>
-                <div class="value">Rp 55,000.00</div>
+                <div class="value">Rp {{ number_format($model?->price_laundry ?? $model?->price_ironing, 2, ',', '.') }}</div>
             </div>
         </div>
 
         <div class="section row">
             <span class="label">Status:</span>
-            <span class="status">Completed</span>
+            <span class="status {{ $model?->status == 'process' ? 'process' : '' }}">{{ ucfirst($model?->status) }}</span>
         </div>
 
         <div class="section">
             <div class="label">Notes:</div>
-            <div class="box text-sm">Please handle with care. Contains delicate fabrics.</div>
+            <div class="box text-sm">{{ $model?->notes_laundry ?? $model?->notes_ironing ?? 'Nothing' }}</div>
         </div>
 
         <div class="footer">

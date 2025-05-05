@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Mpdf\Mpdf;
 use Carbon\Carbon;
+use App\Models\Ironing;
+use App\Models\Laundry;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\IroningController;
 use App\Http\Controllers\LaundryController;
@@ -19,6 +22,7 @@ class PrintController extends Controller
         $search = $request->input('search') ?? '';
         $status = $request->input('status') ?? '';
         $order = $request->input('order') ?? 'desc';
+        $serviceName = $request->input('service');
         
         switch ($type) {
             case 'laundry':
@@ -43,7 +47,7 @@ class PrintController extends Controller
                 break;
             case 'transactionReceipt':
                 $view = 'print.receipt.transaction'; 
-                $data = [];
+                $data = $this->getDataTransactionForReceipt($serviceName);;
                 break;
         }
 
@@ -86,6 +90,18 @@ class PrintController extends Controller
             'income' => (new TransactionController)->getDataTransaction($time, $search)->sum('price_transaction'),
             'date' => $time
         ];
+
+        return $data;
+    }
+
+    public function getDataTransactionForReceipt($serviceName)
+    {
+        $name = Str::formatServiceNameFromSlug($serviceName);
+        $serviceType = str_starts_with(strtolower($name), 'ironing') ? 'ironing' : 'laundry';
+        $service = $serviceType === 'ironing' ? Ironing::class : Laundry::class;
+        
+        $model = $service::where("name_{$serviceType}", $name)->first();
+        $data = $model->transaction()->first();
 
         return $data;
     }

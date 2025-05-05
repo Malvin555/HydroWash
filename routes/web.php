@@ -36,9 +36,7 @@ Route::middleware('allow.guest')->group(function () {
 
 
 Route::middleware('ensure.is.user')->group(function () {
-    Route::get('/user', function () {
-        return view('pages.home-user');
-    })->name('home');
+    Route::get('/user', [DashboardController::class, 'userDashboard'])->name('home');
 
     Route::get('/user/iron',[IroningController::class, 'showCreateFormWithItemTypes'])->name('ironing');
     Route::post('/user/iron',[IroningController::class, 'store'])->name('ironing');
@@ -61,7 +59,7 @@ Route::middleware('ensure.is.user')->group(function () {
     Route::get('/user/transaction/{slug?}', [TransactionController::class, 'showTransactionForm'])->name('transaction');
     Route::post('/user/transaction', [TransactionController::class, 'store'])->name('transaction.add');
 
-    Route::get('/user/complete-transaction', [TransactionController::class, 'showCompleteTransaction'])->name('complete-transaction');
+    Route::get('/user/complete-transaction/{slug?}', [TransactionController::class, 'showCompleteTransaction'])->name('complete-transaction');
 
     Route::post('/user/cancel-order', [CanceledController::class, 'cancelOrder'])->name('cancel.order');
 });

@@ -1,7 +1,7 @@
 <x-user-layout>
     {{-- home --}}
     <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24">
-        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
             <!-- Welcome Section -->
             <div class="text-black mb-12 md:mb-16 max-w-3xl">
                 <div class="inline-block bg-primary/20 backdrop-blur-sm px-4 py-1 rounded-full mb-4">
@@ -131,7 +131,7 @@
 
             <!-- Quick Stats Section -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <a href="{{ route('history', ['status' => 'none-completed']) }}" class="bg-white backdrop-blur-sm rounded-xl p-6 border border-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-teal-200/20 rounded-lg flex items-center justify-center mr-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none"
@@ -142,12 +142,12 @@
                         </div>
                         <div>
                             <p class="text-black text-sm opacity-80">Active Orders</p>
-                            <h4 class="text-black text-2xl font-bold">2</h4>
+                            <h4 class="text-black text-2xl font-bold">{{ $activeOrders }}</h4>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <a href="{{ route('history', ['status' => 'completed']) }}" class="bg-white backdrop-blur-sm rounded-xl p-6 border border-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-teal-200/20 rounded-lg flex items-center justify-center mr-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none"
@@ -158,12 +158,12 @@
                         </div>
                         <div>
                             <p class="text-black text-sm opacity-80">Completed Orders</p>
-                            <h4 class="text-black text-2xl font-bold">8</h4>
+                            <h4 class="text-black text-2xl font-bold">{{ $completedOrders }}</h4>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white backdrop-blur-sm rounded-xl p-6 border border-white/10">
+                <div class="bg-white backdrop-blur-sm rounded-xl p-6 border border-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-teal-200/20 rounded-lg flex items-center justify-center mr-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none"
@@ -174,7 +174,7 @@
                         </div>
                         <div>
                             <p class="text-black text-sm opacity-80">Expenses</p>
-                            <h4 class="text-black text-2xl font-bold">Rp 250</h4>
+                            <h4 class="text-black text-2xl font-bold">Rp {{ number_format($expenses, 2, ',', '.') }}</h4>
                         </div>
                     </div>
                 </div>
