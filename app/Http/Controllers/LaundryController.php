@@ -98,7 +98,6 @@ class LaundryController extends Controller
         }
 
         return redirect()->route('complete-added', ['slug' => Str::slug($createdLaundry->name_laundry)])
-            ->with('laundry', $createdLaundry)
             ->with('success', 'Laundry order successfully created.');
     }
 

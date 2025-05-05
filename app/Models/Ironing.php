@@ -33,7 +33,7 @@ class Ironing extends Model
 
     public function orderItems(): HasMany
     {
-        return $this->hasMany(OrderItems::class, 'ironing');
+        return $this->hasMany(OrderItems::class, 'ironing_id');
     }
 
     public function user(): BelongsTo

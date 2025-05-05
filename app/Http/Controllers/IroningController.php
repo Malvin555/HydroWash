@@ -96,8 +96,7 @@ class IroningController extends Controller
             return redirect()->back()->with('success', 'Ironing order successfully created.');
         }
 
-        return redirect()->route('complete-added')
-            ->with('ironing', $createdIroning)
+        return redirect()->route('complete-added', ['slug' => Str::slug($createdIroning->name_ironing)])
             ->with('success', 'Ironing order successfully created.');
     }
 

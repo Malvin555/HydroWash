@@ -100,7 +100,7 @@ class PrintController extends Controller
         $serviceType = str_starts_with(strtolower($name), 'ironing') ? 'ironing' : 'laundry';
         $service = $serviceType === 'ironing' ? Ironing::class : Laundry::class;
         
-        $model = $service::where("name_{$serviceType}", $name)->first();
+        $model = $service::where("name_{$serviceType}", $name)->firstOrFail();
         $data = $model->transaction()->first();
 
         return $data;

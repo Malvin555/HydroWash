@@ -103,14 +103,15 @@ class TransactionController extends Controller
     {
         [$model, $serviceType, $serviceName] = $this->getModelAndService($slug);
 
-        $service = $model::with('transaction')
-            ->where("name_{$serviceType}", $serviceName)
+        $service = $model::where("name_{$serviceType}", $serviceName)
             ->has('transaction')
             ->firstOrFail();
 
-        $transaction = $service->transaction;
+        $data = Transaction::with("{$serviceType}")
+            ->where("{$serviceType}_id", $service->id)
+            ->firstOrFail();
 
-        return view('pages.complete-transaction-user', compact('transaction', 'serviceType'));
+        return view('pages.complete-transaction-user', compact('data', 'serviceType'));
     }
 
     public function store(Request $request)
