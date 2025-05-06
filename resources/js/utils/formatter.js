@@ -14,11 +14,12 @@ export function formatDate(date) {
     });
 }
 
-// export function formatDate(date) {
-//     if (!date) return "-";
-//     return new Date(date).toLocaleDateString("id-ID", {
-//         day: "2-digit",
-//         month: "2-digit",
-//         year: "numeric",
-//     });
-// }
+export function formatSnakeCaseToLabel(str) {
+    return str
+        .split("_")
+        .map((word) =>
+                word.charAt(0).toUpperCase() +
+                word.slice(1).toLowerCase()
+        )
+        .join(" ");
+}

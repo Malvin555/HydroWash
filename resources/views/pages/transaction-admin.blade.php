@@ -76,7 +76,7 @@
                             <td class="px-6 py-4 text-sm text-primary">
                                 {{ \Carbon\Carbon::parse($transaction->created_at)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 text-sm text-primary">
-                                {{ 'Rp ' . number_format($transaction->price_transaction, 2, ',', '.') }}</td>
+                                {{ Str::formatCurrency($transaction->price_transaction) }}</td>
                             <td class="px-6 py-4 text-sm text-primary">{{ ucfirst($transaction->method) }}</td>
                             <td class="px-6 py-4 flex items-center gap-2 text-sm text-gray-500">
                                 <button data-modal-target="modalInformationTransaction" data-id="{{ $transaction->id }}"

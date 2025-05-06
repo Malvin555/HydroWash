@@ -45,7 +45,7 @@
                                                     {{ $itemType->name_item }}
                                                 </h1>
                                                 <span class="absolute top-0 right-0 text-xs font-bold text-primary p-1">
-                                                    Rp {{ number_format($itemType?->price_item, 2, ',', '.') }}
+                                                    {{ Str::formatCurrency($itemType?->price_item) }}
                                                 </span>
                                             </label>
 

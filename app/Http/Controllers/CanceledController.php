@@ -67,16 +67,16 @@ class CanceledController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'order_id' => 'required|integer',
-            'service_type' => 'required|string|in:Ironing,Laundry',
-            'notes' => 'required|string',
+            'service_type' => 'required|string|in:ironing,laundry',
+            'notes' => 'required|string|max:200',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput()->with('show_modal', 'modalCancelService');
         }
 
-        $model = $request->input('service_type') === 'Ironing' ? Ironing::class : Laundry::class;
-        $serviceId = $request->input('service_type') === 'Ironing' ? 'ironing_id' : 'laundry_id';
+        $model = $request->input('service_type') === 'ironing' ? Ironing::class : Laundry::class;
+        $serviceId = $request->input('service_type') === 'ironing' ? 'ironing_id' : 'laundry_id';
 
         $order = $model::find($request->input('order_id'));
         if (!$order) {

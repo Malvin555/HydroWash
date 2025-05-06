@@ -86,14 +86,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                     </svg>
-                                    <span>{{ ucwords(str_replace('_', ' ', $model?->retrieval_method)) }}</span>
+                                    <span>{{ Str::formatSnakeCaseToLabel($model->retrieval_method) }}</span>
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <p class="text-gray-600 text-sm mb-1">Total Amount:</p>
-                                <p class="font-bold text-primary">Rp
-                                    {{ number_format($model?->price_laundry ?? $model?->price_ironing, 2, ',', '.') }}</p>
+                                <p class="font-bold text-primary">{{ Str::formatCurrency($model?->price_laundry ?? $model?->price_ironing) }}</p>
                             </div>
 
                             <div class="mb-4">
@@ -142,7 +141,7 @@
                 <!-- Action Buttons -->
                 <div class="p-6 border-t border-gray-200 flex flex-col sm:flex-row gap-4">
                     <a href="{{ route('user.print', [
-                        'type' => 'transactionReceipt',
+                        'type' => 'transaction-receipt',
                         'service' => Str::slug($model->name_ironing ?? $model->name_laundry),
                     ]) }}"
                         target="_blank"

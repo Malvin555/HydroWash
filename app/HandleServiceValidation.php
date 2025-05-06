@@ -105,7 +105,7 @@ trait HandleServiceValidation
             $calculatedPrice += $data['retrieval-method'] === 'delivery' ? $additionalPrice + ($calculatedPrice * $tax) : 0;
         }
 
-        return 'Rp ' . number_format($calculatedPrice, 2, ',', '.');
+        return Str::formatCurrency($calculatedPrice);
     }
 
     protected function mapItemQuantities(array $data): Collection

@@ -90,5 +90,36 @@ class MacroServiceProvider extends ServiceProvider
             $suffix = strtoupper(end($parts));
             return $prefix . ' #' . $suffix;
         });
+
+        /**
+         * Macro to convert a snake_case string into a human-readable label.
+         * 
+         * This macro takes a string formatted in snake_case, replaces underscores with spaces,
+         * and capitalizes the first letter of each word to create a readable label.
+         * 
+         * Example:
+         * Input: "take_away"
+         * Output: "Take Away"
+         * 
+         * @param string $value The snake_case string to be formatted.
+         * @return string The formatted label.
+         */
+        Str::macro('formatSnakeCaseToLabel', function (string $value): string {
+            return ucwords(str_replace('_', ' ', $value));
+        });
+
+        /**
+         * Macro to format a number into Indonesian Rupiah format.
+         *
+         * Examples:
+         * Input: 120000.00
+         * Output: Rp 120.000,00
+         *
+         * @param string|float $value The number to be formatted.
+         * @return string The formatted string.
+         */
+        Str::macro('formatCurrency', function (string|float $value): string {
+            return 'Rp ' . number_format($value, 2, ',', '.');
+        });
     }
 }

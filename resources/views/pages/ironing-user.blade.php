@@ -63,7 +63,7 @@
                                                 <div class="bg-cover bg-center h-40 relative"
                                                     style="background-image: url('{{ $item->image_item ? Storage::url($item->image_item) : asset('img/transaction-img.png') }}')">
                                                     <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                        Rp {{ number_format($item->price_item, 2, ',', '.') }}
+                                                        {{ Str::formatCurrency($item->price_item) }}
                                                     </div>
                                                 </div>
                                                 <div class="p-4">

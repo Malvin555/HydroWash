@@ -19,7 +19,7 @@ class HistoryController extends Controller
         $status = $request->input('status') ?? '';
         $type = $request->input('type') ?? '';
         $search = $request->input('search') ?? '';
-        $perPage = 2;
+        $perPage = 1;
 
         // Force page to 1 if it's an AJAX request
         if ($request->ajax()) {
@@ -96,9 +96,9 @@ class HistoryController extends Controller
         }
 
         if ($serviceType == 'ironing') {
-            $service = Ironing::with(['canceled', 'transaction'])->findOrFail($id);
+            $service = Ironing::with(['orderItems.itemType'])->findOrFail($id);
         } else if ($serviceType == 'laundry') {
-            $service = Laundry::with(['canceled', 'transaction'])->findOrFail($id);
+            $service = Laundry::with(['orderItems.itemType'])->findOrFail($id);
         }
 
         $hasTransaction = $service->transaction()->exists();
@@ -107,7 +107,7 @@ class HistoryController extends Controller
             "status" => "success",
             "message" => "Service details retrieved successfully",
             "data" => $service,
-            'serviceType' => ucfirst($serviceType),
+            'serviceType' => $serviceType,
             'hasTransaction' => $hasTransaction,
         ], 200);
     }

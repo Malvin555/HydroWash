@@ -200,22 +200,22 @@
                     Hydro<span class="brand-highlight">Wash</span>
                 </h1>
                 <p class="text-sm text-gray">Ironing Service</p>
-                <p class="text-sm text-gray">23-04-2025 14:30</p>
+                <p class="text-sm text-gray">{{ $data->created_at->format('d-m-Y H:i') }}</p>
             </div>
 
             <!-- Receipt Details -->
             <div class="section">
                 <div class="flex-row">
                     <span class="label">Receipt No:</span>
-                    <span class="value">LI-20250423-001</span>
+                    <span class="value">{{ $data->receipt_no }}</span>
                 </div>
                 <div class="flex-row">
                     <span class="label">Customer:</span>
-                    <span class="value">Malvin</span>
+                    <span class="value">{{ $data->user->name }}</span>
                 </div>
                 <div class="flex-row">
                     <span class="label">Date:</span>
-                    <span class="value">23-04-2025</span>
+                    <span class="value">{{ $data->created_at->format('d-m-Y') }}</span>
                 </div>
             </div>
 
@@ -233,24 +233,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Regular Wash</td>
-                            <td>2</td>
-                            <td>Rp 7,500.00</td>
-                            <td>Rp 15,000.00</td>
-                        </tr>
-                        <tr>
-                            <td>Ironing Service</td>
-                            <td>5</td>
-                            <td>Rp 5,000.00</td>
-                            <td>Rp 25,000.00</td>
-                        </tr>
-                        <tr>
-                            <td>Premium Wash</td>
-                            <td>1</td>
-                            <td>Rp 10,000.00</td>
-                            <td>Rp 10,000.00</td>
-                        </tr>
+                        @forelse ($data->orderItems as $item)
+                            <tr>
+                                <td>{{ $item->itemType->name_item }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>{{ Str::formatCurrency($item->itemType->price_item) }}</td>
+                                <td>{{ Str::formatCurrency($item->price_total) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4">No Ironing Data</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -259,19 +253,23 @@
             <div class="section" style="border-bottom: none;">
                 <div class="flex-row">
                     <span class="label">Subtotal:</span>
-                    <span>Rp 50,000.00</span>
+                    <span>{{ Str::formatCurrency($data->sub_total) }}</span>
+                </div>
+                <div class="flex-row">
+                    <span class="label">Delivery Fee:</span>
+                    <span>{{ Str::formatCurrency($data->delivery_fee) }}</span>
                 </div>
                 <div class="flex-row">
                     <span class="label">Tax (10%):</span>
-                    <span>Rp 5,000.00</span>
+                    <span>{{ Str::formatCurrency($data->tax) }}</span>
                 </div>
                 <div class="flex-row total-row">
                     <span>Total:</span>
-                    <span>Rp 55,000.00</span>
+                    <span>{{ Str::formatCurrency($data->price_total) }}</span>
                 </div>
                 <div class="flex-row" style="margin-top: 0.5rem;">
                     <span class="label">Payment Method:</span>
-                    <span>Cash</span>
+                    <span>{{ Str::formatSnakeCaseToLabel($data->retrieval_method) }}</span>
                 </div>
             </div>
 
@@ -280,11 +278,11 @@
                 <h2 class="section-title">Pickup Information</h2>
                 <div class="flex-row" style="margin-bottom: 0.25rem;">
                     <span class="label">Estimated Ready:</span>
-                    <span>25-04-2025</span>
+                    <span>{{ \Carbon\Carbon::parse($data->estimation)->format('d-m-Y') }}</span>
                 </div>
                 <div class="flex-row">
                     <span class="label">Order Status:</span>
-                    <span class="status-badge">Processing</span>
+                    <span class="status-badge">{{ ucfirst($data->status) }}</span>
                 </div>
             </div>
 

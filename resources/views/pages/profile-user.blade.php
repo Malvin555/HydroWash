@@ -2,10 +2,9 @@
     {{-- profile --}}
     <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24">
         <div class="container mx-auto px-4 md:px-6 relative z-10">
-            <x-back-to-home></x-back-to-home>
-
-            <div class="max-w-4xl mx-auto mt-6">
-                <div class="flex items-center mb-8">
+            <div class="max-w-7xl mx-auto mt-2">
+                <x-back-to-home></x-back-to-home>
+                <div class="flex items-center my-10">
                     <div class="mr-5">
                         <div class="h-16 w-16 md:h-20 md:w-20 rounded-full bg-primary text-white flex items-center justify-center text-2xl md:text-3xl font-bold shadow-md">
                             {{ Str::substr(strtoupper(Auth::user()->name ?? 'User'), 0, 2) }}
@@ -134,7 +133,7 @@
 
                             <div class="flex justify-end">
                                 <button type="submit" 
-                                    class="bg-primary hover:bg-[#0c7489] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 flex items-center">
+                                    class="bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-2 px-6 font-medium shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
@@ -217,7 +216,7 @@
 
                             <div class="flex justify-end">
                                 <button type="submit" 
-                                    class="bg-primary hover:bg-[#0c7489] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 flex items-center">
+                                    class="bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-2 px-6 font-medium shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
@@ -226,14 +225,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
-
-                <!-- Account Activity Section (Optional) -->
-                <div class="mt-8 bg-white bg-opacity-70 rounded-lg p-4 text-center">
-                    <p class="text-gray-600 text-sm">
-                        Last login: {{ \Carbon\Carbon::now()->subHours(rand(1, 24))->format('d M Y, h:i A') }}
-                        • IP: 192.168.xxx.xxx
-                    </p>
                 </div>
             </div>
         </div>
@@ -266,12 +257,12 @@
             const formInputs = document.querySelectorAll('input');
             formInputs.forEach(input => {
                 input.addEventListener('focus', function() {
-                    this.parentElement.classList.add('scale-105');
+                    this.parentElement.classList.add('scale-102');
                     this.parentElement.style.transition = 'all 0.2s ease';
                 });
                 
                 input.addEventListener('blur', function() {
-                    this.parentElement.classList.remove('scale-105');
+                    this.parentElement.classList.remove('scale-102');
                 });
             });
         });

@@ -2,6 +2,7 @@ import initializeModal from "../../modal";
 import buildRoute from "../../utils/buildRoute";
 import fetchDetailToModal from "./fetchDetailToModal";
 import { strSlug } from "../../utils/string";
+import { formatCurrency, formatDate, formatSnakeCaseToLabel } from "../../utils/formatter";
 
 initializeModal('showModalInformationUser', async ({ id, type }) => {
     await fetchDetailToModal({
@@ -23,91 +24,99 @@ function renderModalInformationUser(response) {
     const modalTitle = modal.querySelector(".modal-title");
     modalTitle.textContent = data.name_ironing ?? data.name_laundry;
 
-    const modalContent = modal.querySelector(".modal-data");
-    modalContent.innerHTML = `
-        <div class="overflow-y-auto p-6 space-y-4 flex-1">
-            <h2 class="text-xl font-medium text-center text-primary tracking-wide">${
-                response?.serviceType
-            } Information</h2>
+    const itemsDetails = modal.querySelector(".items-details");
+    
+    if (data.order_items.length <= 1) {
+        itemsDetails.classList.add("justify-center", "items-center");
+    } else {
+        itemsDetails.classList.remove("justify-center", "items-center");
+    }
 
-            <div>
-                <label class="text-sm font-semibold text-primary">Amount Item:</label>
-                <div class="bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">${
-                    data?.amount_item
-                }Pcs ${new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                    }).format(data.price_ironing ?? data.price_laundry)}</div>
-            </div>
-
-            <div>
-                <label class="text-sm font-semibold text-primary">Retrieval Method:</label>
-                <div class="bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">${data?.retrieval_method}</div>
-            </div>
-            
-            ${data.retrieval_method === "delivery" ? `
-                <div>
-                    <label class="text-sm font-semibold text-primary">Address:</label>
-                    <div class="flex items-start gap-2 bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-4" viewBox="0 0 576 512">
-                            <path fill="currentColor"
-                                d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
-                        </svg>
-                        <span>${data?.address_taking}</span>
+    itemsDetails.innerHTML = `
+        ${data.order_items.map((item) => `
+            <div class="item-card flex flex-col justify-center items-center md:flex-row gap-4 min-w-[95%] md:min-w-[500px]">
+                <!-- Item Image -->
+                <div class="w-full md:w-1/3 flex justify-center">
+                    <div
+                        class="relative w-40 h-40 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                        <img src="${'/storage/' + item?.item_type?.image_item}" alt="Laundry Item"
+                            class="w-full h-full object-cover">
                     </div>
                 </div>
-                <div>
-                    <label class="text-sm font-semibold text-primary">Destination:</label>
-                    <div class="flex items-start gap-2 bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-4" viewBox="0 0 448 512">
-                            <path fill="currentColor"
-                                d="M320 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM204.5 121.3c-5.4-2.5-11.7-1.9-16.4 1.7l-40.9 30.7c-14.1 10.6-34.2 7.7-44.8-6.4s-7.7-34.2 6.4-44.8l40.9-30.7c23.7-17.8 55.3-21 82.1-8.4l90.4 42.5c29.1 13.7 36.8 51.6 15.2 75.5L299.1 224l97.4 0c30.3 0 53 27.7 47.1 57.4L415.4 422.3c-3.5 17.3-20.3 28.6-37.7 25.1s-28.6-20.3-25.1-37.7L377 288l-70.3 0c8.6 19.6 13.3 41.2 13.3 64c0 88.4-71.6 160-160 160S0 440.4 0 352s71.6-160 160-160c11.1 0 22 1.1 32.4 3.3l54.2-54.2-42.1-19.8zM160 448a96 96 0 1 0 0-192 96 96 0 1 0 0 192z" />
-                        </svg>
-                        <span>${data?.address_delivery}</span>
+
+                <!-- Item Info -->
+                <div class="w-full space-y-3 pb-0">
+                    <div>
+                        <h4 class="text-lg font-medium text-gray-800">${item?.item_type?.name_item}</h4>
+                        <p class="text-sm text-gray-600">Order ID: ${String(item?.id).padStart(4, '0')}</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-white p-2 rounded-lg border border-gray-300">
+                            <span class="text-xs text-gray-500">Price</span>
+                            <p class="font-semibold text-sm text-gray-800">${formatCurrency(item?.item_type?.price_item)}</p>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-gray-300">
+                            <span class="text-xs text-gray-500">Quantity</span>
+                            <p class="font-semibold text-sm text-gray-800">${item?.quantity} pcs</p>
+                        </div>
+                        <div class="bg-white p-2 rounded-lg border border-gray-300 col-span-2">
+                            <span class="text-xs text-gray-500">Total</span>
+                            <p class="font-semibold text-sm text-gray-800">${formatCurrency(item?.price_total)}</p>
+                        </div>
                     </div>
                 </div>
-            `
-            : "" }
-
-            <div>
-                <label class="text-sm font-semibold text-primary">Notes:</label>
-                <div class="bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm min-h-25">
-                    ${data.notes_ironing ?? data.notes_laundry ?? "Nothing"}
-                </div>
             </div>
+        `).join('')}
+    `;
 
-            <div>
-                <label class="text-sm font-semibold text-primary">Estimation:</label>
-                <div class="flex items-center gap-2 bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-4" viewBox="0 0 448 512">
-                        <path fill="currentColor"
-                            d="M320 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM204.5 121.3c-5.4-2.5-11.7-1.9-16.4 1.7l-40.9 30.7c-14.1 10.6-34.2 7.7-44.8-6.4s-7.7-34.2 6.4-44.8l40.9-30.7c23.7-17.8 55.3-21 82.1-8.4l90.4 42.5c29.1 13.7 36.8 51.6 15.2 75.5L299.1 224l97.4 0c30.3 0 53 27.7 47.1 57.4L415.4 422.3c-3.5 17.3-20.3 28.6-37.7 25.1s-28.6-20.3-25.1-37.7L377 288l-70.3 0c8.6 19.6 13.3 41.2 13.3 64c0 88.4-71.6 160-160 160S0 440.4 0 352s71.6-160 160-160c11.1 0 22 1.1 32.4 3.3l54.2-54.2-42.1-19.8zM160 448a96 96 0 1 0 0-192 96 96 0 1 0 0 192z" />
-                    </svg>
-                    <span>${data?.estimation ? new Date(data?.estimation).toLocaleDateString("id-ID", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                        }) : 'Null Pay First'}
-                    </span>
-                </div>
-            </div>
-        </div>
 
-        <!-- Fixed Footer -->
-        <div class="p-4 space-y-2 bg-white">
-            ${
-                !response.hasTransaction ? ` 
-                <a href="${buildRoute("transaction", strSlug(data.name_ironing ?? data.name_laundry))}"
-                    class="block w-full text-center px-4 py-2 rounded-md bg-primary text-white font-medium">
-                    Transaction
-                </a>
-                
-            <button data-modal-target="modalCancelService" data-fetch="false" class="block cursor-pointer w-full px-4 py-2 rounded-md bg-red-600 text-white font-medium">
+    modal.querySelector('.amount-item').textContent = `${data?.amount_item}pcs (${formatCurrency(data.price_ironing ?? data.price_laundry)})`;
+    modal.querySelector('.retrieval-method').textContent = formatSnakeCaseToLabel(data.retrieval_method);
+
+    if (data.retrieval_method === 'delivery') {
+        modal.querySelector('.address-container').style.display = 'block';
+        modal.querySelector('.destination-container').style.display = 'block';
+        modal.querySelector('.delivery-note').style.display = 'flex';
+        modal.querySelector('.address').textContent = data.address_taking;
+        modal.querySelector('.destination').textContent = data.address_delivery;
+    } else {
+        modal.querySelector('.address-container').style.display = 'none';
+        modal.querySelector('.destination-container').style.display = 'none';
+        modal.querySelector('.delivery-note').style.display = 'none';
+    }
+
+    modal.querySelector('.notes').textContent = data.notes_laundry ?? data.notes_ironing ?? 'Nothing';
+    modal.querySelector('.estimation').textContent = data.estimation ? formatDate(data.estimation) : 'Null Pay First';
+
+
+    if (!response.hasTransaction) {
+        modal.querySelector('.action-buttons').innerHTML = `
+            <a href="${buildRoute('transaction', strSlug(data.name_ironing ?? data.name_laundry))}"
+                class="w-full bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-3 px-6 font-bold text-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex justify-center items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M12 16v.01" />
+                    <path d="M8 12h8" />
+                    <path d="M8 8h8" />
+                </svg>
+                Complete Transaction
+            </a>
+            <button data-modal-target="modalCancelService" data-fetch="false"
+                class="cursor-pointer flex justify-center items-center w-full px-4 py-3 rounded-lg bg-white border border-red-200 text-red-600 font-medium shadow-sm hover:bg-red-100 hover:border-red-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                </svg>
                 Cancel Order
             </button>
-            ` : ""}
-        </div>
-    `;
+        `;
+    } else {
+        modal.querySelector('.action-buttons').innerHTML = '';
+    }
 
     // Data for the modal cancel service
     const modalCancelService = document.getElementById("modalCancelService");

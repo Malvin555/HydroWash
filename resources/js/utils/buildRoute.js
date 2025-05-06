@@ -1,5 +1,8 @@
 export default function buildRoute(name, params = {}) {
     const routes = {
+        laundry: () => `/user/laundry`,
+        ironing: () => `/user/iron`,
+        complete_transaction: (slug) => `/user/complete-transaction/${slug}`,
         transaction: (slug) => `/user/transaction/${slug}`,
         cancel_order: () => `/user/cancel-order`,
         item_types_delete: (id) => `/admin/item-types/${id}`, 

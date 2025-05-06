@@ -1,52 +1,81 @@
 @if ($paginator->hasPages())
-    <div class="rounded-sm flex justify-end mt-4">
-        <div class="px-3 bg-secondary rounded-sm">
-            <div class="flex py-3 w-45 justify-center items-center gap-2 text-black relative">
+    <div class="flex justify-end mt-6">
+        <nav class="inline-flex rounded-lg shadow-sm overflow-hidden" aria-label="Pagination">
+            {{-- Previous Page Link --}}
+            @if ($paginator->onFirstPage())
+                <span
+                    class="relative inline-flex items-center px-3 py-2 bg-gray-100 text-gray-400 cursor-not-allowed border-r border-gray-200">
+                    <span class="sr-only">Previous</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </span>
+            @else
+                <a href="{{ $paginator->previousPageUrl() }}"
+                    class="relative inline-flex items-center px-3 py-2 bg-white hover:bg-primary text-gray-700 hover:text-white transition-colors duration-200 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset">
+                    <span class="sr-only">Previous</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+            @endif
 
-                {{-- Previous Page Link --}}
-                @if ($paginator->onFirstPage())
-                    <span class="bg-primary text-white p-1 rounded-sm absolute left-0 cursor-not-allowed opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 320 512">
-                            <path
-                                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
-                        </svg>
-                    </span>
-                @else
-                    <a href="{{ $paginator->previousPageUrl() }}" class="bg-primary text-white p-1 rounded-sm absolute left-0 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 320 512">
-                            <path
-                                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
-                        </svg>
-                    </a>
-                @endif
+            {{-- Page Number Links (for desktop) --}}
+            <div class="hidden md:flex">
+                @foreach ($elements as $element)
+                    {{-- "Three Dots" Separator --}}
+                    @if (is_string($element))
+                        <span
+                            class="relative inline-flex items-center px-4 py-2 bg-white text-gray-700 border-r border-gray-200">
+                            {{ $element }}
+                        </span>
+                    @endif
 
-                {{-- Page Number Info --}}
-                <div>
-                    <p>{{ $paginator->currentPage() }} of {{ $paginator->lastPage() }}</p>
-                </div>
-
-                {{-- Next Page Link --}}
-                @if ($paginator->hasMorePages())
-                    <a href="{{ $paginator->nextPageUrl() }}" class="bg-primary text-white p-1 rounded-sm absolute right-0 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 320 512">
-                            <path
-                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
-                        </svg>
-                    </a>
-                @else
-                    <span class="bg-primary text-white p-1 rounded-sm absolute right-0 cursor-not-allowed opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 320 512">
-                            <path
-                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
-                        </svg>
-                    </span>
-                @endif
-
+                    {{-- Array Of Links --}}
+                    @if (is_array($element))
+                        @foreach ($element as $page => $url)
+                            @if ($page == $paginator->currentPage())
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 bg-primary text-white font-medium border-r border-gray-200">
+                                    {{ $page }}
+                                </span>
+                            @else
+                                <a href="{{ $url }}"
+                                    class="relative inline-flex items-center px-4 py-2 bg-white hover:bg-primary text-gray-700 hover:text-white transition-colors duration-200 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset">
+                                    {{ $page }}
+                                </a>
+                            @endif
+                        @endforeach
+                    @endif
+                @endforeach
             </div>
-        </div>
+
+            {{-- Page Number Info (for mobile) --}}
+            <div class="flex md:hidden items-center px-4 py-2 bg-white text-gray-700 border-r border-gray-200">
+                <span>{{ $paginator->currentPage() }} of {{ $paginator->lastPage() }}</span>
+            </div>
+
+            {{-- Next Page Link --}}
+            @if ($paginator->hasMorePages())
+                <a href="{{ $paginator->nextPageUrl() }}"
+                    class="relative inline-flex items-center px-3 py-2 bg-white hover:bg-primary text-gray-700 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset">
+                    <span class="sr-only">Next</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            @else
+                <span class="relative inline-flex items-center px-3 py-2 bg-gray-100 text-gray-400 cursor-not-allowed">
+                    <span class="sr-only">Next</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            @endif
+        </nav>
     </div>
 @endif

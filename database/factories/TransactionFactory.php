@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Ironing;
 use App\Models\Laundry;
-use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,7 +36,7 @@ class TransactionFactory extends Factory
             'ironing_id' => $ironing?->id,
             'price_transaction' => $price,
             'method' => $method,
-            'user_transaction' => 'Rp ' . number_format($price, 0, ',', '.'),
+            'user_transaction' => Str::formatCurrency($price),
             'card_number' => $method === "debit" ? $this->faker->creditCardNumber() : null,
             'postal_code' => $method === "debit" ? $this->faker->postcode() : null ,
             'bank_name' => $method === "debit" ?  $this->faker->randomElement(['BCA', 'BNI', 'BRI', 'Mandiri']) : null,

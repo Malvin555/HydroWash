@@ -178,7 +178,7 @@
             </div>
             <div class="text-center">
                 <div class="label">Total Amount:</div>
-                <div class="value">Rp {{ number_format($model?->price_laundry ?? $model?->price_ironing, 2, ',', '.') }}</div>
+                <div class="value">{{ Str::formatCurrency($model?->price_laundry ?? $model?->price_ironing) }}</div>
             </div>
         </div>
 

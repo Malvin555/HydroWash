@@ -158,9 +158,7 @@
                         <div class="md:w-1/3 bg-gray-50 p-4 rounded-xl">
                             <div class="text-center mb-3">
                                 <span class="text-sm text-gray-500">Total Amount</span>
-                                <div class="text-2xl font-bold text-primary">
-                                    Rp {{ number_format($data->price_laundry ?? $data->price_ironing, 2, ',', '.') }}
-                                </div>
+                                <div class="text-2xl font-bold text-primary">{{ Str::formatCurrency($data->price_laundry ?? $data->price_ironing) }}</div>
                             </div>
                             <div class="text-xs text-gray-500 text-center">
                                 *Price may change based on additional services

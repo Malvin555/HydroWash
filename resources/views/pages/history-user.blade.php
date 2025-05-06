@@ -7,7 +7,7 @@
                 <x-back-to-home></x-back-to-home>
                 <!-- Header Section -->
                 <div class="mb-8 mt-5">
-                    <div class="flex items-center gap-3 mb-2">
+                    <div class="flex items-center gap-9 mb-2">
                         <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">
                             Your Service History
                         </h1>
@@ -153,17 +153,19 @@
                                             </span>
                                         </div>
                                         
-                                        <!-- Action Buttons -->
-                                        <div class="flex gap-2">
-                                        
-                                            <a href="{{ route('user.print', [
-                                                'type' => 'laundryReceipt',
-                                            ]) }}" class="bg-primary text-white p-2 rounded-lg transition-colors duration-200" target="_blank" title="Print Receipt">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                                                </svg>
-                                            </a>
-                                        </div>
+                                        @if ($item->status !== 'pending')
+                                            <!-- Action Buttons -->
+                                            <div class="flex gap-2">
+                                                <a href="{{ route('user.print', [
+                                                    'type' => "{$item->type}-receipt",
+                                                    'service' => Str::slug($item->name),
+                                                ]) }}" class="bg-primary text-white p-2 rounded-lg transition-colors duration-200" target="_blank" title="Print Receipt">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 
@@ -192,7 +194,7 @@
                                 <h3 class="text-xl font-medium text-gray-700 mb-2">No Orders Found</h3>
                                 <p class="text-gray-500 max-w-md mb-6">You don't have any service history yet. Place your first order to get started!</p>
                                 <div class="flex items-center justify-center flex-col md:flex-row gap-5 md:gap-8">
-                                    <a href="{{ route('laundry') }}" class="bg-primary hover:bg-[#0c7489] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 inline-flex items-center">
+                                    <a href="{{ route('laundry') }}" class="bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-2 px-6 font-medium shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                         </svg>
@@ -201,7 +203,7 @@
                                     <div class="h-full block m-auto">
                                         <p class="text-gray-500 text-lg max-w-md">Or</p>
                                     </div>
-                                    <a href="{{ route('ironing') }}" class="bg-primary hover:bg-[#0c7489] text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 inline-flex items-center">
+                                    <a href="{{ route('ironing') }}" class="bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-2 px-6 font-medium shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                         </svg>
@@ -233,26 +235,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Search functionality
-            const searchInput = document.getElementById('search');
-            let searchTimeout;
-            
-            searchInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(function() {
-                    const searchValue = searchInput.value.trim();
-                    const currentUrl = new URL(window.location.href);
-                    
-                    if (searchValue) {
-                        currentUrl.searchParams.set('search', searchValue);
-                    } else {
-                        currentUrl.searchParams.delete('search');
-                    }
-                    
-                    window.location.href = currentUrl.toString();
-                }, 500);
-            });
-            
             // Add hover effect to history items
             const historyItems = document.querySelectorAll('#historyList > div');
             historyItems.forEach(item => {

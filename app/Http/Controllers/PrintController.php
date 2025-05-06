@@ -23,31 +23,31 @@ class PrintController extends Controller
         $status = $request->input('status') ?? '';
         $order = $request->input('order') ?? 'desc';
         $serviceName = $request->input('service');
-        
+
         switch ($type) {
             case 'laundry':
                 $view = 'print.laundry';
-                $data = $this->getDataToPrint(LaundryController::class, 'getDataLaundry', $search, $status, $order);
+                $data = $this->getServiceTableDataToPrint(LaundryController::class, 'getDataLaundry', $search, $status, $order);
                 break;
             case 'ironing':
                 $view = 'print.ironing';
-                $data = $this->getDataToPrint(IroningController::class, 'getDataIroning', $search, $status, $order);
+                $data = $this->getServiceTableDataToPrint(IroningController::class, 'getDataIroning', $search, $status, $order);
                 break;
             case 'transaction':
-                $view = 'print.transaction'; 
-                $data = $this->getDataTransactionToPrint($time, $search);
+                $view = 'print.transaction';
+                $data = $this->getTransactionDataToPrint($time, $search);
                 break;
-            case 'laundryReceipt':
-                $view = 'print.receipt.laundry'; 
-                $data = [];
+            case 'laundry-receipt':
+                $view = 'print.receipt.laundry';
+                $data = $this->getServiceReceiptData($serviceName);
                 break;
-            case 'ironingReceipt':
-                $view = 'print.receipt.ironing'; 
-                $data = [];
+            case 'ironing-receipt':
+                $view = 'print.receipt.ironing';
+                $data = $this->getServiceReceiptData($serviceName);
                 break;
-            case 'transactionReceipt':
-                $view = 'print.receipt.transaction'; 
-                $data = $this->getDataTransactionForReceipt($serviceName);;
+            case 'transaction-receipt':
+                $view = 'print.receipt.transaction';
+                $data = $this->getTransactionReceiptData($serviceName);;
                 break;
         }
 
@@ -60,7 +60,7 @@ class PrintController extends Controller
         return $mpdf->Output('laporan-' . $type . '.pdf', 'I');
     }
 
-    public function getDataToPrint($controller, $method, $search, $status = null, $order = null)
+    public function getServiceTableDataToPrint($controller, $method, $search, $status = null, $order = null)
     {
         $dataCollection = (new $controller)->$method($search, $status, $order);
         $dates = $dataCollection->pluck('created_at');
@@ -83,7 +83,7 @@ class PrintController extends Controller
         return $data;
     }
 
-    public function getDataTransactionToPrint($time, $search)
+    public function getTransactionDataToPrint($time, $search)
     {
         $data = [
             'transactions' => (new TransactionController)->getDataTransaction($time, $search)->get(),
@@ -94,14 +94,42 @@ class PrintController extends Controller
         return $data;
     }
 
-    public function getDataTransactionForReceipt($serviceName)
+    public function getTransactionReceiptData($serviceName)
     {
-        $name = Str::formatServiceNameFromSlug($serviceName);
-        $serviceType = str_starts_with(strtolower($name), 'ironing') ? 'ironing' : 'laundry';
-        $service = $serviceType === 'ironing' ? Ironing::class : Laundry::class;
-        
-        $model = $service::where("name_{$serviceType}", $name)->firstOrFail();
-        $data = $model->transaction()->first();
+        [$model, $serviceType, $serviceName] = (new TransactionController)->getModelAndService($serviceName);
+
+        $serviceModel = $model::where("name_{$serviceType}", $serviceName)->firstOrFail();
+        $data = $serviceModel->transaction()->first();
+
+        return $data;
+    }
+
+    public function getServiceReceiptData($serviceName)
+    {
+        [$model, $serviceType, $serviceName] = (new TransactionController)->getModelAndService($serviceName);
+
+        $data = $model::with('orderItems.itemType')
+            ->where("name_{$serviceType}", $serviceName)
+            ->firstOrFail();
+
+        $transaction = $data->transaction()->select('id', 'created_at')->first();
+        $data->receipt_no = Str::upper(Str::substr($serviceType, 0, 2))
+            . '-'
+            . Carbon::parse($transaction->created_at)->format('Ymd')
+            . '-'
+            . str_pad($transaction->id, 3, '0', STR_PAD_LEFT);
+
+        $data->price_total = $data->price_ironing ?? $data->price_laundry;
+        $data->delivery_fee = $data->retrieval_method === 'delivery' ? 20000 : 0;
+
+        $data->sub_total = $data->retrieval_method === 'delivery' 
+            ? ($data->price_total - $data->delivery_fee) / 1.1 
+            : $data->price_total;
+        $data->tax =$data->retrieval_method === 'delivery' 
+            ? $data->sub_total * 0.1
+            : 0;
+            
+        $data->created_at = $transaction->created_at;
 
         return $data;
     }

@@ -14,10 +14,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $service = Laundry::count() + Ironing::count();
+        $service = $this->countOrders();
         $users = User::where('role', 'user')->count();
-        $pending = Laundry::where('status', 'pending')->count() + Ironing::where('status', 'pending')->count();
-        $completed = Laundry::where('status', 'completed')->count() + Ironing::where('status', 'completed')->count();
+        $pending = $this->countOrders('=', 'pending');
+        $completed = $this->countOrders('=', 'completed');
 
         $recentUsers = User::where('role', 'user')->orderBy('created_at', 'desc')->take(5)->get();
         $recentServices = Laundry::with('itemType')->orderBy('created_at', 'desc')->take(3)->get()
@@ -28,22 +28,33 @@ class DashboardController extends Controller
     }
 
     public function userDashboard() {
-        $activeOrders = Laundry::where('user_id', Auth::id())
-            ->where('status', '!=', 'completed')
-            ->count() 
-            + Ironing::where('user_id', Auth::id())
-            ->where('status', '!=', 'completed')
-            ->count();
+        $activeOrders = $this->countOrders('!=', 'completed');
+        $completedOrders = $this->countOrders('=', 'completed');
 
-        $completedOrders = Laundry::where('user_id', Auth::id())
-            ->where('status', 'completed')
-            ->count()
-            + Ironing::where('user_id', Auth::id())
-            ->where('status', 'completed')
-            ->count();
-
-        $expenses = Transaction::where('user_id', Auth::id())->sum('price_transaction');
+        $expenses = DB::table('transaction')
+            ->leftJoin('laundry', 'transaction.laundry_id', '=', 'laundry.id')
+            ->leftJoin('ironing', 'transaction.ironing_id', '=', 'ironing.id')
+            ->leftJoin('canceled as c1', 'c1.laundry_id', '=', 'laundry.id')
+            ->leftJoin('canceled as c2', 'c2.ironing_id', '=', 'ironing.id')
+            ->where('transaction.user_id', Auth::id())
+            ->whereNull('c1.id')
+            ->whereNull('c2.id')
+            ->sum('price_transaction');
 
         return view('pages.home-user', compact('activeOrders', 'completedOrders', 'expenses'));
+    }
+
+    private function countOrders($operator = null, $status = null)
+    {
+        $userId = Auth::id();
+        $laundryQuery = Laundry::where('user_id', $userId)->whereDoesntHave('canceled');
+        $ironingQuery = Ironing::where('user_id', $userId)->whereDoesntHave('canceled');
+
+        if ($operator && $status) {
+            $laundryQuery->where('status', $operator, $status);
+            $ironingQuery->where('status', $operator, $status);
+        }
+
+        return $laundryQuery->count() + $ironingQuery->count();
     }
 }

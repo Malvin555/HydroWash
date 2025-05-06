@@ -2,9 +2,8 @@
     {{-- feedback --}}
     <section class="min-h-screen bg-gradient-to-b from-white via-[#e6f7f9] to-[#d0f0f5] relative py-16 md:py-24">
         <div class="container mx-auto px-4 md:px-6 relative z-10">
-            <x-back-to-home></x-back-to-home>
-
-            <div class="max-w-7xl mx-auto mt-6">
+            <div class="max-w-7xl mx-auto mt-3">
+                <x-back-to-home></x-back-to-home>
                 <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary text-center mb-2">Your Feedback Matters</h1>
                 <p class="text-gray-600 text-center mb-8 max-w-2xl mx-auto">Help us improve our services by sharing your experience. Your insights drive our continuous improvement.</p>
                 
@@ -63,7 +62,7 @@
                                 </div>
                                 
                                 <button type="submit"
-                                    class="w-full bg-primary hover:bg-[#0c7489] text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+                                    class="w-full bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-4 px-6 font-medium shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                     </svg>
@@ -95,8 +94,8 @@
                                     <div class="bg-gray-50 rounded-lg p-4 mb-4 transition-all duration-200 hover:shadow-md">
                                         <div class="flex items-start gap-3">
                                             <div class="flex-shrink-0">
-                                                <div class="w-10 h-10 md:w-12 md:h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center text-primary font-bold">
-                                                    {{ substr($feedback->user->name, 0, 1) }}
+                                                <div class="w-10 h-10 md:w-12 md:h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center text-white font-bold">
+                                                    {{ Str::substr(strtoupper($feedback->user->name), 0, 2) }}
                                                 </div>
                                             </div>
                                             <div class="flex-1 min-w-0">

@@ -174,7 +174,7 @@
                         </div>
                         <div>
                             <p class="text-black text-sm opacity-80">Expenses</p>
-                            <h4 class="text-black text-2xl font-bold">Rp {{ number_format($expenses, 2, ',', '.') }}</h4>
+                            <h4 class="text-black text-2xl font-bold">{{ Str::formatCurrency($expenses) }}</h4>
                         </div>
                     </div>
                 </div>

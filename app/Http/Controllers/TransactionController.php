@@ -149,7 +149,7 @@ class TransactionController extends Controller
             'laundry_id' => $serviceType === 'laundry' ? $model?->id : null,
             'method' => $request->input('payment-method'),
             'price_transaction' => $priceTransaction,
-            'user_transaction' => 'Rp ' . number_format($priceTransaction, 2, ',', '.'),
+            'user_transaction' => Str::formatCurrency($priceTransaction),
             'card_number' => $request->input('card-number'),
             'postal_code' => $request->input('postal-code'),
             'bank_name' => $request->input('bank-name'),
@@ -179,7 +179,7 @@ class TransactionController extends Controller
             ->orderBy('created_at', 'desc');
     }
 
-    private function getModelAndService($slug)
+    public function getModelAndService($slug)
     {
         $serviceType = str_starts_with(strtolower($slug), 'ironing') ? 'ironing' : 'laundry';
         $model = $serviceType === 'ironing' ? Ironing::class : Laundry::class;

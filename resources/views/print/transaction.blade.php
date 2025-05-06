@@ -95,7 +95,7 @@
                     <td>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $item->ironing->name_ironing ?? $item->laundry->name_laundry }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
-                    <td>{{ 'Rp ' . number_format($item->price_transaction, 2, ',', '.') }}</td>
+                    <td>{{ Str::formatCurrency($item->price_transaction) }}</td>
                     <td>{{ ucfirst($item->method) }}</td>
                 </tr>
             @empty
@@ -111,7 +111,7 @@
         
         <div class="flex justify-between text-gray-700">
             <span>Total Income</span>
-            <span class="font-bold">Rp {{ number_format($data['income'], 2, ',', '.') }}</span>
+            <span class="font-bold">{{ Str::formatCurrency($data['income']) }}</span>
         </div>
     
         <div class="flex justify-between text-gray-600">

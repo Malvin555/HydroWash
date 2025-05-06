@@ -33,7 +33,7 @@
                         <div class="flex flex-col items-center relative">
                             <img src="{{ Storage::url($ironing?->image_item ?? '') }}" alt="bedding">
                             <p class="text-primary text-xs font-bold mt-2 absolute bottom-0 start-0 bg-secondary px-2 py-1" id="price-item" data-price="{{ $ironing?->price_item ?? ''  }}">
-                                {{ 'Rp ' . number_format($ironing?->price_item ?? 0, 2, ',', '.') }}
+                                {{ Str::formatCurrency($ironing?->price_item ?? 0) }}
                             </p>
                         </div>
                         <div class="flex flex-col justify-between">
