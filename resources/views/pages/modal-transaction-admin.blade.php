@@ -16,7 +16,7 @@
                 <input type="hidden" name="service-type" value="{{ old('service-type') }}">
                 <div>
                     <label class="text-sm font-bold text-primary">Detail</label>
-                    <div>
+                    {{-- <div>
                         @php
                             $imageItem = null;
                             if (old('service-type') && str_contains(old('service-type'), 'Laundry')) {
@@ -40,7 +40,44 @@
                     </div>
                     @error('service-type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    @enderror --}}
+                    <div class="bg-secondary rounded-md p-3 mt-4">
+                        <h3 class="text-sm font-bold text-primary mb-2">Selected Items:</h3>
+                        <div id="selectedItemsList-edit" class="space-y-2 max-h-32 overflow-y-auto"><div class="flex justify-between items-center text-sm">
+                                <div>
+                                    <span class="font-medium">Clothing</span>
+                                    <span class="text-gray-600 text-xs ml-1">(1 × Rp&nbsp;12.000,00)</span>
+                                </div>
+                                <span>Rp&nbsp;12.000,00</span>
+                            </div><div class="flex justify-between items-center text-sm">
+                                <div>
+                                    <span class="font-medium">Towels</span>
+                                    <span class="text-gray-600 text-xs ml-1">(1 × Rp&nbsp;10.000,00)</span>
+                                </div>
+                                <span>Rp&nbsp;10.000,00</span>
+                            </div></div>
+        
+                        <div class="mt-3 pt-2 border-t border-gray-200">
+                            <div class="flex justify-between items-center font-medium text-gray-600">
+                                <span>Subtotal</span>
+                                <span id="subtotalDisplay-edit">Rp&nbsp;22.000,00</span>
+                            </div>
+                            <div class="flex justify-between items-center font-medium text-gray-600" id="deliveryFeeRow-edit" style="display: none;">
+                                <span>Delivery Fee</span>
+                                <span id="deliveryFeeDisplay">Rp 20.000,00</span>
+                            </div>
+                            <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow-edit" style="display: none;">
+                                <span>Tax (10%)</span>
+                                <span id="taxDisplay-edit">Rp&nbsp;2.200,00</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-primary">
+                                <span>Total:</span>
+                                <span id="totalDisplay-edit">Rp&nbsp;22.000,00</span>
+                                </div>
+                                <span>Rp&nbsp;22.000,00</span>
+                        </div>
+                        <input type="hidden" name="total_price" id="totalPriceInput-edit" value="22000">
+                    </div>
                 </div>
 
                 <div>
