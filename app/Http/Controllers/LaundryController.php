@@ -112,7 +112,7 @@ class LaundryController extends Controller
      */
     public function show(string $id)
     {
-        $laundry = Laundry::with(['user', 'itemType'])->find($id);
+        $laundry = Laundry::with(['user', 'orderItems.itemType'])->find($id);
 
         return response()->json([
             "status" => "success",

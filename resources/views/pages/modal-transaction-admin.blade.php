@@ -16,68 +16,73 @@
                 <input type="hidden" name="service-type" value="{{ old('service-type') }}">
                 <div>
                     <label class="text-sm font-bold text-primary">Detail</label>
-                    {{-- <div>
+                    <div>
                         @php
-                            $imageItem = null;
+                            $orderItems = collect();
                             if (old('service-type') && str_contains(old('service-type'), 'Laundry')) {
-                                $imageItem = DB::table('laundry')
-                                    ->join('item_types', 'laundry.item_id', '=', 'item_types.id')
+                                $orderItems = DB::table('laundry')
+                                    ->join('order_items', 'order_items.laundry_id', '=', 'laundry.id')
+                                    ->join('item_types', 'order_items.item_id', '=', 'item_types.id')
                                     ->where('name_laundry', old('service-type'))
-                                    ->value('item_types.image_item');
+                                    ->get();
                             } elseif (old('service-type') && str_contains(old('service-type'), 'Ironing')) {
-                                $imageItem = DB::table('ironing')
-                                    ->join('item_types', 'ironing.item_id', '=', 'item_types.id')
+                                $orderItems = DB::table('ironing')
+                                    ->join('order_items', 'order_items.ironing_id', '=', 'ironing.id')
+                                    ->join('item_types', 'order_items.item_id', '=', 'item_types.id')
                                     ->where('name_ironing', old('service-type'))
-                                    ->value('item_types.image_item');
+                                    ->get();
+                            }
+
+                            if (old('service-type')) {
+                                $priceTotal =
+                                    $orderItems->first()->price_laundry ?? $orderItems->first()->price_ironing;
+                                $deliveryFee = $orderItems->first()->retrieval_method === 'delivery' ? 20000 : 0;
+                                $subTotal =
+                                    $orderItems->first()->retrieval_method === 'delivery'
+                                        ? ($priceTotal - $deliveryFee) / 1.1
+                                        : $priceTotal;
+                                $tax = $orderItems->first()->retrieval_method === 'delivery' ? $subTotal * 0.1 : 0;
                             }
                         @endphp
-
-                        <img src="{{ Storage::url($imageItem) ?? '' }}" alt="{{ old('service-type') }}"
-                            class="rounded-md w-full h-75 my-4">
-                        <input type="text" id="amount" disabled
-                            class="bg-secondary w-full placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0 text-primary font-bold"
-                            placeholder="12pcs (Rp 12.000.00)">
                     </div>
-                    @error('service-type')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror --}}
-                    <div class="bg-secondary rounded-md p-3 mt-4">
+
+                    <div class="bg-secondary rounded-md p-3 mt-4" id="selectedItemsContainer">
                         <h3 class="text-sm font-bold text-primary mb-2">Selected Items:</h3>
-                        <div id="selectedItemsList-edit" class="space-y-2 max-h-32 overflow-y-auto"><div class="flex justify-between items-center text-sm">
-                                <div>
-                                    <span class="font-medium">Clothing</span>
-                                    <span class="text-gray-600 text-xs ml-1">(1 × Rp&nbsp;12.000,00)</span>
+                        <div id="selectedItemsList-edit" class="space-y-2 max-h-40 overflow-y-auto">
+                            @foreach ($orderItems ?? [] as $item)
+                                <div class="flex justify-between items-center text-sm">
+                                    <div>
+                                        <span class="font-medium">{{ $item->name_item }}</span>
+                                        <span class="text-gray-600 text-xs ml-1">({{ $item->quantity ?? 0 }} × {{ Str::formatCurrency($item->price_item ?? 0) }})</span>
+                                    </div>
+                                    <span>{{ Str::formatCurrency($item->price_total ?? 0) }}</span>
                                 </div>
-                                <span>Rp&nbsp;12.000,00</span>
-                            </div><div class="flex justify-between items-center text-sm">
-                                <div>
-                                    <span class="font-medium">Towels</span>
-                                    <span class="text-gray-600 text-xs ml-1">(1 × Rp&nbsp;10.000,00)</span>
-                                </div>
-                                <span>Rp&nbsp;10.000,00</span>
-                            </div></div>
-        
+                            @endforeach
+
                         <div class="mt-3 pt-2 border-t border-gray-200">
                             <div class="flex justify-between items-center font-medium text-gray-600">
                                 <span>Subtotal</span>
-                                <span id="subtotalDisplay-edit">Rp&nbsp;22.000,00</span>
+                                <span id="subtotalDisplay-edit">{{ Str::formatCurrency($subTotal ?? 0) }}</span>
                             </div>
-                            <div class="flex justify-between items-center font-medium text-gray-600" id="deliveryFeeRow-edit" style="display: none;">
+                            <div class="flex justify-between items-center font-medium text-gray-600"
+                                id="deliveryFeeRow-edit">
                                 <span>Delivery Fee</span>
-                                <span id="deliveryFeeDisplay">Rp 20.000,00</span>
+                                <span id="deliveryFeeDisplay">{{ Str::formatCurrency($deliveryFee ?? 0) }}</span>
                             </div>
-                            <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow-edit" style="display: none;">
+                            <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow-edit">
                                 <span>Tax (10%)</span>
-                                <span id="taxDisplay-edit">Rp&nbsp;2.200,00</span>
+                                <span id="taxDisplay-edit">{{ Str::formatCurrency($tax ?? 0) }}</span>
                             </div>
                             <div class="flex justify-between font-bold text-primary">
                                 <span>Total:</span>
-                                <span id="totalDisplay-edit">Rp&nbsp;22.000,00</span>
-                                </div>
-                                <span>Rp&nbsp;22.000,00</span>
+                                <span id="totalDisplay-edit">{{ Str::formatCurrency($priceTotal ?? 0) }}</span>
+                            </div>
                         </div>
-                        <input type="hidden" name="total_price" id="totalPriceInput-edit" value="22000">
+                        <input type="hidden" name="total_price" id="totalPriceInput-edit" value="{{ $priceTotal ?? 0 }}">
                     </div>
+                    @error('service-type')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
