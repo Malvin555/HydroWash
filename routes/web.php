@@ -17,7 +17,7 @@ use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TransactionController;
 
 Route::get('/l', function () {
-    return view('laundry');
+    return view('pages.laundry-information-admin');
 })->name('home');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
