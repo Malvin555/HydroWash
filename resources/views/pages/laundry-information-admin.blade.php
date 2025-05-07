@@ -17,13 +17,42 @@
 
                 <div class="">
                     <label class="text-sm font-bold text-primary">Order Information</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <img src="{{ asset('img/bedding.png') }}" alt="bedding">
-                        <div class="flex flex-col justify-between">
-                            <input type="text" disabled name="amount-item" id="amount-item" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="90 Pcs">
-                            <input type="text" disabled name="price_laundry" id="price_laundry" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="Rp 90.000.00">
-                            <input type="text" disabled name="status_transaction" id="status_transaction" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="Uncompleted">
+                    <div class="bg-secondary rounded-md p-3 mt-4">
+                        <h3 class="text-sm font-bold text-primary mb-2">Selected Items:</h3>
+                        <div id="selectedItemsList-edit" class="space-y-2 max-h-32 overflow-y-auto"><div class="flex justify-between items-center text-sm">
+                                <div>
+                                    <span class="font-medium">Clothing</span>
+                                    <span class="text-gray-600 text-xs ml-1">(1 × Rp&nbsp;12.000,00)</span>
+                                </div>
+                                <span>Rp&nbsp;12.000,00</span>
+                            </div><div class="flex justify-between items-center text-sm">
+                                <div>
+                                    <span class="font-medium">Bedding</span>
+                                    <span class="text-gray-600 text-xs ml-1">(1 × Rp&nbsp;22.000,00)</span>
+                                </div>
+                                <span>Rp&nbsp;22.000,00</span>
+                            </div></div>
+        
+                        <div class="mt-3 pt-2 border-t border-gray-200">
+                            <div class="flex justify-between items-center font-medium text-gray-600">
+                                <span>Subtotal</span>
+                                <span id="subtotalDisplay-edit">Rp&nbsp;34.000,00</span>
+                            </div>
+                            <div class="flex justify-between items-center font-medium text-gray-600" id="deliveryFeeRow-edit" style="display: flex;">
+                                <span>Delivery Fee</span>
+                                <span id="deliveryFeeDisplay">Rp 20.000,00</span>
+                            </div>
+                            <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow-edit" style="display: flex;">
+                                <span>Tax (10%)</span>
+                                <span id="taxDisplay-edit">Rp&nbsp;3.400,00</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-primary">
+                                <span>Total:</span>
+                                <span id="totalDisplay-edit">Rp&nbsp;57.400,00</span>
+                                </div>
+                                <span>Rp&nbsp;57.400,00</span>
                         </div>
+                        <input type="hidden" name="total_price" id="totalPriceInput-edit" value="57400">
                     </div>
                 </div>
 
