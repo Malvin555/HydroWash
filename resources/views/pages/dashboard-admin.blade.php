@@ -70,8 +70,8 @@
                                             <td class="px-6 py-4 text-sm text-primary">
                                                 {{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}
                                             </td>
-                                            <td class="px-6 py-4 text-sm text-primary">
-                                                {{ $service->itemType->name_item }}
+                                            <td class="px-6 py-4 text-sm text-primary max-w-40">
+                                                {{ $service->orderItems->pluck('itemType.name_item')->implode(', ') }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 <span @class([

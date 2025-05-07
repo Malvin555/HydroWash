@@ -19,7 +19,7 @@ class HistoryController extends Controller
         $status = $request->input('status') ?? '';
         $type = $request->input('type') ?? '';
         $search = $request->input('search') ?? '';
-        $perPage = 1;
+        $perPage = 5;
 
         // Force page to 1 if it's an AJAX request
         if ($request->ajax()) {

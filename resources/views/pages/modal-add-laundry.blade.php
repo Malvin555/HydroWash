@@ -1,4 +1,5 @@
 <!-- Modal -->
+
 <div id="modalAddLaundry"
     class="modal fixed inset-0 hidden flex items-center justify-center z-50 transition-opacity duration-300 opacity-0 bg-black/30">
 
@@ -13,6 +14,7 @@
             <form action="{{ route('laundry-admin.add') }}" method="post" class="space-y-4" id="laundryAdminForm">
                 @csrf
 
+                <!-- Item Types -->
                 <div>
                     @php
                         $itemTypes = DB::table('item_types')
@@ -28,20 +30,15 @@
                                 <div class="grid grid-cols-2 gap-3 min-w-[300px]">
                                     @foreach ($chunk as $itemType)
                                         <div class="w-40 relative item-container">
-                                            <input
-                                                type="checkbox"
-                                                name="selected_types[]"
-                                                id="item_{{ $itemType->id }}"
-                                                value="{{ $itemType->name_item }}"
+                                            <input type="checkbox" name="selected_types[]" id="item_{{ $itemType->id }}"
+                                                value="{{ Str::lower($itemType->name_item) }}"
                                                 class="peer hidden item-checkbox"
                                                 data-price="{{ $itemType->price_item }}"
-                                                data-name="{{ $itemType->name_item }}"
-                                                {{ in_array($itemType->name_item, old('selected_types', [])) ? 'checked' : '' }} />
-                                            <label
-                                                for="item_{{ $itemType->id }}"
+                                                data-name="{{ Str::title($itemType->name_item) }}"
+                                                {{ session('show_modal') === 'modalAddLaundry' && in_array(Str::lower($itemType->name_item), old('selected_types', [])) ? 'checked' : '' }} />
+                                            <label for="item_{{ $itemType->id }}"
                                                 class="block px-8 py-6 peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary bg-secondary text-primary rounded-sm overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
-                                                <h1
-                                                    class="md:text-lg lg:text-xl text-center font-bold">
+                                                <h1 class="md:text-lg lg:text-xl text-center font-bold">
                                                     {{ $itemType->name_item }}
                                                 </h1>
                                                 <span class="absolute top-0 right-0 text-xs font-bold text-primary p-1">
@@ -50,17 +47,21 @@
                                             </label>
 
                                             <!-- Amount input that appears when item is selected -->
-                                            <div class="amount-input mt-2 {{ in_array($itemType->name_item, old('selected_types', [])) ? 'block' : 'hidden' }}">
+                                            <div
+                                                class="box-amount mt-2 
+                                                {{ (session('show_modal') === 'modalAddLaundry' && in_array(Str::lower($itemType->name_item), old('selected_types', []))) ? 'block' : 'hidden' }}"
+                                                >
                                                 <div class="flex items-center bg-secondary rounded-sm">
                                                     <span class="text-primary font-semibold px-2 text-xs">Qty:</span>
-                                                    <input type="number" name="amounts[{{ $itemType->name_item }}]"
-                                                        class="w-full bg-secondary text-primary py-1 px-2 outline-none text-sm"
+                                                    <input type="number"
+                                                        name="amounts[{{ Str::lower($itemType->name_item) }}]"
+                                                        class="amount-input w-full bg-secondary text-primary py-1 px-2 outline-none text-sm"
                                                         placeholder="Amount" min="1"
-                                                        value="{{ old('amounts.' . $itemType->name_item, 1) }}">
+                                                        value="{{ session('show_modal') === 'modalAddLaundry' && old('amounts.' . Str::lower($itemType->name_item)) ? old('amounts.' . Str::lower($itemType->name_item)) : 1 }}">
                                                 </div>
-                                                @error('amounts.' . $itemType->name_item)
-                                                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                                                @enderror
+                                                @errorIfModal('modalAddLaundry', 'amounts.' . Str::lower($itemType->name_item))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('amounts.' . Str::lower($itemType->name_item)) }}</p>
+                                                @enderrorIfModal
                                             </div>
                                         </div>
                                     @endforeach
@@ -68,9 +69,9 @@
                             @endforeach
                         </div>
                     </div>
-                    @error('selected_types')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    @errorIfModal('modalAddLaundry', 'selected_types')
+                        <p class="mt-1 text-sm text-red-600">{{ $errors->first('selected_types') }}</p>
+                    @enderrorIfModal
                 </div>
 
                 <!-- Selected Items Summary -->
@@ -82,37 +83,58 @@
                     </div>
 
                     <div class="mt-3 pt-2 border-t border-gray-200">
+                        <div class="flex justify-between items-center font-medium text-gray-600">
+                            <span>Subtotal</span>
+                            <span id="subtotalDisplay">Rp 0,00</span>
+                        </div>
+                        <div class="flex justify-between items-center font-medium text-gray-600"
+                            id="deliveryFeeRow" style="display: none;">
+                            <span>Delivery Fee</span>
+                            <span id="deliveryFeeDisplay">Rp 20.000,00</span>
+                        </div>
+                        <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow"
+                            style="display: none;">
+                            <span>Tax (10%)</span>
+                            <span id="taxDisplay">Rp 0,00</span>
+                        </div>
                         <div class="flex justify-between font-bold text-primary">
                             <span>Total:</span>
                             <span id="totalDisplay">Rp 0,00</span>
                         </div>
                     </div>
-                    <input type="hidden" name="total_price" id="totalPriceInput" value="{{ old('total_price', 0) }}">
+                    <input type="hidden" name="total_price" id="totalPriceInput" value="{{ @oldIfModal('modalAddLaundry', 'total_price') }}">
                 </div>
 
+                <!-- Retrieval Method -->
                 <div class="mb-5">
                     <label class="text-sm font-bold text-primary">Retrieval Method</label>
                     <div class="relative inline-block w-full">
                         <select name="retrieval-method" id="retrievalMethod"
                             class="appearance-none bg-secondary font-bold rounded-sm text-primary py-2 pl-3 w-full outline-0">
                             <option value="" disabled selected class="text-primary">Retrieval Method</option>
-                            <option value="delivery" class="text-primary" @selected(old('retrieval-method') === 'delivery')>Delivery</option>
-                            <option value="take_away" class="text-primary" @selected(old('retrieval-method') === 'take_away')>Take Away</option>
+                            <option value="delivery" class="text-primary" @selectedIfModal('modalAddLaundry', 'retrieval-method', 'delivery')>Delivery</option>
+                            <option value="take_away" class="text-primary" @selectedIfModal('modalAddLaundry', 'retrieval-method', 'take_away')>Take Away
+                            </option>
                         </select>
 
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg class="w-8 h-8 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20">
                                 <path d="M5.5 7l4.5 4 4.5-4H5.5z" />
                             </svg>
                         </div>
                     </div>
-                    @error('retrieval-method')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    @errorIfModal('modalAddLaundry', 'retrieval-method')
+                        <p class="mt-1 text-sm text-red-600">{{ $errors->first('retrieval-method') }}</p>
+                    @enderrorIfModal
                 </div>
 
-                <div class="grid grid-cols-1 gap-2" id="addressBox" style="{{ old('retrieval-method') === 'delivery' ? '' : 'display: none;' }}">
+                <!-- Delivery Address -->
+                <div class="grid grid-cols-1 gap-2" id="addressBox"
+                    @if (session('show_modal') === 'modalAddLaundry' && old('retrieval-method') === 'delivery')
+                        style="display: block;"
+                    @endif>
                     <label class="text-sm font-bold text-primary">Address</label>
                     <div class="flex items-start gap-2 bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-4 mt-1" viewBox="0 0 576 512">
@@ -121,11 +143,11 @@
                         </svg>
                         <input type="text" name="address" id="address" placeholder="Address"
                             class="bg-transparent focus:outline-none w-full placeholder:text-primary"
-                            value="{{ old('address') }}" />
+                            value="{{ @oldIfModal('modalAddLaundry', 'address') }}" />
                     </div>
-                    @error('address')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    @errorIfModal('modalAddLaundry', 'address')
+                        <p class="mt-1 text-sm text-red-600">{{ $errors->first('address') }}</p>
+                    @enderrorIfModal
                     <div class="flex items-center gap-2 bg-secondary text-primary px-4 py-2 mt-1 rounded-md text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-4" viewBox="0 0 448 512">
                             <path fill="currentColor"
@@ -133,17 +155,18 @@
                         </svg>
                         <input type="text" name="destination" placeholder="Destination"
                             class="bg-transparent focus:outline-none w-full placeholder:text-primary"
-                            value="{{ old('destination') }}" />
+                            value="{{ @oldIfModal('modalAddLaundry', 'destination') }}" />
                     </div>
-                    @error('destination')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                    @errorIfModal('modalAddLaundry', 'destination')
+                        <p class="mt-1 text-sm text-red-600">{{ $errors->first('destination') }}</p>
+                    @enderrorIfModal
                 </div>
 
+                <!-- Notes -->
                 <div class="flex flex-col">
                     <label for="notes" class="text-sm font-bold text-primary mb-1">Notes</label>
                     <textarea name="notes" id="notes" placeholder="Notes"
-                        class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">{{ old('notes') }}</textarea>
+                        class="bg-secondary text-primary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm">{{ @oldIfModal('modalAddLaundry','notes') }}</textarea>
                 </div>
 
                 <div class="flex gap-2 bg-white">
@@ -155,7 +178,7 @@
     </div>
 </div>
 
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const addressBox = document.getElementById('addressBox');
         const retrievalMethod = document.getElementById('retrievalMethod');
@@ -165,6 +188,20 @@
         const totalDisplay = document.getElementById('totalDisplay');
         const totalPriceInput = document.getElementById('totalPriceInput');
         const deliveryFee = 20000; // Rp 20,000.00
+        const subtotalDisplay = document.getElementById('subtotalDisplay');
+        const deliveryFeeRow = document.getElementById('deliveryFeeRow');
+        const deliveryFeeDisplay = document.getElementById('deliveryFeeDisplay');
+        const taxRow = document.getElementById('taxRow');
+        const taxDisplay = document.getElementById('taxDisplay');
+
+        // Initialize retrieval method if it was previously selected
+        if (retrievalMethod.value === 'delivery') {
+            deliveryFeeRow.style.display = 'flex';
+            taxRow.style.display = 'flex';
+        } else if (retrievalMethod.value === 'take_away') {
+            deliveryFeeRow.style.display = 'none';
+            taxRow.style.display = 'none';
+        }
 
         // Format number to Indonesian Rupiah
         function formatRupiah(number) {
@@ -178,6 +215,8 @@
         // Calculate total price
         function calculateTotal() {
             let total = 0;
+            let subtotal = 0;
+            let tax = 0;
             let hasSelectedItems = false;
 
             // Clear the selected items list
@@ -196,7 +235,7 @@
                     const quantity = parseInt(amountInput.value) || 1;
                     const itemTotal = itemPrice * quantity;
 
-                    total += itemTotal;
+                    subtotal += itemTotal;
 
                     // Create item row in summary
                     const itemRow = document.createElement('div');
@@ -212,18 +251,18 @@
                 }
             });
 
+            tax = subtotal * 0.1;
+            total = subtotal;
+
             // Add delivery fee if delivery is selected
             if (retrievalMethod.value === 'delivery') {
                 total += deliveryFee;
-
-                // Add delivery fee row
-                const deliveryRow = document.createElement('div');
-                deliveryRow.className = 'flex justify-between items-center text-sm text-primary';
-                deliveryRow.innerHTML = `
-                    <span class="font-medium">Delivery Fee</span>
-                    <span>${formatRupiah(deliveryFee)}</span>
-                `;
-                selectedItemsList.appendChild(deliveryRow);
+                total += tax;
+                deliveryFeeRow.style.display = 'flex';
+                taxRow.style.display = 'flex';
+            } else {
+                deliveryFeeRow.style.display = 'none';
+                taxRow.style.display = 'none';
             }
 
             // Show "No items selected" if no items are selected
@@ -237,6 +276,8 @@
             }
 
             // Update total display and hidden input
+            taxDisplay.textContent = formatRupiah(tax);
+            subtotalDisplay.textContent = formatRupiah(subtotal);
             totalDisplay.textContent = formatRupiah(total);
             totalPriceInput.value = total;
         }
@@ -285,29 +326,5 @@
 
         // Initialize total calculation
         calculateTotal();
-
-        // Modal functionality
-        const modal = document.getElementById('modalAddLaundry');
-        const closeButtons = document.querySelectorAll('.close-modal-btn');
-
-        // Close modal when clicking close buttons
-        closeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                modal.classList.add('opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
-            });
-        });
-
-        // Close modal when clicking outside
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.classList.add('opacity-0');
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                }, 300);
-            }
-        });
     });
-</script>
+</script> --}}

@@ -89,22 +89,15 @@ trait HandleServiceValidation
         }
 
         if ($id) {
-            $existingData = $this->serviceType === 'ironing' ? Ironing::find($id) : Laundry::find($id);
-            $price =  $this->serviceType === 'ironing' ? $existingData->price_ironing : $existingData->price_laundry;
-
-            if ($existingData->retrieval_method === $data['retrieval-method']) {
-                $calculatedPrice = $price;
-            } else {
-                $calculatedPrice = match ($data['retrieval-method']) {
-                    'delivery' => $price + $additionalPrice + ($price * $tax),
-                    'take_away' => $price - $additionalPrice,
-                    default => $calculatedPrice,
-                };
-            }
+            $calculatedPrice = match ($data['retrieval-method']) {
+                'delivery' => $calculatedPrice + $additionalPrice + ($calculatedPrice * $tax),
+                'take_away' => $calculatedPrice,
+                default => $calculatedPrice,
+            };
         } else {
             $calculatedPrice += $data['retrieval-method'] === 'delivery' ? $additionalPrice + ($calculatedPrice * $tax) : 0;
         }
-
+        
         return Str::formatCurrency($calculatedPrice);
     }
 
@@ -132,6 +125,27 @@ trait HandleServiceValidation
     {
         if (!$model instanceof Laundry && !$model instanceof Ironing) {
             abort(400, 'The model must be an instance of Laundry or Ironing.');
+        }
+
+        // Delete existing order items that are no longer selected
+        $existingItemId = $model->orderItems()->pluck('item_id')->toArray();
+        $newItemId = [];
+
+        foreach ($data['item-quantities']->toArray() as $itemName => $quantity) {
+            $item = ItemType::where('name_item', $itemName)
+                ->where('role', $this->serviceType)
+                ->first();
+
+            if ($item) {
+                $newItemId[] = $item->id;
+            }
+        }
+
+        $itemIdToDelete = array_diff($existingItemId, $newItemId);
+        if (!empty($itemIdToDelete)) {
+            $model->orderItems()
+                ->whereIn('item_id', $itemIdToDelete)
+                ->delete();
         }
 
         foreach ($data['item-quantities']->toArray() as $itemName => $quantity) {
