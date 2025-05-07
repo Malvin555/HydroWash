@@ -56,12 +56,18 @@ class IroningController extends Controller
         return view('pages.ironing-admin', compact('ironing'));
     }
 
-    public function getDataIroning($search, $status, $order)
+    public function getDataIroning($search, $status, $order, $isPrint = false)
     {
-        return Ironing::with('itemType')
+        $ironingQuery = Ironing::with('orderItems.itemType')
             ->ironingSearch($search)
             ->status($status)
             ->orderBy('created_at', $order);
+
+        if ($isPrint) {
+            $ironingQuery->with('user');
+        }
+
+        return $ironingQuery;
     }
 
     /**

@@ -95,11 +95,11 @@
                 <tr>
                     <td>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
                     <td>{{ $item->name_laundry }}</td>
-                    <td>John doe</td>
-                    <td>12</td>
-                    <td>{{ $item->itemType->name_item }}</td>
+                    <td>{{ $item->user->name }}</td>
+                    <td>{{ $item->amount_item }}</td>
+                    <td>{{ $item->orderItems->pluck('itemType.name_item')->implode(', ') }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
-                    <td>{{ ucfirst(str_replace('_', ' ', $item->retrieval_method)) }}</td>
+                    <td>{{ Str::formatSnakeCaseToLabel($item->retrieval_method) }}</td>
                     <td>
                         <span style="
                             padding: 2px 6px; 
@@ -134,7 +134,7 @@
             <p>Denpasar, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
             <p>Hormat Kami,</p>
             <br><br><br>
-            <p style="text-decoration: underline; font-weight: bold;">I Putu Sudipa Yasa</p>
+            <p style="text-decoration: underline; font-weight: bold;">Admin HydroWash</p>
         </div>
     </div>
 </body>

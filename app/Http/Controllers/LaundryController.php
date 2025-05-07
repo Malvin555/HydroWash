@@ -57,12 +57,18 @@ class LaundryController extends Controller
         return view('pages.laundry-admin', compact('laundry'));
     }
     
-    public function getDataLaundry($search, $status, $order)
+    public function getDataLaundry($search, $status, $order, $isDataForPrint = false)
     {
-        return Laundry::with('itemType')
+        $laundryQuery = Laundry::with(['orderItems.itemType', 'transaction'])
             ->laundrySearch($search)
             ->status($status)
             ->orderBy('created_at', $order);
+
+        if ($isDataForPrint) {
+            $laundryQuery->with('user');
+        }
+
+        return $laundryQuery;
     }
 
     /**
@@ -120,12 +126,14 @@ class LaundryController extends Controller
      */
     public function edit(string $id)
     {
-        $laundry = Laundry::with('itemType')->find($id);
+        $laundry = Laundry::with('orderItems.itemType')->find($id);
+        $itemType = ItemType::where('role', 'laundry')->get();
 
         return response()->json([
             "status" => "success",
             "message" => "Laundry data retrieved successfully",
             "data" => $laundry,
+            'itemType' => $itemType,
         ], 200);
     }
 
@@ -136,7 +144,7 @@ class LaundryController extends Controller
     {
         $id = $request->input('id');
 
-        $serviceValidation = $this->setServiceType('Laundry')
+        $serviceValidation = $this->setServiceType('laundry')
             ->setValidationBehavior(isAdmin: true, modalId: 'modalEditLaundry');
 
         $validatedData = $serviceValidation->validateServiceData($request->all(), $id);

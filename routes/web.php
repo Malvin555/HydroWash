@@ -66,6 +66,7 @@ Route::middleware('ensure.is.user')->group(function () {
 
 
 Route::middleware('ensure.is.admin')->group(function () {
+    // Route::get('/admin/laundry/edit/{id}', [LaundryController::class, 'edit']);
 
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 

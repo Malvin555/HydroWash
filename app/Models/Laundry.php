@@ -76,8 +76,10 @@ class Laundry extends Model
         return $query->when($search ?? false, function ($query, $search) {
             $query->whereRaw("LOWER(name_laundry) LIKE ?", [strtolower($search) . '%'])
                 ->orWhereRaw("LOWER(retrieval_method) LIKE ?", [str_replace(' ', '_', strtolower($search)) . '%'])
-                ->orWhereHas('itemType', function ($q) use ($search) {
-                    $q->whereRaw("LOWER(name_item) LIKE ?", [strtolower($search) . '%']);
+                ->orWhereHas('orderItems', function ($q) use ($search) {
+                    $q->whereHas('itemType', function ($q2) use ($search) {
+                        $q2->whereRaw("LOWER(name_item) LIKE ?", [strtolower($search) . '%']);
+                    });
                 });
         });
 

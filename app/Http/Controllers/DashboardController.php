@@ -14,14 +14,24 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $service = $this->countOrders();
+        $service = $this->countOrders(null, null, true);
         $users = User::where('role', 'user')->count();
-        $pending = $this->countOrders('=', 'pending');
-        $completed = $this->countOrders('=', 'completed');
+        $pending = $this->countOrders('=', 'pending', true);
+        $completed = $this->countOrders('=', 'completed', true);
 
         $recentUsers = User::where('role', 'user')->orderBy('created_at', 'desc')->take(5)->get();
-        $recentServices = Laundry::with('itemType')->orderBy('created_at', 'desc')->take(3)->get()
-            ->concat(Ironing::with('itemType')->orderBy('created_at', 'desc')->take(3)->get())
+        $recentServices = Laundry::with('orderItems.itemType')
+            ->whereDoesntHave('canceled')
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get()
+            ->concat(
+                Ironing::with('orderItems.itemType')
+                ->whereDoesntHave('canceled')
+                ->orderBy('created_at', 'desc')
+                ->take(3)
+                ->get()
+            )
             ->sortByDesc('created_at');
 
         return view('pages.dashboard-admin', compact('service', 'users', 'pending', 'completed', 'recentUsers', 'recentServices'));
@@ -44,11 +54,16 @@ class DashboardController extends Controller
         return view('pages.home-user', compact('activeOrders', 'completedOrders', 'expenses'));
     }
 
-    private function countOrders($operator = null, $status = null)
+    private function countOrders($operator = null, $status = null, $isAdmin = false)
     {
-        $userId = Auth::id();
-        $laundryQuery = Laundry::where('user_id', $userId)->whereDoesntHave('canceled');
-        $ironingQuery = Ironing::where('user_id', $userId)->whereDoesntHave('canceled');
+        $laundryQuery = Laundry::whereDoesntHave('canceled');
+        $ironingQuery = Ironing::whereDoesntHave('canceled');
+
+        if (!$isAdmin) {
+            $userId = Auth::id();
+            $laundryQuery->where('user_id', $userId);
+            $ironingQuery->where('user_id', $userId);
+        }
 
         if ($operator && $status) {
             $laundryQuery->where('status', $operator, $status);

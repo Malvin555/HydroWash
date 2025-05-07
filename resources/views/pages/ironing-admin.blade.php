@@ -113,8 +113,8 @@
                             <td class="px-6 py-4 text-sm text-primary">{{ $iron->name_ironing }}</td>
                             <td class="px-6 py-4 text-sm text-primary">
                                 {{ \Carbon\Carbon::parse($iron->created_at)->format('d-m-Y') }}</td>
-                            <td class="px-6 py-4 text-sm text-primary">{{ ucfirst(str_replace   ('_', ' ', $iron->retrieval_method)) }}</td>
-                            <td class="px-6 py-4 text-sm text-primary">{{ $iron->itemType->name_item }}</td>
+                            <td class="px-6 py-4 text-sm text-primary">{{ Str::formatSnakeCaseToLabel($iron->retrieval_method) }}</td>
+                            <td class="px-6 py-4 text-sm text-primary">{{ $iron->orderItems->pluck('itemType.name_item')->implode(', ') }}</td>
                             <td class="px-6 py-4">
                                 <span @class([
                                     'px-2 inline-flex text-xs leading-5 font-semibold rounded-full',

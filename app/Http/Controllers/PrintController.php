@@ -62,7 +62,7 @@ class PrintController extends Controller
 
     public function getServiceTableDataToPrint($controller, $method, $search, $status = null, $order = null)
     {
-        $dataCollection = (new $controller)->$method($search, $status, $order);
+        $dataCollection = (new $controller)->$method($search, $status, $order, true);
         $dates = $dataCollection->pluck('created_at');
         $minDate = $dates->min();
         $maxDate = $dates->max();
