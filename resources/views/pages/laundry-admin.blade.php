@@ -119,9 +119,9 @@
                         {{ Str::formatSnakeCaseToLabel($lndry->retrieval_method) }}</td>
                     <td class="px-6 py-4 text-sm text-primary">{{ $lndry->orderItems->pluck('itemType.name_item')->implode(', ') }}</td>
                     <td class="px-6 py-4">
-                        <span @class([ 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full'
-                            , 'bg-gray-300 text-gray-800'=> $lndry->status == 'pending',
-                            'bg-yellow-100 text-yellow-800' => $lndry->status == 'process',
+                        <span @class([ 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full',
+                            'bg-yellow-100 text-yellow-800'=> $lndry->status == 'pending',
+                            'bg-blue-100 text-blue-800' => $lndry->status == 'process',
                             'bg-green-100 text-green-800' => $lndry->status == 'completed',
                             'line-through' => $lndry->status_report === 'deleted',
                             'no-underline' => $lndry->status_report != 'deleted',

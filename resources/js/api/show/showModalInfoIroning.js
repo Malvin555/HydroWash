@@ -1,7 +1,7 @@
 import initializeModal from "../../modal";
 import fetchDetailToModal from "./fetchDetailToModal";
 import buildRoute from "../../utils/buildRoute";
-import { formatCurrency, formatDate } from "../../utils/formatter";
+import { formatCurrency, formatDate, formatSnakeCaseToLabel } from "../../utils/formatter";
 import { ucFirst } from "../../utils/string";
 
 initializeModal('showModalInfoIroning', async ({ id }) => {
@@ -74,7 +74,7 @@ function renderModalInfoIroning(response) {
 
             <div>
                 <label class="text-sm font-bold text-primary">Retrieval Method</label>
-                <input type="text" disabled class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-none text-sm" placeholder="${ucFirst(data?.retrieval_method)}">
+                <input type="text" disabled class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-none text-sm" placeholder="${formatSnakeCaseToLabel(data?.retrieval_method)}">
             </div>
 
             ${data?.retrieval_method === 'delivery' ? 
@@ -102,20 +102,18 @@ function renderModalInfoIroning(response) {
 
             <div class="flex flex-col">
                 <label for="notes" class="text-sm font-bold text-primary mb-1">Notes</label>
-                <textarea name="notes" disabled id="notes" placeholder="${data?.notes_laundry}"
+                <textarea name="notes" disabled id="notes" placeholder="${data?.notes_ironing}"
                     class="bg-secondary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm"></textarea>
             </div>
 
             <div class="flex items-center gap-2">
                 <p class="text-sm font-bold text-primary">Status</p>
                 <div class="py-1 px-6 rounded-md text-sm 
-                    ${data?.status === "pending"
-                        ? "bg-btn text-[#6D6969]"
-                        : data?.status === "process"
-                        ? "bg-proccess text-[#9F8D04]"
-                        : data?.status === "completed"
-                        ? "bg-success text-[#399707]"
-                    : ""}
+                    ${
+                        data?.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                        data?.status === 'process' ? 'bg-blue-100 text-blue-800' :
+                        data?.status === 'completed' ? 'bg-green-100 text-green-800' : ''
+                    }
                 ">${ucFirst(data?.status)}</div>
             </div>
 

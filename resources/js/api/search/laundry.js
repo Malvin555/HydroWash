@@ -46,13 +46,13 @@ function renderLaundryList(data) {
                 <td class="px-6 py-4">
                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                         ${
-                            item?.status === 'pending' ? 'bg-gray-300 text-gray-800' :
-                            item?.status === 'process' ? 'bg-yellow-100 text-yellow-800' :
+                            item?.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            item?.status === 'process' ? 'bg-blue-100 text-blue-800' :
                             item?.status === 'completed' ? 'bg-green-100 text-green-800' : ''
                         }
                         ">${ucFirst(item?.status)}</span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 flex items-center gap-2 text-sm text-gray-500">
                     ${item?.transaction?.length == 0 && item?.status_report === 'normal' ? `
                         <button 
                             data-modal-target="modalTransaction" 

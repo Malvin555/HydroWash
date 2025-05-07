@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <a href="{{ route('home') }}"
+                                <a href="{{ route('history') }}"
                                     class="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 w-full hover:bg-primary-dark rounded-lg cursor-pointer py-4 px-6 font-bold text-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">

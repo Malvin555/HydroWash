@@ -1,7 +1,7 @@
 import initializeModal from "../../modal";
 import fetchDetailToModal from "./fetchDetailToModal";
 import buildRoute from "../../utils/buildRoute";
-import { ucFirst } from "../../utils/string";
+import { formatCurrency } from "../../utils/formatter";
 
 initializeModal('showModalInfoTransaction', async ({ id }) => {
     await fetchDetailToModal({
@@ -20,25 +20,47 @@ function renderModalInfoTransaction(response) {
 
     if (!data) return;
 
+    let priceTotal = data?.[serviceName]?.[`price_${serviceName}`];
+    let deliveryFee = data?.[serviceName]?.retrieval_method === 'delivery' ? 20000 : 0;
+    let subTotal = data?.[serviceName]?.retrieval_method === 'delivery' ? (priceTotal - deliveryFee) / 1.1 : priceTotal;
+    let tax = data?.[serviceName]?.retrieval_method === 'delivery' ? subTotal * 0.1 : 0;
+
     modalContent.innerHTML = `
         <h2 class="text-xl text-center text-primary font-bold tracking-wide mb-4">Pay ${data?.[serviceName]?.[`name_${serviceName}`]}</h2>
 
         <div class="space-y-4">
 
-            <div>
-                <label class="text-sm font-bold text-primary">Detail (${ucFirst(data?.[serviceName]?.status)})</label>
-                <div>
-                    <img src="${data?.[serviceName]?.item_type?.image_item ? '/storage/' + data?.[serviceName]?.item_type?.image_item : ''}" alt="" class="rounded-md w-full h-75 my-4">
-                    <input type="text" disabled class="bg-secondary w-full text-primary placeholder:text-primary placeholder:font-bold px-4 py-2 mt-1 rounded-md text-sm outline-0" 
-                    placeholder="${data?.[serviceName]?.amount_item}pcs (${new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                    }).format(data?.[serviceName]?.[`price_${serviceName}`])})"
-                    
-                    value="${data?.[serviceName]?.amount_item}pcs (${new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                    }).format(data?.[serviceName]?.[`price_${serviceName}`])})">
+            <div class="bg-secondary rounded-md p-3 mt-4">
+                <h3 class="text-sm font-bold text-primary mb-2">Selected Items:</h3>
+                <div id="selectedItemsList-edit" class="space-y-2 max-h-40 overflow-y-auto">
+                    ${data?.[serviceName]?.order_items.map(item => `
+                        <div class="flex justify-between items-center text-sm">
+                            <div>
+                                <span c lass="font-medium">${item?.item_type?.name_item}</span>
+                                <span class="text-gray-600 text-xs ml-1">(${item?.quantity} × ${formatCurrency(item?.item_type?.price_item)})</span>
+                            </div>
+                            <span>${formatCurrency(item?.price_total)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+        
+                <div class="mt-3 pt-2 border-t border-gray-200">
+                    <div class="flex justify-between items-center font-medium text-gray-600">
+                        <span>Subtotal</span>
+                        <span id="subtotalDisplay-edit">${formatCurrency(subTotal)}</span>
+                    </div>
+                    <div class="flex justify-between items-center font-medium text-gray-600" id="deliveryFeeRow-edit" style="display: flex;">
+                        <span>Delivery Fee</span>
+                        <span id="deliveryFeeDisplay">${formatCurrency(deliveryFee)}</span>
+                    </div>
+                    <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow-edit" style="display: flex;">
+                        <span>Tax (10%)</span>
+                        <span id="taxDisplay-edit">${formatCurrency(tax)}</span>
+                    </div>
+                    <div class="flex justify-between font-bold text-primary">
+                        <span>Total:</span>
+                        <span id="totalDisplay-edit">${formatCurrency(priceTotal)}</span>
+                        </div>
                 </div>
             </div>
 
