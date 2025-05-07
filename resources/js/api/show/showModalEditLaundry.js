@@ -61,8 +61,7 @@ function renderModalEditLaundry(response) {
                     <div class="flex justify-between font-bold text-primary">
                         <span>Total:</span>
                         <span id="totalDisplay-edit">Rp 0,00</span>
-                        </div>
-                        <span>${formatCurrency(data?.price_laundry ?? data?.price_ironing)}</span>
+                    </div>
                 </div>
                 <input type="hidden" name="total_price" id="totalPriceInput-edit" value="">
             </div>

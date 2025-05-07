@@ -53,12 +53,14 @@ function renderLaundryList(data) {
                         ">${ucFirst(item?.status)}</span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button 
-                        data-modal-target="modalTransaction" 
-                        data-slug="${item?.name_laundry}"
-                        data-modal-key="showModalTransactionIroning" class="cursor-pointer mr-3">
-                        <img src="/img/cash.svg" alt="cash" class="w-5 h-5">
-                    </button>
+                    ${item?.transaction?.length == 0 && item?.status_report === 'normal' ? `
+                        <button 
+                            data-modal-target="modalTransaction" 
+                            data-slug="${item?.name_laundry}"
+                            data-modal-key="showModalTransactionIroning" class="cursor-pointer mr-3">
+                            <img src="/img/cash.svg" alt="cash" class="w-5 h-5">
+                        </button>
+                    ` : ''}
                     <button 
                         data-modal-target="modalInformationLaundry" 
                         data-id="${item?.id}"
@@ -82,7 +84,7 @@ function renderLaundryList(data) {
                         </svg>
                     </button>
                     ${item?.transaction?.length > 0 ? `
-                        <a href="${buildRoute('admin_print', 'laundry-receipt', strSlug(item?.name_laundry))}" target="_blank" id="printLink">
+                        <a href="${buildRoute('admin_print', ['laundry-receipt', strSlug(item?.name_laundry)])}" target="_blank" id="printLink">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
                                 viewBox="0 0 512 512">
                                 <path
