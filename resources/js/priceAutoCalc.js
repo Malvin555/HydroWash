@@ -19,10 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 document.addEventListener('click', function (e) {
-    // if (e.target.closest('[data-modal-target="modalEditLaundry"]')) {
-    //     initializeModalCalculation("edit", "modalEditLaundry");
-    // }
-
     if (e.target.closest('[data-modal-target="modalAddLaundry"]')) {
         initializeModalCalculation("add", "modalAddLaundry");
     }

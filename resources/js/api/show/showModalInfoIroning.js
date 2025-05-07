@@ -8,17 +8,22 @@ initializeModal('showModalInfoIroning', async ({ id }) => {
     await fetchDetailToModal({
         id: id,
         url: "/admin/ironing",
-        renderFn: renderModalInforIroning,
+        renderFn: renderModalInfoIroning,
     });
 });
 
-function renderModalInforIroning(response) {
+function renderModalInfoIroning(response) {
     const modal = document.getElementById("modalInformationIroning");
     const data = response.data;
 
     if (!data) {
         return;
     }
+
+    let priceTotal = data.price_laundry ?? data.price_ironing;
+    let deliveryFee = data.retrieval_method === 'delivery' ? 20000 : 0;
+    let subTotal = data.retrieval_method === 'delivery' ? (priceTotal - deliveryFee) / 1.1 : priceTotal;
+    let tax = data.retrieval_method === 'delivery' ? subTotal * 0.1 : 0;
 
     const modalContent = modal.querySelector(".modal-data");
 
@@ -31,13 +36,39 @@ function renderModalInforIroning(response) {
 
             <div class="">
                 <label class="text-sm font-bold text-primary">Order Information</label>
-                <div class="grid grid-cols-2 gap-2">
-                    <img src="${'/storage/' + data?.item_type?.image_item}" alt="image ironing">
-                    <div class="flex flex-col gap-2 justify-between">
-                        <input type="text" disabled name="amount-item" id="amount-item" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="${data?.amount_item} Pcs">
-                        <input type="text" disabled name="price_laundry" id="price_laundry" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="${formatCurrency(data?.price_ironing)}">
-                        <input type="text" disabled name="status_transaction" id="status_transaction" class="bg-secondary placeholder:text-primary px-4 py-2 w-full rounded-md outline-0" placeholder="${ucFirst(data?.status_transaction)}">
+                <div class="bg-secondary rounded-md p-3 mt-4">
+                    <h3 class="text-sm font-bold text-primary mb-2">Selected Items:</h3>
+                    <div id="selectedItemsList-edit" class="space-y-2 max-h-32 overflow-y-auto">
+                        ${data?.order_items.map(item => `
+                            <div class="flex justify-between items-center text-sm">
+                                <div>
+                                    <span class="font-medium">${item?.item_type?.name_item}</span>
+                                    <span class="text-gray-600 text-xs ml-1">(${item?.quantity} × ${formatCurrency(item?.item_type?.price_item)})</span>
+                                </div>
+                                <span>${formatCurrency(item?.price_total)}</span>
+                            </div>
+                        `).join('')}
                     </div>
+    
+                    <div class="mt-3 pt-2 border-t border-gray-200">
+                        <div class="flex justify-between items-center font-medium text-gray-600">
+                            <span>Subtotal</span>
+                            <span id="subtotalDisplay-edit">${formatCurrency(subTotal)}</span>
+                        </div>
+                        <div class="flex justify-between items-center font-medium text-gray-600" id="deliveryFeeRow-edit" style="display: flex;">
+                            <span>Delivery Fee</span>
+                            <span id="deliveryFeeDisplay">${formatCurrency(deliveryFee)}</span>
+                        </div>
+                        <div class="flex justify-between items-center font-medium text-gray-600" id="taxRow-edit" style="display: flex;">
+                            <span>Tax (10%)</span>
+                            <span id="taxDisplay-edit">${formatCurrency(tax)}</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-primary">
+                            <span>Total:</span>
+                            <span id="totalDisplay-edit">${formatCurrency(priceTotal)}</span>
+                            </div>
+                    </div>
+                    <input type="hidden" name="total_price" id="totalPriceInput-edit" value="${priceTotal}">
                 </div>
             </div>
 
@@ -71,7 +102,7 @@ function renderModalInforIroning(response) {
 
             <div class="flex flex-col">
                 <label for="notes" class="text-sm font-bold text-primary mb-1">Notes</label>
-                <textarea name="notes" disabled id="notes" placeholder="${data?.notes_ironing}"
+                <textarea name="notes" disabled id="notes" placeholder="${data?.notes_laundry}"
                     class="bg-secondary placeholder:text-primary px-4 py-2 w-full h-32 rounded-md resize-none outline-none text-sm"></textarea>
             </div>
 
@@ -98,7 +129,7 @@ function renderModalInforIroning(response) {
                     class="close-button flex justify-center items-center w-full h-fit px-4 py-2 rounded-md bg-primary text-white font-medium cursor-pointer">
                     Close
                 </div>
-                <form action="${buildRoute('ironing_delete', data?.id)}" method="POST" class="inline" onsubmit="return confirm('Are you sure to want delete this?')">
+                <form action="${buildRoute('laundry_delete', data?.id)}" method="POST" class="inline" onsubmit="return confirm('Are you sure to want delete this?')">
                     <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').content}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="flex justify-center items-center w-full px-4 py-2 rounded-md bg-red-600 text-white font-medium cursor-pointer">

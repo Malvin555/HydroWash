@@ -89,7 +89,8 @@
                                     </svg>
                                 </button>
                                 <a href="{{ route('admin.print', [
-                                    'type' => 'transactionReceipt',
+                                    'type' => 'transaction-receipt',
+                                    'service' => Str::slug($transaction?->ironing?->name_ironing ?? $transaction?->laundry?->name_laundry),
                                     ]) }}" target="_blank" id="printLink">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
                                         viewBox="0 0 512 512">

@@ -16,7 +16,6 @@ async function getDataWithSearch(apiPath, searchValue, renderCallback) {
         updateQueryString("search", searchValue);
 
         if (response.data.status === "success") {
-            console.log(response.data);
             renderCallback(response.data);
         }
     } catch (error) {

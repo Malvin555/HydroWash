@@ -56,14 +56,14 @@ class IroningController extends Controller
         return view('pages.ironing-admin', compact('ironing'));
     }
 
-    public function getDataIroning($search, $status, $order, $isPrint = false)
+    public function getDataIroning($search, $status, $order, $isDataForPrint = false)
     {
-        $ironingQuery = Ironing::with('orderItems.itemType')
+        $ironingQuery = Ironing::with(['orderItems.itemType', 'transaction'])
             ->ironingSearch($search)
             ->status($status)
             ->orderBy('created_at', $order);
 
-        if ($isPrint) {
+        if ($isDataForPrint) {
             $ironingQuery->with('user');
         }
 
@@ -111,7 +111,7 @@ class IroningController extends Controller
      */
     public function show(string $id)
     {
-        $ironing = Ironing::with(['user', 'itemType'])->find($id);
+        $ironing = Ironing::with(['user', 'orderItems.itemType'])->find($id);
 
         return response()->json([
             "status" => "success",
@@ -125,12 +125,14 @@ class IroningController extends Controller
      */
     public function edit(string $id)
     {
-        $ironing = Ironing::with('itemType')->find($id);
+        $ironing = Ironing::with('orderItems.itemType')->find($id);
+        $itemType = ItemType::where('role', 'ironing')->get();
 
         return response()->json([
             "status" => "success",
             "message" => "Ironing data retrieved successfully",
             "data" => $ironing,
+            'itemType' => $itemType,
         ], 200);
     }
 
