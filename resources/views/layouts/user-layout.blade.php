@@ -28,25 +28,17 @@
                         <span class="ml-2 text-white font-bold text-xl">Hydro<span class="text-teal-200">Wash</span></span>
                     </a>
                     
-                    <a href="{{ route('history') }}" class="hidden sm:flex">
+                    <a href="{{ route('history') }}" class="flex">
                         <div class="bg-white/10 hover:bg-white/20 rounded-lg px-4 py-2 text-white font-medium transition duration-150 flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 m-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>Order History</span>
+                            <span class="hidden md:block">Order History</span>
                         </div>
                     </a>
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('history') }}" class="sm:hidden">
-                        <div class="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-2 text-white transition duration-150">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </a>
-                    
                     <x-profile></x-profile>
                 </div>
             </div>
