@@ -3,6 +3,7 @@ const mobileMenu = document.getElementById("mobileMenu");
 const currentPage = document.body.getAttribute("data-page");
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".nav__link");
+const navBile = document.querySelector(".nav__bile");
 
 if (currentPage === "landing") {
     // Mobile menu toggle
@@ -14,24 +15,33 @@ if (currentPage === "landing") {
 
     // Navigation Bar Highlight
     const scrollActive = () => {
-        const scrollDown = window.scrollY;
-
-        sections.forEach((current, index) => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 58;
-            const sectionId = current.getAttribute("id");
-            const navLink = navLinks[index];
-
-            if (
-                scrollDown > sectionTop &&
-                scrollDown <= sectionTop + sectionHeight
-            ) {
-                navLink.classList.add("border-b-2", "border-white");
+        const scrollY = window.scrollY;
+    
+        sections.forEach((section, index) => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute("id");
+    
+            // Target corresponding links
+            const desktopLink = document.querySelector(`.nav-desktop a[href="#${sectionId}"]`);
+            const mobileLink = document.querySelector(`.nav-mobile a[href="#${sectionId}"]`);
+    
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                // Highlight current section link
+                desktopLink?.classList.add("border-b-2", "border-white");
+                mobileLink?.classList.add("bg-white/20", "font-semibold");
+    
+                // Optional: add background to mobile nav
+                document.querySelector(".nav-mobile")?.classList.add("bg-teal/80");
             } else {
-                navLink.classList.remove("border-b-2", "border-white");
+                // Remove highlight
+                desktopLink?.classList.remove("border-b-2", "border-white");
+                mobileLink?.classList.remove("bg-white/20", "font-semibold");
             }
         });
     };
+    
+    
 
     window.addEventListener("scroll", scrollActive);
 }

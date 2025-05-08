@@ -22,11 +22,11 @@
                     </div>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav__link border-b-2 border-white text-white  px-3 py-2 text-sm font-medium transition duration-150">Home</a>
-                    <a href="#services" class="nav__link text-white  px-3 py-2 text-sm font-medium transition duration-150">Services</a>
-                    <a href="#how-it-works" class="nav__link text-white  px-3 py-2 text-sm font-medium transition duration-150">How It Works</a>
-                    <a href="#testimonials" class="nav__link text-white  px-3 py-2 text-sm font-medium transition duration-150">Testimonials</a>
+                <div class="nav-desktop hidden md:flex items-center space-x-8">
+                    <a href="#home" class=" border-b-2 border-white text-white  px-3 py-2 text-sm font-medium transition duration-150">Home</a>
+                    <a href="#services" class=" text-white  px-3 py-2 text-sm font-medium transition duration-150">Services</a>
+                    <a href="#how-it-works" class=" text-white  px-3 py-2 text-sm font-medium transition duration-150">How It Works</a>
+                    <a href="#testimonials" class=" text-white  px-3 py-2 text-sm font-medium transition duration-150">Testimonials</a>
                     <a href="{{ route('login') }}" class="bg-white text-primary hover:bg-teal-50 ml-3 px-4 py-2 rounded-lg text-sm font-medium transition duration-150">Log in</a>
                 </div>
 
@@ -42,11 +42,11 @@
 
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-teal-400">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="nav__link border-b-2 border-white text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#services" class="nav__link text-white block px-3 py-2 rounded-md text-base font-medium">Services</a>
-                <a href="#how-it-works" class="nav__link text-white block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
-                <a href="#testimonials" class="nav__link text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+            <div class="nav-mobile px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class=" text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#services" class=" text-white block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <a href="#how-it-works" class=" text-white block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#testimonials" class=" text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
                 <a href="{{ route('login') }}" class="bg-white text-primary hover:bg-teal-50 block px-3 py-2 rounded-md text-base font-medium mt-4">Log in</a>
             </div>
         </div>
