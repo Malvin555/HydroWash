@@ -68,11 +68,11 @@
         @if (!$feedbacks->isEmpty())
             @foreach ($feedbacks as $feedback)
                 <div class="bg-primary w-full flex justify-between items-center rounded-sm py-2 px-4">
-                    <div class="flex items-center gap-3">
-                        <div class="h-5 w-5 md:h-5 md:w-5 text-xs md:text-base rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                    <div class="flex gap-2">
+                        <div class="h-5 w-5 md:h-7 md:w-7 text-xs md:text-base rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
                             {{ Str::substr(optional($feedback)->user->name, 0, 2) }}
                         </div>
-                        <div class="flex flex-col justify-center">
+                        <div class="flex flex-col justify-center col-span-3">
                             <p class="text-white text-[.9rem] md:ext-lg font-bold">{{ $feedback->user->name }}</p>
                             <p class="text-white text-[.8rem] md:ext-lg">{{ $feedback->comment }}</p>
                         </div>

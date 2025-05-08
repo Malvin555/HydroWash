@@ -4,7 +4,7 @@
         <div class="container mx-auto px-4 md:px-6 relative z-10">
             <div class="max-w-7xl mx-auto mt-3">
                 <x-back-to-home></x-back-to-home>
-                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary text-center mb-2">Your Feedback Matters</h1>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-primary text-center mt-5 mb-2">Your Feedback Matters</h1>
                 <p class="text-gray-600 text-center mb-8 max-w-2xl mx-auto">Help us improve our services by sharing your experience. Your insights drive our continuous improvement.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
