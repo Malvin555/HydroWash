@@ -69,7 +69,7 @@
             @foreach ($feedbacks as $feedback)
                 <div class="bg-primary w-full flex justify-between items-center rounded-sm py-2 px-4">
                     <div class="flex items-center gap-3">
-                        <div class="h-8 w-8 rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
+                        <div class="h-5 w-5 md:h-5 md:w-5 text-xs md:text-base rounded-full bg-btn flex items-center justify-center text-black font-medium uppercase">
                             {{ Str::substr(optional($feedback)->user->name, 0, 2) }}
                         </div>
                         <div class="flex flex-col justify-center">
@@ -103,8 +103,8 @@
                                 onsubmit="return confirm('Are you sure to want delete this?')">
                                 @csrf
                                 @method('DELETE')
-                                <button class="p-2 rounded bg-red-600 text-white hover:bg-red-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor"
+                                <button class="p-1 md:p-2 rounded bg-red-600 text-white hover:bg-red-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 md:w-5 md:h-5" fill="currentColor"
                                         viewBox="0 0 448 512">
                                         <path
                                             d="M135.2 17.7C140.6 7.1 151.3 0 163.2 0h121.6c11.9 0 22.6 7.1 28 17.7L328 32h88c13.3 0 24 10.7 24 24s-10.7 24-24 24h-16l-21.2 339.3c-1.6 25.5-22.9 45.7-48.5 45.7H117.7c-25.6 0-46.9-20.2-48.5-45.7L48 80H32c-13.3 0-24-10.7-24-24S18.7 32 32 32h88l15.2-14.3zM182.6 160c-6.6 0-12 5.4-12 12v208c0 6.6 5.4 12 12 12s12-5.4 12-12V172c0-6.6-5.4-12-12-12zm82.8 0c-6.6 0-12 5.4-12 12v208c0 6.6 5.4 12 12 12s12-5.4 12-12V172c0-6.6-5.4-12-12-12z" />

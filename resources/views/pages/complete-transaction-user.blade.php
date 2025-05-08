@@ -145,12 +145,12 @@
                         'service' => Str::slug($model->name_ironing ?? $model->name_laundry),
                     ]) }}"
                         target="_blank"
-                        class="border border-primary hover:bg-primary-dark rounded-lg cursor-pointer text-primary py-4 px-6 font-bold text-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        class="border border-primary hover:bg-primary-dark rounded-lg cursor-pointer text-primary py-4 px-6 font-bold text-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary text-center">
                         View Receipt
                     </a>
                     <a href="{{ route('history') }}">
                         <button id="finishedBtn"
-                            class="w-full bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-4 px-6 font-bold text-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            class="w-full bg-primary hover:bg-primary-dark rounded-lg cursor-pointer text-white py-4 px-6 font-bold text-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary text-center">
                             Finished
                         </button>
                     </a>

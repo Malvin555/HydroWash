@@ -10,7 +10,7 @@ class FeedbackController extends Controller
 {
     public function index()
     {
-        return Feedback::getFeedbacksWithUser(view: 'index');
+        return Feedback::getFeedbacksWithUser(view: 'index', amount: 5);
     }
 
     public function getFeedbacks()
