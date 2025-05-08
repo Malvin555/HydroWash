@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Middleware\ActivityLog;
-use App\Http\Middleware\AllowGuestAccess;
-use App\Http\Middleware\EnsureIsAdmin;
 use App\Http\Middleware\EnsureIsUser;
-use App\Http\Middleware\VerifyApiToken;
+use App\Http\Middleware\EnsureIsAdmin;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\VerifyApiToken;
+use App\Http\Middleware\AllowGuestAccess;
+use App\Http\Middleware\AutoLoginFromCookie;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'ensure.is.admin' => EnsureIsAdmin::class,
             'ensure.is.user' => EnsureIsUser::class,
             'allow.guest' => AllowGuestAccess::class,
+            'auto.login.from.cookie' => AutoLoginFromCookie::class,
         ]);
 
         $middleware->api(append: [

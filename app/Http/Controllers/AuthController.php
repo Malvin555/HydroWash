@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Mail\SendVerificationCode;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use function PHPUnit\Framework\isNull;
@@ -95,38 +95,42 @@ class AuthController extends Controller
             return back()->withErrors(['password' => 'The provided password is incorrect.'])->onlyInput('password');
         }
 
-        if ($user->api_token) {
-            $activeSession = DB::table('sessions')
-                ->where('user_id', $user->id)
-                ->exists();
-
-            $sessionToken = session('api_token');
-            if ($activeSession && $sessionToken !== $user->api_token) {
-                return back()->withErrors(['name' => 'The username logged in is already in use.'])->onlyInput('name');
-            }
+        $activeSession = DB::table('sessions')
+            ->where('user_id', $user->id)
+            ->exists();
+        if ($user->api_token && $activeSession && $user->remember_token) {
+            return back()->withErrors(['name' => 'The username logged in is already in use.'])->onlyInput('name');
         }
 
         Auth::login($user);
         $request->session()->regenerate();
 
         $user->api_token = Str::random(60);
+        $user->remember_token = Str::random(60);
         $user->save();
-        $isAdmin = $this->isAdminAuthenticated($user);
-
+        
         session()->put('api_token', $user->api_token);
         session()->put('user_id', Hash::make($user->id));
-
+        
+        // Set cookie for 7 days
+        $minutes = 60 * 24 * 7;
+        Cookie::queue('remember_token', $user->remember_token, $minutes);
+        
+        $isAdmin = $this->isAdminAuthenticated($user);
         return redirect()->route($isAdmin ? 'admin' : 'home');
     }
 
     public function logout(Request $request)
     {
         $user = Auth::user();
+
         $user->api_token = null;
+        $user->remember_token = null;
         $user->save();
 
         session()->forget('api_token');
         session()->forget('user_id');
+        Cookie::queue(Cookie::forget('remember_token'));
 
         $isAdmin = $this->isAdminAuthenticated($user);
         

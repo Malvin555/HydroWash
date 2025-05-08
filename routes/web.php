@@ -16,13 +16,9 @@ use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TransactionController;
 
-Route::get('/l', function () {
-    return view('pages.laundry-information-admin');
-})->name('home');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::middleware('allow.guest')->group(function () {
+Route::middleware(['auto.login.from.cookie', 'allow.guest'])->group(function () {
     Route::get('/', [FeedbackController::class, 'index'])->name('landing');
 
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
